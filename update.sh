@@ -1,4 +1,7 @@
-#!/bin/bash
+#!/bin/zsh
+
+# Clean staged
+git restore --staged .
 
 # Get lists of new, modified, and deleted files (excluding README.md) BEFORE staging
 new_files=$(git ls-files --others --exclude-standard | grep -v "^README\.md$")
@@ -15,19 +18,22 @@ git add .
 commit_msg=""
 
 if [ -n "$new_files" ]; then
-    commit_msg+=$'new:\n'"$new_files"$'\n\n'
+    new_list=$(echo "$new_files" | tr '\n' ' ')
+    commit_msg+="new: $new_list | "
 fi
 
 if [ -n "$modified_files" ]; then
-    commit_msg+=$'update:\n'"$modified_files"$'\n\n'
+    mod_list=$(echo "$modified_files" | tr '\n' ' ')
+    commit_msg+="update: $mod_list | "
 fi
 
 if [ -n "$deleted_files" ]; then
-    commit_msg+=$'delete:\n'"$deleted_files"$'\n\n'
+    del_list=$(echo "$deleted_files" | tr '\n' ' ')
+    commit_msg+="delete: $del_list | "
 fi
 
-# Remove trailing newlines
-commit_msg=$(echo "$commit_msg" | sed -e :a -e '/^\s*$/d;N;ba')
+# Remove trailing " | "
+commit_msg=$(echo "$commit_msg" | sed 's/ | $//')
 
 # Check if there are any changes to commit (excluding README.md changes)
 if [ -n "$commit_msg" ]; then

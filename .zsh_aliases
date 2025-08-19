@@ -74,6 +74,7 @@ alias h="history"
 alias kb="setxkbmap us"
 alias df="df -h -x tmpfs"
 alias nosuspend="xset s off & xset -dpms"
+alias cd="z"
 
 
 # eza
@@ -114,7 +115,7 @@ alias gclean='git clean -fd'                  # Clean untracked files
 alias grs='git restore'                       # Restore file
 alias grss='git restore --staged'             # Unstage file
 alias gwip='git commit -m "WIP"'              # Quick WIP commit
-alias guncommit='git reset --soft HEAD~1'     # Undo last commit (keep changes)
+alias guncommit='git reset --soft HEAD~1 && grss .'     # Undo last commit (keep changes)
 alias gh='git log --pretty=oneline --abbrev-commit'  # Abbreviated log
 
 # GitHub CLI aliases (if using `gh`)
