@@ -43,3 +43,6 @@ if [ -n "$commit_msg" ]; then
 else
     echo "No changes to commit."
 fi
+
+# Verify everything is right
+clear && git status
