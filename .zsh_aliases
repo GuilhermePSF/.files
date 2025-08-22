@@ -65,6 +65,7 @@ alias birth="stat / | grep 'Birth' | sed 's/Birth: //g' | cut -b 2-11"
 alias brt='xrandr --output eDP-1 --brightness'
 alias chargef='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
 alias charge='upower -i $(upower -e | grep BAT) | grep --color=never -E "state|to\ full|to\ empty|percentage"'
+alias timestamp='date -u +"%Y%m%d%H%M%S"'
 alias aliases='cat ~/.zsh_aliases'
 
 # fixes
