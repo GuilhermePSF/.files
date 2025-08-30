@@ -54,9 +54,6 @@ alias bt="bun run test"
 alias bi="bun install"
 alias ba="bun add"
 
-# ssh
-alias mine="ssh -p 8022 u0_a240@192.168.1.84"
-
 # misc
 
 alias q="exit"
