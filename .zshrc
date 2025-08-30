@@ -110,7 +110,7 @@ fi
 
 # ========== Custom Aliases/Functions ==========
 ce() {
-  code "$@" && exit
+  cd "$@" && code . && exit
 }
 
 eval "$(zoxide init zsh)"

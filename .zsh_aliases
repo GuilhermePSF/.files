@@ -20,6 +20,7 @@ alias med="mix ecto.drop"
 alias mni="cd assets && ni && cd .."
 
 # npm
+
 alias nr="npm run"
 alias ns="npm start"
 alias nd="npm run dev"
@@ -30,6 +31,7 @@ alias nt="npm run test"
 alias ni="npm install"
 
 # yarn
+
 alias yr="yarn run"
 alias ys="yarn start"
 alias yd="yarn run dev"
@@ -40,8 +42,8 @@ alias yt="yarn run test"
 alias yi="yarn install"
 alias ya="yarn add"
 
-
 # bun3
+
 alias br="bun run"
 alias bs="bun run start"
 alias bd="bun run dev"
@@ -52,6 +54,8 @@ alias bt="bun run test"
 alias bi="bun install"
 alias ba="bun add"
 
+# ssh
+alias mine="ssh -p 8022 u0_a240@192.168.1.84"
 
 # misc
 
