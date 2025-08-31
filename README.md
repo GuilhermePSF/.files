@@ -1,10 +1,13 @@
 ```
 .
+├── .config
+│   └── fastfetch
+│       └── config.jsonc
 ├── .gitconfig
 ├── .zsh_aliases
 ├── .zshrc
 ├── software-list.txt
 └── update.sh
 
-0 directories, 5 files
+2 directories, 6 files
 ```
