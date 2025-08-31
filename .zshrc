@@ -1,5 +1,5 @@
 if [[ -o interactive ]]; then
-    pokemon-colorscripts -n swampert | fastfetch --disable-linewrap --logo -
+    fastfetch --disable-linewrap --file /home/gui/.config/fastfetch/swampert.txt
 fi
 
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.

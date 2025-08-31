@@ -2,11 +2,12 @@
 .
 ├── .config
 │   └── fastfetch
-│       └── config.jsonc
+│       ├── config.jsonc
+│       └── swampert.txt
 ├── .gitconfig
 ├── .zsh_aliases
 ├── .zshrc
 └── update.sh
 
-2 directories, 5 files
+2 directories, 6 files
 ```
