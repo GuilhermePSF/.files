@@ -6,8 +6,7 @@
 ├── .gitconfig
 ├── .zsh_aliases
 ├── .zshrc
-├── software-list.txt
 └── update.sh
 
-2 directories, 6 files
+2 directories, 5 files
 ```
