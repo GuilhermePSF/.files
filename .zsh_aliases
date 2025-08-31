@@ -67,7 +67,7 @@ alias brt='xrandr --output eDP-1 --brightness'
 alias chargef='upower -i /org/freedesktop/UPower/devices/battery_BAT0'
 alias charge='upower -i $(upower -e | grep BAT) | grep --color=never -E "state|to\ full|to\ empty|percentage"'
 alias timestamp='date -u +"%Y%m%d%H%M%S"'
-alias update="cd ~/dotfiles  && ./update.sh && cd -"
+alias update="cd ~/dotfiles  && ./update.sh"
 alias aliases='cat ~/.zsh_aliases'
 
 # fixes
