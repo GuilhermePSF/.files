@@ -9,7 +9,9 @@ modified_files=$(git ls-files -m | grep -v -Ff <(git ls-files -d) | grep -v "^RE
 deleted_files=$(git ls-files -d | grep -v "^README\.md$")
 
 # Update README.md with the tree output
-tree -a -I '.git|README.md' > README.md
+echo '```' > README.md
+tree -a -I '.git|README.md' >> README.md
+echo '```' >> README.md
 
 # Stage all changes
 git add .

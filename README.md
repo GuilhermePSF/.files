@@ -1,8 +1,10 @@
+```
 .
 ├── .gitconfig
-├── software-list.txt
-├── update.sh
 ├── .zsh_aliases
-└── .zshrc
+├── .zshrc
+├── software-list.txt
+└── update.sh
 
 0 directories, 5 files
+```
