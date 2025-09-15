@@ -2,7 +2,6 @@ if [[ -o interactive ]]; then
 	# FOR SOME REASON THIS CROPS WHEN RUN DURING BOOT fastfetch --disable-linewrap --file ~/dotfiles/.config/fastfetch/swampert.txt 
 	pokemon-colorscripts -n swampert | sed '1s/.*/ /' | fastfetch --disable-linewrap --logo -
 fi
-
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
@@ -88,7 +87,7 @@ case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
-
+sleep(1)
 # flyctl
 export FLYCTL_INSTALL="$HOME/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
