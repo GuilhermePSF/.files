@@ -78,6 +78,8 @@ alias kb="setxkbmap us"
 alias df="df -h -x tmpfs"
 alias nosuspend="xset s off & xset -dpms"
 alias cd="z"
+alias fastfetch="chafa /home/gui/Pictures/pikmnroxo_100x180-removebg-preview.png --size 26 | fastfetch --disable-linewrap --logo -"
+alias brave="brave-browser"
 
 
 # eza

@@ -5,9 +5,9 @@
 │       ├── config.jsonc
 │       └── swampert.txt
 ├── .gitconfig
-├── update.sh
 ├── .zsh_aliases
-└── .zshrc
+├── .zshrc
+└── update.sh
 
 2 directories, 6 files
 ```

@@ -1,6 +1,7 @@
 if [[ -o interactive ]]; then
 	# FOR SOME REASON THIS CROPS WHEN RUN DURING BOOT fastfetch --disable-linewrap --file ~/dotfiles/.config/fastfetch/swampert.txt 
-	pokemon-colorscripts -n swampert | sed '1s/.*/ /' | fastfetch --disable-linewrap --logo -
+	# pokemon-colorscripts -n swampert | sed '1s/.*/ /' | fastfetch --disable-linewrap --logo -
+	chafa /home/gui/Pictures/pikmnroxo_100x180-removebg-preview.png --size 26 | fastfetch --disable-linewrap --logo -
 fi
 # Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
@@ -87,7 +88,7 @@ case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
-sleep(1)
+
 # flyctl
 export FLYCTL_INSTALL="$HOME/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
@@ -117,6 +118,10 @@ fi
 # ========== Custom Aliases/Functions ==========
 ce() {
   cd "$@" && code . && exit
+}
+
+co() {
+  cd "$@" && open . && exit
 }
 
 eval "$(zoxide init zsh)"
