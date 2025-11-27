@@ -128,3 +128,4 @@ eval "$(zoxide init zsh)"
 
 # ========== Powerlevel10k fallback ==========
 source ~/powerlevel10k/powerlevel10k.zsh-theme 2>/dev/null || true
+
