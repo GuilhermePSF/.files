@@ -1,0 +1,13 @@
+# System-specific files
+hardware-configuration.nix
+
+# Nix build artifacts
+result/
+*.*.drv
+
+# Log files and common editors
+*.swp
+*~
+
+# README script generator for precommit
+generate-readme.sh
