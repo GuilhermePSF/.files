@@ -51,7 +51,7 @@
   programs.zsh.enable = true; 
 
   environment.variables = {
-    NH_FLAKE = "/etc/nixos";
+    FLAKE = "/home/gui/nixos-config";
     TERMINAL = "ghostty";
     # Hint for electron apps to use Wayland
     NIXOS_OZONE_WL = "1"; 
