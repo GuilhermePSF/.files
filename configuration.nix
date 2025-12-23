@@ -22,6 +22,11 @@
 
   hardware.graphics.enable = true; 
 
+  hardware.bluetooth.enable = true;       # Needed for Bluetooth widget
+  hardware.bluetooth.powerOnBoot = true;  # Optional: powers up bluetooth on boot
+  services.upower.enable = true;          # Needed for Battery widget
+  services.power-profiles-daemon.enable = true; # Needed for Power Profile widget
+
   # ### DISPLAY MANAGER ###
   services.displayManager.ly.enable = true;
 
@@ -51,7 +56,7 @@
   programs.zsh.enable = true; 
 
   environment.variables = {
-    FLAKE = "/home/gui/nixos-config";
+    NH_FLAKE = "/home/gui/nixos-config";
     TERMINAL = "ghostty";
     # Hint for electron apps to use Wayland
     NIXOS_OZONE_WL = "1"; 
@@ -70,9 +75,6 @@
     nix-output-monitor
     nvd
 
-    waybar       # Status bar (from your reference)
-    rofi-wayland # App launcher (dmenu/rofi alternative for Wayland)
-    dunst        # Notification daemon
     wl-clipboard # Copy/paste functionality in Wayland
     hyprpaper    # Wallpaper utility
   ];

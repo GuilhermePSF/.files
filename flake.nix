@@ -2,8 +2,15 @@
   description = "My NixOS configuration with flakes";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.05";  # Pin to a specific branch or commit
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";  # Pin to a specific branch or commit
+
     quickshell.url = "github:outfoxxed/quickshell";
+
+    noctalia = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };    
+
     home-manager = {
       url = "github:nix-community/home-manager/release-25.05";  # Pin Home Manager
       inputs.nixpkgs.follows = "nixpkgs";  # Ensure it uses the same nixpkgs version

@@ -90,7 +90,6 @@ in
             new_optimizations = true;
           };
 
-          # FIXED: New shadow syntax
           shadow = {
             enabled = true;
             range = 4;
@@ -131,7 +130,8 @@ in
           "$mod SHIFT, Q, exit"
           "$mod, F, fullscreen"
           "$mod, V, togglefloating"
-          
+          "$mod, SPACE, exec, noctalia-shell ipc call launcher toggle"
+
           "$mod, Return, exec, ${terminal}"
           "$mod, B, exec, ${browser}"
           "$mod, Space, exec, ${launcher}"
@@ -172,7 +172,7 @@ in
         exec-once = [
           "${pkgs.hyprpaper}/bin/hyprpaper"
 	  "hyprctl setcursor ${cursorName} ${toString cursorSize}"
-	  "quickshell"
+	  "noctalia-shell"
         ];
       };
     };

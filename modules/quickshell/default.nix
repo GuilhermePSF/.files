@@ -13,6 +13,7 @@
       pkgs.nerd-fonts.jetbrains-mono
     ];
 
-    xdg.configFile."quickshell/shell.qml".source = ./shell.qml;
+    # switched to noctalia shell
+    # xdg.configFile."quickshell/shell.qml".source = ./shell.qml;
   };
 }

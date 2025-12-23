@@ -8,6 +8,7 @@ let
   quickshellModule = import ./modules/quickshell;
   fastfetchModule = import ./modules/fastfetch;
   ghosttyModule = import ./modules/ghostty;
+  noctaliaModule = import ./modules/noctalia;
 in
 {
   home.username = "gui";
@@ -20,6 +21,7 @@ in
   quickshellModule.enable = true;
   fastfetchModule.enable = true; 
   ghosttyModule.enable = true;
+  noctaliaModule.enable = true;
 
   imports = [
     hyprlandModule
@@ -29,5 +31,6 @@ in
     quickshellModule
     fastfetchModule
     ghosttyModule
+    noctaliaModule
   ];
 }
