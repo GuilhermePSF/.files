@@ -18,6 +18,7 @@
     df = "df -h -x tmpfs";
     nosuspend = "xset s off & xset -dpms";
     brave = "brave-browser";
+    playit = "nix run github:pedorich-n/playit-nixos-module#playit-cli -- start";
 
     # --- Eza (Better ls) ---
     ls = "eza --color=always --group-directories-first --icons";

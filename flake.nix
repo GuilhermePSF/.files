@@ -2,7 +2,7 @@
   description = "My NixOS configuration with flakes";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";  # Pin to a specific branch or commit
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     quickshell.url = "github:outfoxxed/quickshell";
 
@@ -12,30 +12,39 @@
     };    
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.05";  # Pin Home Manager
-      inputs.nixpkgs.follows = "nixpkgs";  # Ensure it uses the same nixpkgs version
+      url = "github:nix-community/home-manager/release-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-minecraft = {
+      url = "github:Infinidoge/nix-minecraft";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    playit = {
+      url = "github:pedorich-n/playit-nixos-module";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, nix-minecraft, playit, ... }@inputs: {
     nixosConfigurations.nixos-btw = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";  # Architecture for your system
-      specialArgs = {inherit inputs; };
+      system = "x86_64-linux";
+      specialArgs = { inherit inputs; };
       modules = [
-        ./configuration.nix  # Your NixOS system configuration
-        home-manager.nixosModules.home-manager  # Add the Home Manager module
+        ./configuration.nix
+        playit.nixosModules.default
+        home-manager.nixosModules.home-manager
         {
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-	    extraSpecialArgs = { inherit inputs; };
-            users.gui = import ./home.nix;  # Your home manager configuration file
+            extraSpecialArgs = { inherit inputs; };
+            users.gui = import ./home.nix;
             backupFileExtension = "backup";
           };
         }
       ];
-      
     };
   };
 }
-

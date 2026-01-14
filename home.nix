@@ -9,6 +9,7 @@ let
   fastfetchModule = import ./modules/fastfetch;
   ghosttyModule = import ./modules/ghostty;
   noctaliaModule = import ./modules/noctalia;
+  minecraftModule = import ./modules/minecraft;
 in
 {
   home.username = "gui";
@@ -22,6 +23,7 @@ in
   fastfetchModule.enable = true; 
   ghosttyModule.enable = true;
   noctaliaModule.enable = true;
+  minecraftModule.enable = true;
 
   imports = [
     hyprlandModule
@@ -32,5 +34,6 @@ in
     fastfetchModule
     ghosttyModule
     noctaliaModule
+    minecraftModule
   ];
 }

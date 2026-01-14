@@ -14,6 +14,8 @@ in
 	    gdu             # Disk usage
 	    ripgrep         # Better grep
 	    fd              # Better find
+	    bat		    # Better cat
+	    unzip	    # Zipping tool
 
 	    # --- Dev Tools (Global) ---
 	    git
