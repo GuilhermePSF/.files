@@ -88,6 +88,7 @@
     tree
 
     kdePackages.dolphin
+    vesktop
 
     nh
     nix-output-monitor
