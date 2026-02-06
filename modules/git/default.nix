@@ -6,10 +6,13 @@
   config = lib.mkIf config.gitModule.enable {
     programs.git = {
       enable = true;
-      userName = "GuilhermePSF";
-      userEmail = "guilhermepsf23@gmail.com";
-
-      extraConfig = {
+      
+      settings = {
+        user = {
+          name = "GuilhermePSF";
+          email = "guilhermepsf23@gmail.com";
+        };
+        
         init.defaultBranch = "main";
       };
     };

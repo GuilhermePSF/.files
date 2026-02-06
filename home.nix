@@ -4,8 +4,9 @@
   home.username = "gui";
   home.homeDirectory = "/home/gui";
   home.stateVersion = "25.11"; 
+  home.enableNixpkgsReleaseCheck = false;
 
-  # niriModule.enable = true;
+  niriModule.enable = true;
   gitModule.enable = true;
   zshModule.enable = true;
   hyprlandModule.enable = true;
@@ -17,7 +18,7 @@
 
   imports = [
     ./modules/hyprland
-    # ./modules/niri
+    ./modules/niri
     ./modules/vscode
     ./modules/zsh
     ./modules/git
