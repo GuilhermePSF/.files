@@ -19,6 +19,13 @@
     xwayland.enable = true; # Allow X11 apps to run
   };
 
+  programs.niri = {
+    enable = true;
+    package = pkgs.niri;
+  };
+
+  services.displayManager.sessionPackages = [ pkgs.niri ];
+
   hardware.graphics.enable = true; 
 
   hardware.bluetooth.enable = true;       # Needed for Bluetooth widget
