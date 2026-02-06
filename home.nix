@@ -1,39 +1,30 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, inputs, ... }:
 
-let
-  vscodeModule = import ./modules/vscode;
-  hyprlandModule = import ./modules/hyprland;
-  zshModule = import ./modules/zsh;
-  gitModule = import ./modules/git;
-  quickshellModule = import ./modules/quickshell;
-  fastfetchModule = import ./modules/fastfetch;
-  ghosttyModule = import ./modules/ghostty;
-  noctaliaModule = import ./modules/noctalia;
-  minecraftModule = import ./modules/minecraft;
-in
 {
   home.username = "gui";
   home.homeDirectory = "/home/gui";
-  home.stateVersion = "25.11";
+  home.stateVersion = "25.11"; 
 
+  # niriModule.enable = true;
+  gitModule.enable = true;
   zshModule.enable = true;
   hyprlandModule.enable = true;
-  gitModule.enable = true;
   quickshellModule.enable = true;
-  fastfetchModule.enable = true; 
+  fastfetchModule.enable = true;
   ghosttyModule.enable = true;
   noctaliaModule.enable = true;
-  minecraftModule.enable = true;
+  minecraftModule.enable = false;
 
   imports = [
-    hyprlandModule
-    vscodeModule
-    zshModule
-    gitModule
-    quickshellModule
-    fastfetchModule
-    ghosttyModule
-    noctaliaModule
-    minecraftModule
+    ./modules/hyprland
+    # ./modules/niri
+    ./modules/vscode
+    ./modules/zsh
+    ./modules/git
+    ./modules/quickshell
+    ./modules/fastfetch
+    ./modules/ghostty
+    ./modules/noctalia
+    ./modules/minecraft
   ];
 }

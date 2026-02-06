@@ -3,7 +3,6 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./modules/playit
   ];
 
   boot.loader.systemd-boot.enable = true;

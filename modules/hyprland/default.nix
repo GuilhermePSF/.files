@@ -56,9 +56,9 @@ in
         monitor = ",preferred,auto,1";
 
 	env = [
-            "XCURSOR_THEME,${cursorName}"
-            "XCURSOR_SIZE,${toString cursorSize}"
-        ];
+  "XCURSOR_THEME=${cursorName}"
+  "XCURSOR_SIZE=${toString cursorSize}"
+];
 
         general = {
           gaps_in = 4;
@@ -69,17 +69,17 @@ in
           layout = "dwindle";
         };
 
-        input = {
-          kb_layout = "us"; 
-          follow_mouse = 1;
-          
-          touchpad = {
-            natural_scroll = true;
-            disable_while_typing = true;
-            tap-to-click = true;
-          };
-        };
+	input = {
+  kb_layout = "us";
+  follow_mouse = 2;
 
+  touchpad = {
+    natural_scroll = true;
+    disable_while_typing = true;
+    tap_to_click = true;
+  };
+};
+	
         decoration = {
           rounding = 6;
           
@@ -87,15 +87,8 @@ in
             enabled = true;
             size = 3;
             passes = 1;
-            new_optimizations = true;
           };
 
-          shadow = {
-            enabled = true;
-            range = 4;
-            render_power = 3;
-            color = "rgba(1a1a1aee)";
-          };
         };
 
         animations = {
@@ -112,17 +105,17 @@ in
         };
 
         windowrulev2 = [
-          "float,title:^(Open File)$"
-          "float,title:^(Select a File)$"
-          "float,title:^(Choose wallpaper)$"
-          "float,title:^(Open Folder)$"
-          "float,title:^(Save As)$"
-          "float,title:^(Library)$" 
-          "float,title:^(File Operation Progress)$"
+          "float, title:^(Open File)$"
+          "float, title:^(Select a File)$"
+          "float, title:^(Choose wallpaper)$"
+          "float, title:^(Open Folder)$"
+          "float, title:^(Save As)$"
+          "float, title:^(Library)$" 
+          "float, title:^(File Operation Progress)$"
 
-          "float,title:^(Picture-in-Picture)$"
-          "pin,title:^(Picture-in-Picture)$"
-          "move 100%-w-20 100%-h-20,title:^(Picture-in-Picture)$"
+          "float, title:^(Picture-in-Picture)$"
+          "pin, title:^(Picture-in-Picture)$"
+          "move 100%-w-20 100%-h-20, title:^(Picture-in-Picture)$"
         ];
 
         bind = [
