@@ -14,7 +14,7 @@ in
 {
   home.username = "gui";
   home.homeDirectory = "/home/gui";
-  home.stateVersion = "25.05";
+  home.stateVersion = "25.11";
 
   zshModule.enable = true;
   hyprlandModule.enable = true;

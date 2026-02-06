@@ -20,12 +20,6 @@
     xwayland.enable = true; # Allow X11 apps to run
   };
 
-  services.cage = {
-    enable = true;
-    user = "gui";
-    program = "${pkgs.ghostty}/bin/ghostty"; # Cage will boot straight into Ghostty
-  };
-
   hardware.graphics.enable = true; 
 
   hardware.bluetooth.enable = true;       # Needed for Bluetooth widget
@@ -35,18 +29,6 @@
 
   # Display Manager
   services.displayManager.ly.enable = true;
-
-  services.displayManager.sessionPackages = [
-    ((pkgs.writeTextDir "share/wayland-sessions/cage.desktop" ''
-      [Desktop Entry]
-      Name=Cage (Server Mode)
-      Comment=Ghostty Kiosk
-      Exec=${pkgs.cage}/bin/cage -- ${pkgs.ghostty}/bin/ghostty
-      Type=Application
-    '').overrideAttrs (_: {
-      passthru.providedSessions = [ "cage" ];
-    }))
-  ];
 
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
@@ -109,5 +91,5 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  system.stateVersion = "25.05";
+  system.stateVersion = "25.11";
 }
