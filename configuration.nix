@@ -95,6 +95,12 @@
     nerd-fonts.symbols-only
   ];
 
+  nix.gc = {
+    automatic = true;
+    dates = "daily"; 
+    options = "--delete-generations +5";
+  };
+
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   system.stateVersion = "25.11";
