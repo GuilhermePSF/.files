@@ -14,7 +14,7 @@ let
     Mod+Shift+${toString (if i == 10 then 0 else i)} { move-column-to-workspace ${toString i}; }
   '') workspaces);
 
-  noctalia = cmd: "spawn \"noctalia-shell\" \"ipc\" \"call\" " + cmd;
+  noctalia = action: cmd: "spawn \"noctalia-shell\" \"ipc\" \"call\" \"" + action + "\" \"" + cmd + "\";";
 in 
 {
   options.niriModule.enable = lib.mkEnableOption "Enable Niri Module";
@@ -55,8 +55,7 @@ in
         XCURSOR_SIZE "${toString cursorSize}"
       }
 
-      spawn-at-startup "xwayland-satellite"
-      # Remember: No noctalia spawn here! Systemd handles it.
+      spawn-at-startup "xwayland-satellite";
 
       binds {
         Mod+Q { close-window; }
@@ -67,29 +66,33 @@ in
         Mod+Return { spawn "${terminal}"; }
         Mod+B { spawn "${browser}"; }
 
-        # --- Noctalia Integration Binds ---
+        // Launcher
+        Mod+Space { ${noctalia "launcher" "toggle"} }
+
+        // Power Menu
+        Mod+Shift+E { ${noctalia "sessionMenu" "toggle"} }
+
+        // --- AUDIO CONTROLS (Fixed) ---
+        // Note: We use "volume" directly, not "audio volume"
+        XF86AudioRaiseVolume { ${noctalia "volume" "increase"} }
+        XF86AudioLowerVolume { ${noctalia "volume" "decrease"} }
         
-        # Launcher
-        Mod+Space { ${noctalia "\"launcher\" \"toggle\""} }
+        // Mute Output (Speakers)
+        XF86AudioMute        { ${noctalia "volume" "muteOutput"} }
+        
+        // Mute Input (Microphone) - Using wpctl for reliability as fallback
+        XF86AudioMicMute     { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
 
-        # Power Menu (Session)
-        Mod+Shift+E { ${noctalia "\"sessionMenu\" \"toggle\""} }
+        // --- BRIGHTNESS CONTROLS ---
+        XF86MonBrightnessUp   { ${noctalia "brightness" "increase"} }
+        XF86MonBrightnessDown { ${noctalia "brightness" "decrease"} }
 
-        # Volume (Calls Noctalia IPC -> Shows OSD)
-        XF86AudioRaiseVolume { ${noctalia "\"audio\" \"volume\" \"increase\""} }
-        XF86AudioLowerVolume { ${noctalia "\"audio\" \"volume\" \"decrease\""} }
-        XF86AudioMute        { ${noctalia "\"audio\" \"mute\" \"toggle\""} }
+        // Media Keys
+        XF86AudioPlay { ${noctalia "media" "playPause"} }
+        XF86AudioNext { ${noctalia "media" "next"} }
+        XF86AudioPrev { ${noctalia "media" "previous"} }
 
-        # Brightness (Calls Noctalia IPC -> Shows OSD)
-        XF86MonBrightnessUp   { ${noctalia "\"brightness\" \"increase\""} }
-        XF86MonBrightnessDown { ${noctalia "\"brightness\" \"decrease\""} }
-
-        # Media Control (Optional, if your keyboard has these keys)
-        XF86AudioPlay { ${noctalia "\"media\" \"playPause\""} }
-        XF86AudioNext { ${noctalia "\"media\" \"next\""} }
-        XF86AudioPrev { ${noctalia "\"media\" \"previous\""} }
-
-        # Standard Window Management
+        // Standard Window Management
         Mod+H { focus-column-left; }
         Mod+L { focus-column-right; }
         Mod+K { focus-window-up; }

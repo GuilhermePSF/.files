@@ -7,17 +7,17 @@
 
   config = lib.mkIf config.noctaliaModule.enable {
     
-    # 1. Install necessary dependencies for plugins/clipboard
+    # 1. Required packages for Plugins and Clipboard
     home.packages = with pkgs; [ 
       cliphist 
       wl-clipboard 
+      git
     ];
 
     programs.noctalia-shell = {
       enable = true;
       systemd.enable = true; 
 
-      # 2. Configure Plugins
       plugins = {
         sources = [
           {
@@ -27,44 +27,48 @@
           }
         ];
         states = {
-          catwalk = { enabled = true; }; # Cool system monitor visualizer
+          weekly-calendar = {
+            enabled = true;
+            sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+          };
         };
+        version = 2;
       };
 
-      # 3. Main Configuration
       settings = {
         bar = {
-          density = "compact"; # Keeps it tight
+          density = "compact";
           position = "top";
           
-          framed = true;
-          marginVertical = 8;
-          marginHorizontal = 8;
-          backgroundOpacity = 0.8; # 80% Opacity
-          showCapsule = true;      # The "island" look
-          frameRadius = 16;        # Rounded corners for the bar itself
+          # 3. Gaps & Floating Look
+          marginVertical = 4;
+          marginHorizontal = 10;
+          backgroundOpacity = 0.8;
+          showCapsule = true;
+          frameRadius = 12;
 
           widgets = {
             left = [
               { id = "ControlCenter"; useDistroLogo = true; }
-              { id = "MediaMini"; }    # Music Controls
-              { id = "Tray"; }         # System Tray
+              { id = "MediaMini"; }
+              { id = "Tray"; }
             ];
             center = [
               { 
                 id = "Workspace"; 
-                labelMode = "none";    # Just dots
+                labelMode = "none";
                 hideUnoccupied = false; 
               }
             ];
             right = [
-              { id = "SystemMonitor"; } # CPU/RAM graphs
+              { id = "SystemMonitor"; }
               { id = "Network"; }
               { id = "Bluetooth"; }
               { id = "Battery"; warningThreshold = 30; }
               { 
                 id = "Clock"; 
-                formatHorizontal = "HH:mm"; 
+                formatHorizontal = "dd MM HH mm"; 
+                formatVertical = "dd\nMM\nHH\nmm";
                 useMonospacedFont = true; 
                 usePrimaryColor = true; 
               }
@@ -72,43 +76,38 @@
           };
         };
 
-        # 4. Tokyo Night Theme & Colors
+        dock = {
+          enabled = false;
+        };
+
         colorSchemes = {
           predefinedScheme = "Tokyo Night";
           darkMode = true;
         };
 
-        # 5. General Look & Feel
         general = {
           avatarImage = "${config.home.homeDirectory}/.face"; 
-          radiusRatio = 1.0;          # "Really rounded" widgets 
+          radiusRatio = 1.0;
           enableShadows = true;
-          
-          # Power Menu Configuration
           showSessionButtonsOnLockScreen = true;
         };
 
-        # 6. Wallpaper Engine (Wallhaven)
         wallpaper = {
           enabled = true;
           useWallhaven = true;
-          wallhavenQuery = "landscape";   # Search query
-          wallhavenCategories = "111";    # General/Anime/People
-          wallhavenPurity = "100";        # SFW only
-          wallhavenSorting = "toplist";
+          wallhavenQuery = "landscape";
+          wallhavenCategories = "111";
+          wallhavenPurity = "100";
           fillMode = "crop";
         };
 
-        # 7. App Launcher & Clipboard
         appLauncher = {
           enableClipboardHistory = true;
           autoPasteClipboard = false;
-          # Ensure these commands match your installed packages
           clipboardWatchTextCommand = "wl-paste --type text --watch cliphist store";
           clipboardWatchImageCommand = "wl-paste --type image --watch cliphist store";
         };
         
-        # 8. OSD (Volume/Brightness Popups)
         osd = {
           enabled = true;
           location = "top_right";
