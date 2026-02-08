@@ -59,6 +59,8 @@
 
   programs.zsh.enable = true;
 
+  programs.ssh.startAgent = true;
+
   environment.variables = {
     NH_FLAKE = "/home/gui/nixos-config";
     TERMINAL = "ghostty";
