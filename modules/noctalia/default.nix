@@ -65,13 +65,13 @@
               { id = "Network"; }
               { id = "Bluetooth"; }
               { id = "Battery"; warningThreshold = 30; }
-              { 
-                id = "Clock"; 
-                formatHorizontal = "dd MM HH mm"; 
-                formatVertical = "dd\nMM\nHH\nmm";
-                useMonospacedFont = true; 
-                usePrimaryColor = true; 
-              }
+             { 
+              id = "Clock"; 
+              formatHorizontal = "ddd, MMM dd  •  HH:mm";
+              formatVertical = "HH\nmm";
+              useMonospacedFont = false;
+              usePrimaryColor = true; 
+            }
             ];
           };
         };

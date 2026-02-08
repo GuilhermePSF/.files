@@ -15,6 +15,7 @@
   ghosttyModule.enable = true;
   noctaliaModule.enable = true;
   minecraftModule.enable = false;
+  vscodeModule.enable = true;
 
   imports = [
     ./modules/hyprland

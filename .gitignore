@@ -6,3 +6,5 @@ result/
 *.swp
 *~
 
+# Flake lock files
+flake.lock
