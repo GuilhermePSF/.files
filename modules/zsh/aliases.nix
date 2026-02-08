@@ -91,17 +91,6 @@
     nt = "npm run test";
     ni = "npm install";
 
-    # --- Yarn ---
-    yr = "yarn run";
-    ys = "yarn start";
-    yd = "yarn run dev";
-    yb = "yarn run build";
-    yf = "yarn run format";
-    yfix = "yarn run format:fix";
-    yt = "yarn run test";
-    yi = "yarn install";
-    ya = "yarn add";
-
     # --- Bun ---
     br = "bun run";
     bs = "bun run start";

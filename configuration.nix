@@ -54,6 +54,15 @@
     # jack.enable = true;
   };
 
+  services.postgresql = {
+  enable = true;
+  package = pkgs.postgresql_16;
+  ensureDatabases = [ "pearl_dev" ];
+  authentication = pkgs.lib.mkOverride 10 ''
+    host all all 127.0.0.1/32 trust
+  '';
+};
+
   users.users.gui = {
     shell = pkgs.zsh;
     isNormalUser = true;
@@ -65,6 +74,8 @@
     ignoreShellProgramCheck = true;
   };
 
+  nix.settings.trusted-users = [ "root" "gui" ];
+
   programs.zsh.enable = true;
 
   environment.variables = {
@@ -72,6 +83,22 @@
     TERMINAL = "ghostty";
     # Hint for electron apps to use Wayland
     NIXOS_OZONE_WL = "1"; 
+  };
+
+  fileSystems."/mnt/PopOSPartition" = {
+    device = "/dev/disk/by-uuid/4674f222-87f4-46a1-8b0e-18796c5faccf";
+    fsType = "ext4"; 
+    # 'nofail' ensures boot even if the partition is deleted
+    options = [ "nofail" ]; 
+  };
+
+  fileSystems."/home/gui/popOSHome" = {
+    device = "/mnt/PopOSPartition/home/gui"; 
+    
+    fsType = "none";
+    options = [ "bind" ];
+    
+    depends = [ "/mnt/PopOSPartition" ]; 
   };
 
   environment.systemPackages = with pkgs; [

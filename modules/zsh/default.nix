@@ -20,6 +20,7 @@ in
       unzip           # Zipping tool
       fzf             # Fuzzy finder
       zoxide          # Smarter cd
+      xclip           # Clipboard tool
       
       # --- Dependencies for your specific Aliases ---
       nautilus  
@@ -28,16 +29,14 @@ in
 
       # --- Dev Tools ---
       git
-      uv              # Python Package Manager
-      elixir          # Elixir: Gives you 'iex', 'mix' globally
-      nodejs_22       # Node: Replaces nvm
-      bun             # JS: Replaces bun installer
       go              # Go
       rustc           # Rust Compiler
       cargo           # Rust Package Manager
       pnpm            # JS Package Manager
-      yarn            # JS Package Manager
       
+      direnv
+      nix-direnv
+
       gcc
       gnumake
     ];
@@ -79,8 +78,9 @@ in
       };
 
       initContent = ''
-        # Initialize Fastfetch (if installed)
         ${pkgs.fastfetch}/bin/fastfetch
+
+        eval "$(direnv hook zsh)"
 
         # --- Custom Bash/Zsh Functions ---
         ce() { cd "$@" && code . && exit; }
