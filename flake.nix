@@ -30,7 +30,7 @@
   };
 
   outputs = { self, nixpkgs, home-manager, nix-minecraft, playit, ... }@inputs: {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.nixos-btw = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
       modules = [

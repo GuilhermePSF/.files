@@ -18,6 +18,9 @@
     df = "df -h -x tmpfs";
     nosuspend = "xset s off & xset -dpms";
     brave = "brave-browser";
+    
+    # --- Nix specific ---
+    # Running Playit via Nix Run as you requested
     playit = "nix run github:pedorich-n/playit-nixos-module#playit-cli -- start";
 
     # --- Eza (Better ls) ---
@@ -79,7 +82,6 @@
     mni = "cd assets && ni && cd ..";
 
     # --- NPM ---
-    # These work because 'nodejs' in default.nix provides 'npm'
     nr = "npm run";
     ns = "npm start";
     nd = "npm run dev";
@@ -90,7 +92,6 @@
     ni = "npm install";
 
     # --- Yarn ---
-    # These work because 'yarn' in default.nix provides 'yarn'
     yr = "yarn run";
     ys = "yarn start";
     yd = "yarn run dev";
@@ -102,7 +103,6 @@
     ya = "yarn add";
 
     # --- Bun ---
-    # These work because 'bun' in default.nix provides 'bun'
     br = "bun run";
     bs = "bun run start";
     bd = "bun run dev";
