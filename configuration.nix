@@ -8,8 +8,16 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos";
+  networking.hostName = "nixos-btw";
   networking.networkmanager.enable = true;
+
+  services.resolved = {
+    enable = true;
+    dnssec = "allow-downgrade";
+    domains = [ "~." ];
+  };
+
+  networking.resolvconf.enable = false;
 
   time.timeZone = "Europe/Lisbon";
 
@@ -58,8 +66,6 @@
   };
 
   programs.zsh.enable = true;
-
-  programs.ssh.startAgent = true;
 
   environment.variables = {
     NH_FLAKE = "/home/gui/nixos-config";
