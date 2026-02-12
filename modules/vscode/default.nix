@@ -183,5 +183,31 @@
         }
       ];
     };
+
+     home.file = {
+      ".config/Code/User/snippets/nix.json".text = builtins.toJSON {
+        
+        "Nix Shell (Zsh)" = {
+          "prefix" = "nixzsh";
+          "body" = [
+            "{ pkgs ? import <nixpkgs> {} }:"
+            ""
+            "pkgs.mkShell {"
+            "  nativeBuildInputs = with pkgs; ["
+            "    $1"
+            "  ];"
+            ""
+            "  # Automatically swap to zsh"
+            "  shellHook = ''"
+            "    exec zsh"
+            "  '';"
+            "}"
+          ];
+          "description" = "Create a nix shell that opens zsh directly";
+        };
+
+      };
+  };
+
   };
 }

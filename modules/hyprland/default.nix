@@ -26,6 +26,7 @@ in
     home.packages = with pkgs; [
       brightnessctl 
       hyprpaper
+      hyprshot
       grim
       slurp
       swappy

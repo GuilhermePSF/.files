@@ -17,6 +17,14 @@
     │   └── default.nix
     ├── hyprland
     │   └── default.nix
+    ├── minecraft
+    │   └── default.nix
+    ├── niri
+    │   └── default.nix
+    ├── noctalia
+    │   └── default.nix
+    ├── playit
+    │   └── default.nix
     ├── quickshell
     │   ├── default.nix
     │   └── shell.qml
@@ -26,5 +34,5 @@
         ├── aliases.nix
         └── default.nix
 
-9 directories, 14 files
+13 directories, 18 files
 ```

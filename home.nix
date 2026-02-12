@@ -10,7 +10,7 @@
   gitModule.enable = true;
   zshModule.enable = true;
   hyprlandModule.enable = true;
-  quickshellModule.enable = true;
+  quickshellModule.enable = false;
   fastfetchModule.enable = true;
   ghosttyModule.enable = true;
   noctaliaModule.enable = true;

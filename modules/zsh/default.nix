@@ -24,8 +24,7 @@ in
       
       # --- Dependencies for your specific Aliases ---
       nautilus  
-      xorg.xrandr     
-      brave           
+      xrandr     
 
       # --- Dev Tools ---
       git
