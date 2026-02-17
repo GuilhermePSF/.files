@@ -59,14 +59,14 @@
    extraPortals = [ pkgs.xdg-desktop-portal-hyprland ];
  };
 
-   services.postgresql = {
-   enable = true;
-   package = pkgs.postgresql_16;
-   ensureDatabases = [ "pearl_dev" ];
-   authentication = pkgs.lib.mkOverride 10 ''
-     host all all 127.0.0.1/32 trust
-   '';
- };
+#    services.postgresql = {
+#    enable = true;
+#    package = pkgs.postgresql_16;
+#    ensureDatabases = [ "pearl_dev" ];
+#    authentication = pkgs.lib.mkOverride 10 ''
+#      host all all 127.0.0.1/32 trust
+#    '';
+#  };
 
   users.users.gui = {
     shell = pkgs.zsh;
@@ -115,14 +115,12 @@
     git
     zsh-powerlevel10k
     tree
+	
+    slack
 
     kdePackages.dolphin
     slack
     vesktop
-
-    nh
-    nix-output-monitor
-    nvd
 
     wl-clipboard
     hyprpaper

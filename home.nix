@@ -16,6 +16,7 @@
   noctaliaModule.enable = true;
   minecraftModule.enable = false;
   vscodeModule.enable = true;
+  nhModule.enable = true;
 
   imports = [
     ./modules/hyprland
@@ -28,5 +29,6 @@
     ./modules/ghostty
     ./modules/noctalia
     ./modules/minecraft
+    ./modules/nh
   ];
 }
