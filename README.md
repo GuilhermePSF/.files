@@ -19,6 +19,8 @@
     │   └── default.nix
     ├── minecraft
     │   └── default.nix
+    ├── nh
+    │   └── default.nix
     ├── niri
     │   └── default.nix
     ├── noctalia
@@ -28,11 +30,13 @@
     ├── quickshell
     │   ├── default.nix
     │   └── shell.qml
+    ├── spicetify
+    │   └── default.nix
     ├── vscode
     │   └── default.nix
     └── zsh
         ├── aliases.nix
         └── default.nix
 
-13 directories, 18 files
+15 directories, 20 files
 ```

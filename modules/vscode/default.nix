@@ -39,6 +39,9 @@
           # --- Other Compiled Languages ---
           golang.go           # Go tools often need patching
           haskell.haskell     # Haskell GHC paths
+
+	  # --- Tools ---
+          # vscodevim.vim
         ]
 
         ++ (with pkgs.vscode-marketplace; [

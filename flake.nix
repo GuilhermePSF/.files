@@ -19,14 +19,19 @@
     };
 
     # nix-minecraft = {
-      # url = "github:Infinidoge/nix-minecraft";
-      # inputs.nixpkgs.follows = "nixpkgs";
+    # url = "github:Infinidoge/nix-minecraft";
+    # inputs.nixpkgs.follows = "nixpkgs";
     # };
 
     # playit = {
-      # url = "github:pedorich-n/playit-nixos-module";
-      # inputs.nixpkgs.follows = "nixpkgs";
+    # url = "github:pedorich-n/playit-nixos-module";
+    # inputs.nixpkgs.follows = "nixpkgs";
     # };
+
+    spicetify-nix = {
+      url = "github:Gerg-L/spicetify-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, ... }@inputs: {

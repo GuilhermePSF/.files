@@ -17,6 +17,7 @@
   minecraftModule.enable = false;
   vscodeModule.enable = true;
   nhModule.enable = true;
+  spicetifyModule.enable = true;
 
   imports = [
     ./modules/hyprland
@@ -30,5 +31,6 @@
     ./modules/noctalia
     ./modules/minecraft
     ./modules/nh
+    ./modules/spicetify
   ];
 }
