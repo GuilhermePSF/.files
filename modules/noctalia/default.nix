@@ -31,6 +31,14 @@
             enabled = true;
             sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
           };
+          screenshot = {
+            enabled = true;
+            sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+          };
+          screen-recorder = {
+            enabled = true;
+            sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
+          };
         };
         version = 2;
       };
@@ -65,6 +73,8 @@
               { id = "Network"; }
               { id = "Bluetooth"; }
               { id = "Battery"; warningThreshold = 30; }
+              { id = "screenshot"; }
+              { id = "screen-recorder"; }
              { 
               id = "Clock"; 
               formatHorizontal = "ddd, MMM dd  •  HH:mm";

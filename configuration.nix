@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, inputs, ... }:
 
 {
   imports = [
@@ -148,6 +148,8 @@
   fonts.packages = with pkgs; [
     nerd-fonts.fira-code
     nerd-fonts.symbols-only
+    noto-fonts-color-emoji
+    dejavu_fonts
   ];
 
   nix.gc = {

@@ -32,6 +32,8 @@ in
       swappy
       cliphist
       wl-clipboard
+      gpu-screen-recorder
+      wofi
       cursorPackage
     ];
 
@@ -41,6 +43,41 @@ in
       name = cursorName;
       package = cursorPackage;
       size = cursorSize;
+    };
+
+    xdg.configFile."hypr/display-mode.sh" = {
+      executable = true;
+      text = ''
+        #!/usr/bin/env bash
+        # WIN+P style display mode picker
+        LAPTOP="eDP-1"
+        EXTERNAL=$(hyprctl monitors -j | ${pkgs.jq}/bin/jq -r '.[].name' | grep -v "$LAPTOP" | head -1)
+
+        CHOICE=$(printf 'laptop-only\nexternal-only\nmirror\nextend-vertical (laptop bottom)\nextend-vertical (laptop top)' \
+          | wofi --dmenu --prompt "Display mode" --width 400 --height 220)
+
+        case "$CHOICE" in
+          "laptop-only")
+            hyprctl keyword monitor "$LAPTOP,preferred,0x0,1"
+            [ -n "$EXTERNAL" ] && hyprctl keyword monitor "$EXTERNAL,disabled"
+            ;;
+          "external-only")
+            [ -n "$EXTERNAL" ] && hyprctl keyword monitor "$EXTERNAL,preferred,0x0,1"
+            hyprctl keyword monitor "$LAPTOP,disabled"
+            ;;
+          "mirror")
+            hyprctl keyword monitor "$LAPTOP,preferred,0x0,1,mirror,$EXTERNAL"
+            ;;
+          "extend-vertical (laptop bottom)")
+            [ -n "$EXTERNAL" ] && hyprctl keyword monitor "$EXTERNAL,preferred,0x0,1"
+            hyprctl keyword monitor "$LAPTOP,preferred,0x1080,1"
+            ;;
+          "extend-vertical (laptop top)")
+            hyprctl keyword monitor "$LAPTOP,preferred,0x0,1"
+            [ -n "$EXTERNAL" ] && hyprctl keyword monitor "$EXTERNAL,preferred,0x1080,1"
+            ;;
+        esac
+      '';
     };
 
     xdg.configFile."hypr/hyprpaper.conf".text = ''
@@ -59,7 +96,11 @@ in
       settings = {
         "$mod" = "SUPER";
 
-        monitor = ",preferred,auto,1";
+        # Default monitor layout: vertical alignment
+        monitor = [
+          "eDP-1,preferred,0x1080,1"     # laptop screen — bottom
+          ",preferred,0x0,1"              # any other monitor — on top
+        ];
 
         env = [
           "XCURSOR_THEME,${cursorName}"
@@ -123,8 +164,9 @@ in
           "$mod, Space, exec, ${noctalia "launcher" "toggle"}"
           "$mod SHIFT, E, exec, ${noctalia "sessionMenu" "toggle"}"
           
-          # Screenshots
-          "$mod SHIFT, S, exec, grim -g \"$(slurp)\" - | swappy -f -"
+          "$mod SHIFT, S, exec, hyprshot -m region"
+
+          "$mod, P, exec, ~/.config/hypr/display-mode.sh"
 
           # Navigation (HJKL)
           "$mod, H, movefocus, l"

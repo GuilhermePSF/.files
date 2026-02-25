@@ -40,8 +40,7 @@
       specialArgs = { inherit inputs; };
       modules = [
         ./configuration.nix
-        # playit.nixosModules.default
-        
+
         {
           nixpkgs.overlays = [
             inputs.nix-vscode-extensions.overlays.default
