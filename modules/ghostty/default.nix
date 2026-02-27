@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 {
   options.ghosttyModule.enable = lib.mkEnableOption "Enable Ghostty Module";

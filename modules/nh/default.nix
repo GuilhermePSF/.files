@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 {
   options.nhModule.enable = lib.mkEnableOption "Enable NH Module";
@@ -8,7 +13,7 @@
     programs.nh = {
       enable = true;
       clean.enable = true;
-      clean.extraArgs = "--keep-since 3d --keep 5";
+      clean.extraArgs = "--keep-since 24h --keep 5";
     };
 
   };

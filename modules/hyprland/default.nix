@@ -1,9 +1,14 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 let
   terminal = "ghostty";
   browser = "brave";
-  
+
   wallpaperFile = "${config.home.homeDirectory}/.background-image";
 
   ### CURSOR POINTER CONFIGURATION ###
@@ -17,14 +22,14 @@ let
 
   # Wraps the command in Hyprland's exec syntax
   noctalia = action: cmd: "noctalia-shell ipc call \"${action}\" \"${cmd}\"";
-in 
+in
 {
   options.hyprlandModule.enable = lib.mkEnableOption "Enable Hyprland Module";
 
   config = lib.mkIf config.hyprlandModule.enable {
-    
+
     home.packages = with pkgs; [
-      brightnessctl 
+      brightnessctl
       hyprpaper
       hyprshot
       grim
@@ -39,7 +44,7 @@ in
 
     home.pointerCursor = {
       gtk.enable = true;
-      x11.enable = true; 
+      x11.enable = true;
       name = cursorName;
       package = cursorPackage;
       size = cursorSize;
@@ -90,16 +95,16 @@ in
 
     wayland.windowManager.hyprland = {
       enable = true;
-      package = pkgs.hyprland; 
-      systemd.variables = ["--all"];
+      package = pkgs.hyprland;
+      systemd.variables = [ "--all" ];
 
       settings = {
         "$mod" = "SUPER";
 
         # Default monitor layout: vertical alignment
         monitor = [
-          "eDP-1,preferred,0x1080,1"     # laptop screen — bottom
-          ",preferred,0x0,1"              # any other monitor — on top
+          "eDP-1,preferred,0x1080,1" # laptop screen — bottom
+          ",preferred,0x0,1" # any other monitor — on top
         ];
 
         env = [
@@ -128,7 +133,7 @@ in
             tap-to-click = true;
           };
         };
-  
+
         decoration = {
           rounding = 6;
           shadow = {
@@ -144,7 +149,7 @@ in
           bezier = "decel, 0.05, 0.9, 0.1, 1.0";
           animation = [
             "windows, 1, 3, decel, popin 80%"
-            "windowsOut, 1, 3, decel, popin 80%" 
+            "windowsOut, 1, 3, decel, popin 80%"
             "border, 1, 5, default"
             "fade, 1, 3, default"
             "workspaces, 1, 4, decel, slide"
@@ -157,13 +162,13 @@ in
           "$mod SHIFT, Q, exit"
           "$mod, F, fullscreen"
           "$mod, V, togglefloating"
-          
+
           # Apps & Shell (Noctalia integrated)
           "$mod, Return, exec, ${terminal}"
           "$mod, B, exec, ${browser}"
           "$mod, Space, exec, ${noctalia "launcher" "toggle"}"
           "$mod SHIFT, E, exec, ${noctalia "sessionMenu" "toggle"}"
-          
+
           "$mod SHIFT, S, exec, hyprshot -m region"
 
           "$mod, P, exec, ~/.config/hypr/display-mode.sh"
@@ -173,7 +178,7 @@ in
           "$mod, L, movefocus, r"
           "$mod, K, movefocus, u"
           "$mod, J, movefocus, d"
-          
+
           # Window Shifting
           "$mod SHIFT, H, movewindow, l"
           "$mod SHIFT, L, movewindow, r"
@@ -184,11 +189,15 @@ in
           ", XF86AudioPlay, exec, ${noctalia "media" "playPause"}"
           ", XF86AudioNext, exec, ${noctalia "media" "next"}"
           ", XF86AudioPrev, exec, ${noctalia "media" "previous"}"
-        ] 
+        ]
         # Clean workspace generator to match Niri's logic
-        ++ (map (i: "$mod, ${toString (if i == 10 then 0 else i)}, workspace, ${toString i}") (builtins.genList (x: x + 1) 10))
-        ++ (map (i: "$mod SHIFT, ${toString (if i == 10 then 0 else i)}, movetoworkspace, ${toString i}") (builtins.genList (x: x + 1) 10));
-        
+        ++ (map (i: "$mod, ${toString (if i == 10 then 0 else i)}, workspace, ${toString i}") (
+          builtins.genList (x: x + 1) 10
+        ))
+        ++ (map (i: "$mod SHIFT, ${toString (if i == 10 then 0 else i)}, movetoworkspace, ${toString i}") (
+          builtins.genList (x: x + 1) 10
+        ));
+
         # Repeating Keys
         bindel = [
           # Audio (Noctalia)
@@ -196,7 +205,7 @@ in
           ", XF86AudioLowerVolume, exec, ${noctalia "volume" "decrease"}"
           ", XF86AudioMute, exec, ${noctalia "volume" "muteOutput"}"
           ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
-          
+
           # Brightness (Noctalia)
           ", XF86MonBrightnessUp, exec, ${noctalia "brightness" "increase"}"
           ", XF86MonBrightnessDown, exec, ${noctalia "brightness" "decrease"}"
@@ -210,7 +219,7 @@ in
         exec-once = [
           "hyprpaper"
           "hyprctl setcursor ${cursorName} ${toString cursorSize}"
-          "wl-paste --type text --watch cliphist store" 
+          "wl-paste --type text --watch cliphist store"
           "wl-paste --type image --watch cliphist store"
         ];
       };

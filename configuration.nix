@@ -1,4 +1,10 @@
-{ config, lib, pkgs, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 
 {
   imports = [
@@ -23,7 +29,7 @@
 
   # --- GRAPHICS & DESKTOP ---
   hardware.graphics.enable = true;
-  
+
   programs.hyprland = {
     enable = true;
     xwayland.enable = true;
@@ -33,7 +39,7 @@
     enable = true;
     package = pkgs.niri;
   };
-  
+
   services.displayManager.sessionPackages = [ pkgs.niri ];
   services.displayManager.ly.enable = true;
 
@@ -45,8 +51,8 @@
   # --- VIRTUALIZATION (KVM/QEMU) ---
   virtualisation.libvirtd.enable = true;
   programs.virt-manager.enable = true;
-  
-  programs.dconf.enable = true; 
+
+  programs.dconf.enable = true;
 
   # --- WIRESHARK ---
   programs.wireshark.enable = true;
@@ -82,11 +88,14 @@
     ignoreShellProgramCheck = true;
   };
 
-  nix.settings.trusted-users = [ "root" "gui" ];
+  nix.settings.trusted-users = [
+    "root"
+    "gui"
+  ];
 
   # --- PROGRAMS ---
   programs.zsh.enable = true;
-  
+
   programs.nix-ld.enable = true;
   programs.nix-ld.libraries = with pkgs; [
     stdenv.cc.cc.lib
@@ -125,7 +134,8 @@
     hyprpaper
     bluez
     bluez-tools
-    
+    nixfmt
+
     # Browsers
     brave
     firefox
@@ -138,8 +148,9 @@
     jetbrains.datagrip
     gemini-cli
     kdePackages.dolphin
+    krita
     vesktop
-    
+
     qemu_kvm
   ];
 
@@ -158,7 +169,10 @@
     options = "--delete-generations +5";
   };
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 
   system.stateVersion = "25.11";
 }

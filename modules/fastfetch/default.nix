@@ -1,10 +1,15 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 {
   options.fastfetchModule.enable = lib.mkEnableOption "Enable Fastfetch Module";
 
   config = lib.mkIf config.fastfetchModule.enable {
-    
+
     home.packages = [ pkgs.fastfetch ];
 
     xdg.configFile."fastfetch/config.jsonc".text = ''

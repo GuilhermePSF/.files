@@ -25,6 +25,8 @@
     │   └── default.nix
     ├── noctalia
     │   └── default.nix
+    ├── obsidian
+    │   └── default.nix
     ├── playit
     │   └── default.nix
     ├── quickshell
@@ -38,5 +40,5 @@
         ├── aliases.nix
         └── default.nix
 
-15 directories, 20 files
+16 directories, 21 files
 ```

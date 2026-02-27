@@ -1,13 +1,20 @@
-{ config, pkgs, lib, inputs, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  inputs,
+  ...
+}:
 
 {
   home.username = "gui";
   home.homeDirectory = "/home/gui";
-  home.stateVersion = "25.11"; 
+  home.stateVersion = "25.11";
   home.enableNixpkgsReleaseCheck = false;
 
   niriModule.enable = true;
   gitModule.enable = true;
+  obsidianModule.enable = true;
   zshModule.enable = true;
   hyprlandModule.enable = true;
   quickshellModule.enable = false;
@@ -32,5 +39,6 @@
     ./modules/minecraft
     ./modules/nh
     ./modules/spicetify
+    ./modules/obsidian
   ];
 }

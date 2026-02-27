@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 let
   terminal = "ghostty";
@@ -9,13 +14,16 @@ let
   c_inactive = "#595959aa";
 
   workspaces = builtins.genList (x: x + 1) 10;
-  binds_workspaces = builtins.concatStringsSep "\n        " (map (i: ''
-    Mod+${toString (if i == 10 then 0 else i)} { focus-workspace ${toString i}; }
-    Mod+Shift+${toString (if i == 10 then 0 else i)} { move-column-to-workspace ${toString i}; }
-  '') workspaces);
+  binds_workspaces = builtins.concatStringsSep "\n        " (
+    map (i: ''
+      Mod+${toString (if i == 10 then 0 else i)} { focus-workspace ${toString i}; }
+      Mod+Shift+${toString (if i == 10 then 0 else i)} { move-column-to-workspace ${toString i}; }
+    '') workspaces
+  );
 
-  noctalia = action: cmd: "spawn \"noctalia-shell\" \"ipc\" \"call\" \"" + action + "\" \"" + cmd + "\";";
-in 
+  noctalia =
+    action: cmd: "spawn \"noctalia-shell\" \"ipc\" \"call\" \"" + action + "\" \"" + cmd + "\";";
+in
 {
   options.niriModule.enable = lib.mkEnableOption "Enable Niri Module";
 
@@ -27,7 +35,7 @@ in
       slurp
       swappy
       xwayland-satellite
-      cliphist 
+      cliphist
       wl-clipboard
     ];
 

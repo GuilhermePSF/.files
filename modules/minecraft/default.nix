@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 with lib;
 
@@ -20,9 +25,9 @@ in
 
     home.sessionPath = [ "$HOME/.cargo/bin" ];
 
-    home.activation.installMcman = hm.dag.entryAfter ["writeBoundary"] ''
+    home.activation.installMcman = hm.dag.entryAfter [ "writeBoundary" ] ''
       export PATH=$PATH:${pkgs.git}/bin:${pkgs.cargo}/bin
-      
+
       if ! [ -f "$HOME/.cargo/bin/mcman" ]; then
         echo "--- Installing mcman via Cargo (this may take a minute) ---"
         ${pkgs.cargo}/bin/cargo install --git https://github.com/ParadigmMC/mcman.git

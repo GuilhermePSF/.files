@@ -1,16 +1,21 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 {
-  options.vscodeModule.enable =
-    lib.mkEnableOption "Enable VSCode module";
+  options.vscodeModule.enable = lib.mkEnableOption "Enable VSCode module";
 
   config = lib.mkIf config.vscodeModule.enable {
     programs.vscode = {
       enable = true;
       mutableExtensionsDir = false;
 
-      profiles.default.extensions = 
-        with pkgs.vscode-extensions; [
+      profiles.default.extensions =
+        with pkgs.vscode-extensions;
+        [
           # --- Copilot ---
           github.copilot
           github.copilot-chat
@@ -37,10 +42,10 @@
           redhat.java
 
           # --- Other Compiled Languages ---
-          golang.go           # Go tools often need patching
-          haskell.haskell     # Haskell GHC paths
+          golang.go # Go tools often need patching
+          haskell.haskell # Haskell GHC paths
 
-	  # --- Tools ---
+          # --- Tools ---
           # vscodevim.vim
         ]
 
@@ -86,7 +91,7 @@
           yoavbls.pretty-ts-errors
           pkief.material-icon-theme
           tamasfe.even-better-toml
-          
+
           # --- Specific Language Tools ---
           jakebecker.elixir-ls
           justusadam.language-haskell
@@ -158,9 +163,9 @@
         "editor.unicodeHighlight.invisibleCharacters" = false;
         "explorer.confirmDragAndDrop" = false;
         "window.customTitleBarVisibility" = "never";
-        
+
         "vim.active" = false;
-        
+
         "extensions.autoUpdate" = false;
         "extensions.autoCheckUpdates" = true;
       };
@@ -182,14 +187,16 @@
         {
           key = "ctrl+shift+s";
           command = "command-runner.run";
-          args = { command = "elixirFormat"; };
+          args = {
+            command = "elixirFormat";
+          };
         }
       ];
     };
 
-     home.file = {
+    home.file = {
       ".config/Code/User/snippets/nix.json".text = builtins.toJSON {
-        
+
         "Nix Shell (Zsh)" = {
           "prefix" = "nixzsh";
           "body" = [
@@ -210,7 +217,7 @@
         };
 
       };
-  };
+    };
 
   };
 }

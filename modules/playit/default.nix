@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   services.playit = {
@@ -6,5 +11,5 @@
     secretPath = "/var/lib/playit/secret";
   };
 
-  networking.firewall.allowedUDPPorts = [ 5523 ]; 
+  networking.firewall.allowedUDPPorts = [ 5523 ];
 }

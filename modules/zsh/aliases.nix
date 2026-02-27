@@ -10,7 +10,7 @@
     birth = "stat / | grep 'Birth' | sed 's/Birth: //g' | cut -b 2-11";
     brt = "xrandr --output eDP-1 --brightness";
     timestamp = "date -u +\"%Y%m%d%H%M%S\"";
-    
+
     # --- Fixes / Utils ---
     history = "history 1";
     h = "history";
@@ -18,8 +18,7 @@
     df = "df -h -x tmpfs";
     nosuspend = "xset s off & xset -dpms";
     brave = "brave-browser";
-    
-    # --- Nix specific ---
+
     # Running Playit via Nix Run as you requested
     playit = "nix run github:pedorich-n/playit-nixos-module#playit-cli -- start";
 
@@ -60,7 +59,7 @@
     gwip = "git commit -m 'WIP'";
     guncommit = "git reset --soft HEAD~1 && grss .";
     gh = "git log --pretty=oneline --abbrev-commit";
-    
+
     # --- Mix (Elixir) ---
     im = "iex -S mix";
     ims = "iex -S mix phx.server";
