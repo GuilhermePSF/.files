@@ -9,6 +9,9 @@
   options.vscodeModule.enable = lib.mkEnableOption "Enable VSCode module";
 
   config = lib.mkIf config.vscodeModule.enable {
+
+    stylix.targets.vscode.enable = false;
+
     programs.vscode = {
       enable = true;
       mutableExtensionsDir = false;

@@ -32,6 +32,11 @@
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -39,6 +44,7 @@
       self,
       nixpkgs,
       home-manager,
+      stylix,
       ...
     }@inputs:
     {
@@ -47,6 +53,8 @@
         specialArgs = { inherit inputs; };
         modules = [
           ./configuration.nix
+
+          stylix.nixosModules.stylix
 
           {
             nixpkgs.overlays = [

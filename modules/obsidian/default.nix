@@ -88,24 +88,26 @@
     };
 
     # Style Settings – Moon variant colours
-    home.file."Obsidian/GUIs Vault/.obsidian/plugins/obsidian-style-settings/data.json".text = builtins.toJSON {
-      "Appearance@@red@@dark" = "#FF757F";
-      "Appearance@@red1@@dark" = "#C53B53";
-      "Appearance@@green@@dark" = "#C3E88D";
-      "Appearance@@cyan@@dark" = "#86E1FC";
-      "Appearance@@blue@@dark" = "#82AAFF";
-      "Appearance@@yellow@@dark" = "#FFC777";
-      "Appearance@@orange@@dark" = "#FF966C";
-      "Appearance@@magenta@@dark" = "#C099FF";
-      "Appearance@@bg@@dark" = "#222436";
-      "Appearance@@bg_dark@@dark" = "#1E2030";
-      "Appearance@@bg_highlight@@dark" = "#2F334D";
-      "Appearance@@bg_highlight_dark@@dark" = "#1E2030";
-      "Appearance@@bg_dark2@@dark" = "#191B29";
-      "Appearance@@text-normal@@dark" = "#C8D3F5";
-      "Appearance@@text-muted@@dark" = "#828BB8";
-      "Appearance@@text-faint@@dark" = "#828BB8";
-    };
+    home.file."Obsidian/GUIs Vault/.obsidian/plugins/obsidian-style-settings/data.json".text =
+      builtins.toJSON
+        {
+          "Appearance@@red@@dark" = "#FF757F";
+          "Appearance@@red1@@dark" = "#C53B53";
+          "Appearance@@green@@dark" = "#C3E88D";
+          "Appearance@@cyan@@dark" = "#86E1FC";
+          "Appearance@@blue@@dark" = "#82AAFF";
+          "Appearance@@yellow@@dark" = "#FFC777";
+          "Appearance@@orange@@dark" = "#FF966C";
+          "Appearance@@magenta@@dark" = "#C099FF";
+          "Appearance@@bg@@dark" = "#222436";
+          "Appearance@@bg_dark@@dark" = "#1E2030";
+          "Appearance@@bg_highlight@@dark" = "#2F334D";
+          "Appearance@@bg_highlight_dark@@dark" = "#1E2030";
+          "Appearance@@bg_dark2@@dark" = "#191B29";
+          "Appearance@@text-normal@@dark" = "#C8D3F5";
+          "Appearance@@text-muted@@dark" = "#828BB8";
+          "Appearance@@text-faint@@dark" = "#828BB8";
+        };
 
     # core-plugins.json – enables/disables built-in plugins
     home.file."Obsidian/GUIs Vault/.obsidian/core-plugins.json".text = builtins.toJSON {

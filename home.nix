@@ -7,24 +7,27 @@
 }:
 
 {
-  home.username = "gui";
+  home.username    = "gui";
   home.homeDirectory = "/home/gui";
   home.stateVersion = "25.11";
   home.enableNixpkgsReleaseCheck = false;
 
-  niriModule.enable = true;
-  gitModule.enable = true;
-  obsidianModule.enable = true;
-  zshModule.enable = true;
-  hyprlandModule.enable = true;
+  niriModule.enable      = true;
+  gitModule.enable       = true;
+  obsidianModule.enable  = true;
+  zshModule.enable       = true;
+  hyprlandModule.enable  = true;
   quickshellModule.enable = false;
   fastfetchModule.enable = true;
-  ghosttyModule.enable = true;
-  noctaliaModule.enable = true;
+  ghosttyModule.enable   = true;
+  noctaliaModule.enable  = true;
   minecraftModule.enable = false;
-  vscodeModule.enable = true;
-  nhModule.enable = true;
+  vscodeModule.enable    = true;
+  nhModule.enable        = true;
   spicetifyModule.enable = true;
+  braveModule.enable     = true;
+  firefoxModule.enable   = true;
+  nautilusModule.enable  = true;
 
   imports = [
     ./modules/hyprland
@@ -40,5 +43,8 @@
     ./modules/nh
     ./modules/spicetify
     ./modules/obsidian
+    ./modules/brave
+    ./modules/firefox
+    ./modules/nautilus
   ];
 }

@@ -16,11 +16,6 @@ let
   cursorPackage = pkgs.bibata-cursors;
   cursorSize = 24;
 
-  # Standard Hex/RGBA
-  c_focus = "rgba(33ccffee)";
-  c_inactive = "rgba(595959aa)";
-
-  # Wraps the command in Hyprland's exec syntax
   noctalia = action: cmd: "noctalia-shell ipc call \"${action}\" \"${cmd}\"";
 in
 {
@@ -41,14 +36,6 @@ in
       wofi
       cursorPackage
     ];
-
-    home.pointerCursor = {
-      gtk.enable = true;
-      x11.enable = true;
-      name = cursorName;
-      package = cursorPackage;
-      size = cursorSize;
-    };
 
     xdg.configFile."hypr/display-mode.sh" = {
       executable = true;
@@ -119,15 +106,13 @@ in
           gaps_in = 4;
           gaps_out = 8;
           border_size = 2;
-          "col.active_border" = c_focus;
-          "col.inactive_border" = c_inactive;
           layout = "dwindle";
           resize_on_border = true;
         };
 
         input = {
           kb_layout = "us";
-          follow_mouse = 2;
+          follow_mouse = 1;
           touchpad = {
             natural_scroll = true;
             tap-to-click = true;
@@ -140,7 +125,6 @@ in
             enabled = true;
             range = 4;
             render_power = 3;
-            color = "rgba(1a1a1aee)";
           };
         };
 
