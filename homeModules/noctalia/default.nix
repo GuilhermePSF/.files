@@ -51,15 +51,15 @@
 
       settings = {
         bar = {
-          density   = "compact";
-          position  = "top";
+          density = "compact";
+          position = "top";
 
-          marginVertical   = 4;
+          marginVertical = 4;
           marginHorizontal = 10;
           # Use mkForce to win over the upstream module default of 1.0
           backgroundOpacity = lib.mkForce 0.8;
-          showCapsule  = true;
-          frameRadius  = 12;
+          showCapsule = true;
+          frameRadius = 12;
 
           widgets = {
             left = [
@@ -90,9 +90,9 @@
               {
                 id = "Clock";
                 formatHorizontal = "ddd, MMM dd  •  HH:mm";
-                formatVertical   = "HH\nmm";
-                useMonospacedFont  = false;
-                usePrimaryColor    = true;
+                formatVertical = "HH\nmm";
+                useMonospacedFont = false;
+                usePrimaryColor = true;
               }
             ];
           };
@@ -106,31 +106,31 @@
         };
 
         general = {
-          avatarImage              = "${config.home.homeDirectory}/.face";
-          radiusRatio              = 1.0;
-          enableShadows            = true;
+          avatarImage = "${config.home.homeDirectory}/.face";
+          radiusRatio = 1.0;
+          enableShadows = true;
           showSessionButtonsOnLockScreen = true;
         };
 
         wallpaper = {
-          enabled          = true;
-          useWallhaven     = true;
-          wallhavenQuery   = "landscape";
+          enabled = true;
+          useWallhaven = true;
+          wallhavenQuery = "landscape";
           wallhavenCategories = "111";
-          wallhavenPurity  = "100";
-          fillMode         = "crop";
+          wallhavenPurity = "100";
+          fillMode = "crop";
         };
 
         appLauncher = {
-          enableClipboardHistory    = true;
-          autoPasteClipboard        = false;
-          clipboardWatchTextCommand  = "wl-paste --type text --watch cliphist store";
+          enableClipboardHistory = true;
+          autoPasteClipboard = false;
+          clipboardWatchTextCommand = "wl-paste --type text --watch cliphist store";
           clipboardWatchImageCommand = "wl-paste --type image --watch cliphist store";
         };
 
         osd = {
-          enabled    = true;
-          location   = "top_right";
+          enabled = true;
+          location = "top_right";
           autoHideMs = 2000;
         };
       };

@@ -7,44 +7,55 @@
 }:
 
 {
-  home.username    = "gui";
+  home.username = "gui";
   home.homeDirectory = "/home/gui";
   home.stateVersion = "25.11";
   home.enableNixpkgsReleaseCheck = false;
+  stylix.enableReleaseChecks = false;
 
-  niriModule.enable      = true;
-  gitModule.enable       = true;
-  obsidianModule.enable  = true;
-  zshModule.enable       = true;
-  hyprlandModule.enable  = true;
+  niriModule.enable = true;
+  gitModule.enable = true;
+  obsidianModule.enable = true;
+  zshModule.enable = true;
+  hyprlandModule.enable = true;
   quickshellModule.enable = false;
   fastfetchModule.enable = true;
-  ghosttyModule.enable   = true;
-  noctaliaModule.enable  = true;
+  ghosttyModule.enable = true;
+  noctaliaModule.enable = true;
   minecraftModule.enable = false;
-  vscodeModule.enable    = true;
-  nhModule.enable        = true;
+  vscodeModule.enable = true;
+  nhModule.enable = true;
   spicetifyModule.enable = true;
-  braveModule.enable     = true;
-  firefoxModule.enable   = true;
-  nautilusModule.enable  = true;
+  braveModule.enable = true;
+  firefoxModule.enable = true;
+  nautilusModule.enable = true;
+  neovimModule.enable = true;
+  kritaModule.enable = true;
+  vesktopModule.enable = true;
+  slackModule.enable = true;
+  jetbrainsModule.enable = true;
 
   imports = [
-    ./modules/hyprland
-    ./modules/niri
-    ./modules/vscode
-    ./modules/zsh
-    ./modules/git
-    ./modules/quickshell
-    ./modules/fastfetch
-    ./modules/ghostty
-    ./modules/noctalia
-    ./modules/minecraft
-    ./modules/nh
-    ./modules/spicetify
-    ./modules/obsidian
-    ./modules/brave
-    ./modules/firefox
-    ./modules/nautilus
+    ./homeModules/hyprland
+    ./homeModules/niri
+    ./homeModules/vscode
+    ./homeModules/zsh
+    ./homeModules/git
+    ./homeModules/quickshell
+    ./homeModules/fastfetch
+    ./homeModules/ghostty
+    ./homeModules/noctalia
+    ./homeModules/minecraft
+    ./homeModules/nh
+    ./homeModules/spicetify
+    ./homeModules/obsidian
+    ./homeModules/brave
+    ./homeModules/firefox
+    ./homeModules/nautilus
+    ./homeModules/neovim
+    ./homeModules/krita
+    ./homeModules/vesktop
+    ./homeModules/slack
+    ./homeModules/jetbrains
   ];
 }

@@ -103,7 +103,7 @@
       # --------------------------------------------------------
       # SETTINGS
       # --------------------------------------------------------
-      userSettings = {
+      profiles.default.userSettings = {
         "workbench.colorTheme" = "Min Theme+";
 
         "[jsonc]" = {
@@ -176,7 +176,7 @@
       # --------------------------------------------------------
       # KEYBINDINGS
       # --------------------------------------------------------
-      keybindings = [
+      profiles.default.keybindings = [
         {
           key = "ctrl+shift+m";
           command = "markdown.showPreview";

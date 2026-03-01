@@ -10,6 +10,8 @@
 
   config = lib.mkIf config.firefoxModule.enable {
 
+    stylix.targets.firefox.profileNames = [ "default" ];
+
     programs.firefox = {
       enable = true;
       package = pkgs.firefox;

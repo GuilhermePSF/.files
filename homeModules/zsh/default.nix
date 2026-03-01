@@ -45,9 +45,9 @@ in
     ];
 
     programs.zsh = {
-      enable                  = true;
-      enableCompletion        = true;
-      autosuggestion.enable   = true;
+      enable = true;
+      enableCompletion = true;
+      autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
 
       # Import the aliases file
@@ -55,16 +55,16 @@ in
 
       # Environment Variables
       sessionVariables = {
-        LANG        = "en_US.UTF-8";
-        EDITOR      = "nvim";
+        LANG = "en_US.UTF-8";
+        EDITOR = "nvim";
         SUDO_EDITOR = "nvim";
-        BROWSER     = "brave";
+        BROWSER = "brave";
 
         # History Settings
         HISTFILESIZE = "100000000000";
-        SAVEHIST     = "5000000";
-        HISTSIZE     = "5000000";
-        HIST_STAMPS  = "dd-mm-yyyy";
+        SAVEHIST = "5000000";
+        HISTSIZE = "5000000";
+        HIST_STAMPS = "dd-mm-yyyy";
 
         # Elixir History
         ERL_AFLAGS = "-kernel shell_history enabled -kernel shell_history_file_bytes 4096000";
@@ -72,7 +72,7 @@ in
 
       oh-my-zsh = {
         enable = true;
-        theme  = "robbyrussell";
+        theme = "robbyrussell";
         plugins = [
           "git"
           "colored-man-pages"
@@ -92,20 +92,20 @@ in
     };
 
     programs.fzf = {
-      enable              = true;
+      enable = true;
       enableZshIntegration = true;
     };
 
     programs.zoxide = {
-      enable              = true;
+      enable = true;
       enableZshIntegration = true;
-      options             = [ "--cmd cd" ];
+      options = [ "--cmd cd" ];
     };
 
     programs.direnv = {
-      enable              = true;
+      enable = true;
       enableZshIntegration = true;
-      nix-direnv.enable   = true;
+      nix-direnv.enable = true;
     };
   };
 }
