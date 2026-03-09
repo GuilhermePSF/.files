@@ -34,6 +34,10 @@
   vesktopModule.enable = true;
   slackModule.enable = true;
   jetbrainsModule.enable = true;
+  organizeModule.enable = true;
+  pavucontrolModule.enable = true;
+  mediaModule.enable = true;
+  devtoolsModule.enable = true;
 
   imports = [
     ./homeModules/hyprland
@@ -57,5 +61,9 @@
     ./homeModules/vesktop
     ./homeModules/slack
     ./homeModules/jetbrains
+    ./homeModules/organize
+    ./homeModules/pavucontrol
+    ./homeModules/media
+    ./homeModules/devtools
   ];
 }

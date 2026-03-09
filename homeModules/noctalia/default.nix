@@ -17,7 +17,6 @@
     home.packages = with pkgs; [
       cliphist
       wl-clipboard
-      git
     ];
 
     programs.noctalia-shell = {

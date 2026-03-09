@@ -17,6 +17,7 @@ let
   cursorSize = 24;
 
   noctalia = action: cmd: "noctalia-shell ipc call \"${action}\" \"${cmd}\"";
+  toast = title: body: icon: "noctalia-shell ipc call toast send '{\"title\":\"${title}\",\"body\":\"${body}\",\"icon\":\"${icon}\",\"duration\":1500}'";
 in
 {
   options.hyprlandModule.enable = lib.mkEnableOption "Enable Hyprland Module";
@@ -29,12 +30,10 @@ in
       hyprshot
       grim
       slurp
-      swappy
-      cliphist
-      wl-clipboard
       gpu-screen-recorder
       wofi
       cursorPackage
+      wl-gammarelay-rs
     ];
 
     xdg.configFile."hypr/display-mode.sh" = {
@@ -106,8 +105,17 @@ in
           gaps_in = 4;
           gaps_out = 8;
           border_size = 2;
-          layout = "dwindle";
+          layout = "master";
           resize_on_border = true;
+        };
+
+        master = {
+          orientation = "left";
+          new_status = "slave";
+        };
+
+        misc = {
+          focus_on_activate = true; # switch workspace when an app requests focus (e.g. link opens browser)
         };
 
         input = {
@@ -146,14 +154,19 @@ in
           "$mod SHIFT, Q, exit"
           "$mod, F, fullscreen"
           "$mod, V, togglefloating"
+          "$mod, T, exec, hyprctl dispatch layoutmsg orientationcycle left top && ${toast "Tiling" "Layout orientation toggled" "media-record"}"
 
           # Apps & Shell (Noctalia integrated)
           "$mod, Return, exec, ${terminal}"
           "$mod, B, exec, ${browser}"
+          "$mod, E, exec, nautilus"
           "$mod, Space, exec, ${noctalia "launcher" "toggle"}"
           "$mod SHIFT, E, exec, ${noctalia "sessionMenu" "toggle"}"
 
           "$mod SHIFT, S, exec, hyprshot -m region"
+
+          "$mod SHIFT, N, exec, busctl --user set-property rs.wl-gammarelay / rs.wl.gammarelay Brightness d 0.3"
+          "$mod SHIFT, M, exec, busctl --user set-property rs.wl-gammarelay / rs.wl.gammarelay Brightness d 1.0"
 
           "$mod, P, exec, ~/.config/hypr/display-mode.sh"
 
@@ -202,6 +215,7 @@ in
 
         exec-once = [
           "hyprpaper"
+          "wl-gammarelay-rs run"
           "hyprctl setcursor ${cursorName} ${toString cursorSize}"
           "wl-paste --type text --watch cliphist store"
           "wl-paste --type image --watch cliphist store"

@@ -35,8 +35,7 @@ in
       slurp
       swappy
       xwayland-satellite
-      cliphist
-      wl-clipboard
+      wl-gammarelay-rs
     ];
 
     xdg.configFile."niri/config.kdl".text = ''
@@ -64,6 +63,7 @@ in
       }
 
       spawn-at-startup "xwayland-satellite";
+      spawn-at-startup "wl-gammarelay-rs" "run";
 
       binds {
         Mod+Q { close-window; }
@@ -109,6 +109,9 @@ in
         Mod+Shift+L { move-column-right; }
         
         Mod+Shift+S { spawn "sh" "-c" "${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp)\" - | ${pkgs.swappy}/bin/swappy -f -"; }
+
+        Mod+Shift+N { spawn "busctl" "--user" "set-property" "rs.wl-gammarelay" "/" "rs.wl.gammarelay" "Brightness" "d" "0.5"; }
+        Mod+Shift+M { spawn "busctl" "--user" "set-property" "rs.wl-gammarelay" "/" "rs.wl.gammarelay" "Brightness" "d" "1.0"; }
 
         ${binds_workspaces}
       }

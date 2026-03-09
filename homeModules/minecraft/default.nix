@@ -17,10 +17,8 @@ in
 
   config = mkIf cfg.enable {
     home.packages = with pkgs; [
-      jdk21
-      cargo
-      rustc
-      git
+      # jdk21 provided by devtoolsModule
+      # cargo/rustc provided by zshModule
     ];
 
     home.sessionPath = [ "$HOME/.cargo/bin" ];

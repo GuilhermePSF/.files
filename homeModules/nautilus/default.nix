@@ -34,7 +34,7 @@
       unrar
 
       # --- Image viewer ---
-      eog # Eye of GNOME
+      # loupe is provided by mediaModule
 
       # --- Trash, bookmarks, monitoring ---
       glib # gio CLI (gio trash, gio open, etc.)
@@ -66,14 +66,14 @@
         "application/x-xz" = [ "org.gnome.FileRoller.desktop" ];
         "application/x-zstd-compressed-tar" = [ "org.gnome.FileRoller.desktop" ];
 
-        # Images → Eye of GNOME
-        "image/jpeg" = [ "org.gnome.eog.desktop" ];
-        "image/png" = [ "org.gnome.eog.desktop" ];
-        "image/gif" = [ "org.gnome.eog.desktop" ];
-        "image/webp" = [ "org.gnome.eog.desktop" ];
-        "image/svg+xml" = [ "org.gnome.eog.desktop" ];
-        "image/bmp" = [ "org.gnome.eog.desktop" ];
-        "image/tiff" = [ "org.gnome.eog.desktop" ];
+        # Images → Loupe (provided by mediaModule)
+        "image/jpeg" = [ "org.gnome.Loupe.desktop" ];
+        "image/png" = [ "org.gnome.Loupe.desktop" ];
+        "image/gif" = [ "org.gnome.Loupe.desktop" ];
+        "image/webp" = [ "org.gnome.Loupe.desktop" ];
+        "image/svg+xml" = [ "org.gnome.Loupe.desktop" ];
+        "image/bmp" = [ "org.gnome.Loupe.desktop" ];
+        "image/tiff" = [ "org.gnome.Loupe.desktop" ];
 
         # PDFs → Evince
         "application/pdf" = [ "org.gnome.Evince.desktop" ];
@@ -152,9 +152,35 @@
     # Bookmarks (sidebar in Nautilus + all GTK file pickers)
     # ----------------------------------------------------------------
     home.file.".config/gtk-3.0/bookmarks".text = ''
+      file:///home/gui/UMINHO UMinho
       file:///home/gui/Downloads Downloads
+      file:///home/gui/Documents Documents
+      file:///home/gui/Pictures Pictures
+      file:///home/gui/Videos Videos
+      file:///home/gui/Music Music
+      file:///home/gui/Pictures/Screenshots Screenshots
+      file:///home/gui/Pictures/Wallpapers Wallpapers
+      file:///home/gui/Documents/PDFs PDFs
+      file:///home/gui/dev Dev
       file:///home/gui/Obsidian Obsidian Vault
       file:///home/gui/nixos-config NixOS Config
+      file:///home/gui/Misc Misc
+    '';
+
+    home.file.".config/gtk-4.0/bookmarks".text = ''
+      file:///home/gui/UMINHO UMinho
+      file:///home/gui/Downloads Downloads
+      file:///home/gui/Documents Documents
+      file:///home/gui/Pictures Pictures
+      file:///home/gui/Videos Videos
+      file:///home/gui/Music Music
+      file:///home/gui/Pictures/Screenshots Screenshots
+      file:///home/gui/Pictures/Wallpapers Wallpapers
+      file:///home/gui/Documents/PDFs PDFs
+      file:///home/gui/dev Dev
+      file:///home/gui/Obsidian Obsidian Vault
+      file:///home/gui/nixos-config NixOS Config
+      file:///home/gui/Misc Misc
     '';
 
   };

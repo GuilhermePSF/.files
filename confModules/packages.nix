@@ -1,17 +1,27 @@
 { pkgs, ... }:
 
 {
+  documentation = {
+    enable = true;
+    man = {
+      enable = true;
+      generateCaches = true;
+    };
+    dev.enable = true;
+  };
+
   environment.systemPackages = with pkgs; [
     wget
     git
     tree
     wl-clipboard
-    hyprpaper
     bluez
     bluez-tools
     nixfmt
     gemini-cli
     qemu_kvm
+    man-pages
+    man-pages-posix
   ];
 
   nixpkgs.config.allowUnfree = true;
