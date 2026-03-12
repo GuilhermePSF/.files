@@ -6,8 +6,6 @@
 
     nix-vscode-extensions.url = "github:nix-community/nix-vscode-extensions";
 
-    # quickshell.url = "github:outfoxxed/quickshell";
-
     noctalia = {
       url = "github:noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
