@@ -5,6 +5,7 @@
     c = "clear";
     nv = "nvim";
     files = "nautilus . > /dev/null 2>&1 & disown";
+    sybau = "nh os switch --update && nh clean all --keep-since 24h --keep 5";
     open = "nautilus";
     diskusage = "gdu";
     birth = "stat / | grep 'Birth' | sed 's/Birth: //g' | cut -b 2-11";
