@@ -22,6 +22,9 @@
 
       # --- Fonts ---
       font-manager # Browse & preview installed fonts
+
+      # --- PDF ---
+      masterpdfeditor4 # Proprietary garbage but fuckit
     ];
   };
 }
