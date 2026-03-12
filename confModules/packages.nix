@@ -22,6 +22,7 @@
     qemu_kvm
     man-pages
     man-pages-posix
+    usbutils
   ];
 
   nixpkgs.config.allowUnfree = true;
