@@ -31,23 +31,19 @@ in
       grim
       slurp
       gpu-screen-recorder
-      wofi
       cursorPackage
       wl-gammarelay-rs
     ];
 
+    # display-mode.sh — backend called by the Quickshell DisplayPicker with a single mode argument
     xdg.configFile."hypr/display-mode.sh" = {
       executable = true;
       text = ''
         #!/usr/bin/env bash
-        # WIN+P style display mode picker
         LAPTOP="eDP-1"
         EXTERNAL=$(hyprctl monitors -j | ${pkgs.jq}/bin/jq -r '.[].name' | grep -v "$LAPTOP" | head -1)
 
-        CHOICE=$(printf 'laptop-only\nexternal-only\nmirror\nextend-vertical (laptop bottom)\nextend-vertical (laptop top)' \
-          | wofi --dmenu --prompt "Display mode" --width 400 --height 220)
-
-        case "$CHOICE" in
+        case "$1" in
           "laptop-only")
             hyprctl keyword monitor "$LAPTOP,preferred,0x0,1"
             [ -n "$EXTERNAL" ] && hyprctl keyword monitor "$EXTERNAL,disabled"
@@ -59,13 +55,17 @@ in
           "mirror")
             hyprctl keyword monitor "$LAPTOP,preferred,0x0,1,mirror,$EXTERNAL"
             ;;
-          "extend-vertical (laptop bottom)")
+          "extend-bottom")
             [ -n "$EXTERNAL" ] && hyprctl keyword monitor "$EXTERNAL,preferred,0x0,1"
-            hyprctl keyword monitor "$LAPTOP,preferred,0x1080,1"
+            EXT_H=$(hyprctl monitors -j | ${pkgs.jq}/bin/jq -r --arg name "$EXTERNAL" '.[] | select(.name==$name) | .height')
+            EXT_H="''${EXT_H:-1080}"
+            hyprctl keyword monitor "$LAPTOP,preferred,0x''${EXT_H},1"
             ;;
-          "extend-vertical (laptop top)")
+          "extend-top")
             hyprctl keyword monitor "$LAPTOP,preferred,0x0,1"
-            [ -n "$EXTERNAL" ] && hyprctl keyword monitor "$EXTERNAL,preferred,0x1080,1"
+            LAPTOP_H=$(hyprctl monitors -j | ${pkgs.jq}/bin/jq -r --arg name "$LAPTOP" '.[] | select(.name==$name) | .height')
+            LAPTOP_H="''${LAPTOP_H:-1080}"
+            [ -n "$EXTERNAL" ] && hyprctl keyword monitor "$EXTERNAL,preferred,0x''${LAPTOP_H},1"
             ;;
         esac
       '';
@@ -87,10 +87,11 @@ in
       settings = {
         "$mod" = "SUPER";
 
-        # Default monitor layout: vertical alignment
+        # Default monitor layout: laptop auto-positions below external
+        # auto-down avoids overlap when external resolution != 1080p
         monitor = [
-          "eDP-1,preferred,0x1080,1" # laptop screen — bottom
-          ",preferred,0x0,1" # any other monitor — on top
+          ",preferred,0x0,1" # any external monitor — top, auto position
+          "eDP-1,preferred,auto-down,1" # laptop screen — always below external
         ];
 
         env = [
@@ -103,8 +104,8 @@ in
 
         general = {
           gaps_in = 4;
-          gaps_out = 8;
-          border_size = 2;
+          gaps_out = 6;
+          border_size = 3;
           layout = "master";
           resize_on_border = true;
         };
@@ -162,13 +163,14 @@ in
           "$mod, E, exec, nautilus"
           "$mod, Space, exec, ${noctalia "launcher" "toggle"}"
           "$mod SHIFT, E, exec, ${noctalia "sessionMenu" "toggle"}"
+          "$mod SHIFT, L, exec, ${noctalia "lockScreen" "lock"}"
 
           "$mod SHIFT, S, exec, hyprshot -m region"
 
           "$mod SHIFT, N, exec, busctl --user set-property rs.wl-gammarelay / rs.wl.gammarelay Brightness d 0.3"
           "$mod SHIFT, M, exec, busctl --user set-property rs.wl-gammarelay / rs.wl.gammarelay Brightness d 1.0"
 
-          "$mod, P, exec, ~/.config/hypr/display-mode.sh"
+          "$mod, P, exec, qs ipc call displayPicker toggle"
 
           # Navigation (HJKL)
           "$mod, H, movefocus, l"
@@ -213,9 +215,15 @@ in
           "$mod, mouse:273, resizewindow"
         ];
 
+        # Lid switch — lock & suspend when closed
+        bindl = [
+          ", switch:on:Lid Switch, exec, ${noctalia "sessionMenu" "lockAndSuspend"}"
+        ];
+
         exec-once = [
           "hyprpaper"
           "wl-gammarelay-rs run"
+          # "qs"
           "hyprctl setcursor ${cursorName} ${toString cursorSize}"
           "wl-paste --type text --watch cliphist store"
           "wl-paste --type image --watch cliphist store"
