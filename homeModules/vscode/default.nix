@@ -50,12 +50,17 @@
 
           # --- Tools ---
           # vscodevim.vim
+          usernamehw.errorlens
+          google.geminicodeassist
+
         ]
 
         ++ (with pkgs.vscode-marketplace; [
           # --- Your Marketplace Specific List ---
           amatiasq.sort-imports
           astro-build.astro-vscode
+          theqtcompany.qt-qml
+          theqtcompany.qt-core
           bundlecoverage.vue3-import-auto-correct
           caponetto.vscode-diff-viewer
           cweijan.dbclient-jdbc
@@ -84,7 +89,6 @@
           bbenoist.nix
           esbenp.prettier-vscode
           editorconfig.editorconfig
-          usernamehw.errorlens
           eamodio.gitlens
           mhutchie.git-graph
           dbaeumer.vscode-eslint
