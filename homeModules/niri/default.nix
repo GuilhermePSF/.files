@@ -54,8 +54,11 @@ in
           active-color "${c_focus}"
           inactive-color "${c_inactive}"
         }
-        focus-ring { off; } 
+        focus-ring { off; }
       }
+
+      prefer-no-csd
+
       environment {
         DISPLAY ":0"
         XCURSOR_THEME "${cursorName}"
@@ -64,15 +67,20 @@ in
 
       spawn-at-startup "xwayland-satellite";
       spawn-at-startup "wl-gammarelay-rs" "run";
+      # spawn-at-startup "qs";
 
       binds {
         Mod+Q { close-window; }
         Mod+Shift+Q { quit; }
         Mod+F { fullscreen-window; }
         Mod+V { switch-preset-column-width; }
-        
+
         Mod+Return { spawn "${terminal}"; }
         Mod+B { spawn "${browser}"; }
+        Mod+E { spawn "nautilus"; }
+
+        // Display Picker (Quickshell)
+        Mod+P { spawn "qs" "ipc" "call" "displayPicker" "toggle"; }
 
         // Launcher
         Mod+Space { ${noctalia "launcher" "toggle"} }
@@ -80,15 +88,13 @@ in
         // Power Menu
         Mod+Shift+E { ${noctalia "sessionMenu" "toggle"} }
 
-        // --- AUDIO CONTROLS (Fixed) ---
-        // Note: We use "volume" directly, not "audio volume"
+        // Lock Screen
+        Mod+Ctrl+L { ${noctalia "lockScreen" "lock"} }
+
+        // --- AUDIO CONTROLS ---
         XF86AudioRaiseVolume { ${noctalia "volume" "increase"} }
         XF86AudioLowerVolume { ${noctalia "volume" "decrease"} }
-        
-        // Mute Output (Speakers)
         XF86AudioMute        { ${noctalia "volume" "muteOutput"} }
-        
-        // Mute Input (Microphone) - Using wpctl for reliability as fallback
         XF86AudioMicMute     { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
 
         // --- BRIGHTNESS CONTROLS ---
@@ -107,10 +113,12 @@ in
         Mod+J { focus-window-down; }
         Mod+Shift+H { move-column-left; }
         Mod+Shift+L { move-column-right; }
-        
+        Mod+Shift+K { move-window-up; }
+        Mod+Shift+J { move-window-down; }
+
         Mod+Shift+S { spawn "sh" "-c" "${pkgs.grim}/bin/grim -g \"$(${pkgs.slurp}/bin/slurp)\" - | ${pkgs.swappy}/bin/swappy -f -"; }
 
-        Mod+Shift+N { spawn "busctl" "--user" "set-property" "rs.wl-gammarelay" "/" "rs.wl.gammarelay" "Brightness" "d" "0.5"; }
+        Mod+Shift+N { spawn "busctl" "--user" "set-property" "rs.wl-gammarelay" "/" "rs.wl.gammarelay" "Brightness" "d" "0.3"; }
         Mod+Shift+M { spawn "busctl" "--user" "set-property" "rs.wl-gammarelay" "/" "rs.wl.gammarelay" "Brightness" "d" "1.0"; }
 
         ${binds_workspaces}
