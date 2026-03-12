@@ -2,7 +2,6 @@
   pkgs,
   lib,
   config,
-  inputs,
   ...
 }:
 
@@ -12,14 +11,12 @@
   config = lib.mkIf config.quickshellModule.enable {
 
     home.packages = [
-      inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default
-
       # Dependencies
+      pkgs.quickshell
       pkgs.jq
       pkgs.nerd-fonts.jetbrains-mono
     ];
 
-    # switched to noctalia shell
-    # xdg.configFile."quickshell/shell.qml".source = ./shell.qml;
+    xdg.configFile."quickshell/shell.qml".source = ./shell.qml;
   };
 }
