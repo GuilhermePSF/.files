@@ -21,6 +21,8 @@
 ├── homeModules
 │   ├── brave
 │   │   └── default.nix
+│   ├── devtools
+│   │   └── default.nix
 │   ├── fastfetch
 │   │   └── default.nix
 │   ├── firefox
@@ -35,6 +37,8 @@
 │   │   └── default.nix
 │   ├── krita
 │   │   └── default.nix
+│   ├── media
+│   │   └── default.nix
 │   ├── minecraft
 │   │   └── default.nix
 │   ├── nautilus
@@ -48,6 +52,10 @@
 │   ├── noctalia
 │   │   └── default.nix
 │   ├── obsidian
+│   │   └── default.nix
+│   ├── organize
+│   │   └── default.nix
+│   ├── pavucontrol
 │   │   └── default.nix
 │   ├── playit
 │   │   └── default.nix
@@ -67,5 +75,5 @@
 │       └── default.nix
 └── home.nix
 
-26 directories, 38 files
+30 directories, 42 files
 ```
