@@ -16,9 +16,9 @@
 
       # --- Python ---
       python3
-      python3Packages.pip
+      python3Packages.uv
+      python313Packages.scapy
 
-      # virt-manager is enabled via programs.virt-manager.enable in confModules/desktop.nix
     ];
   };
 }
