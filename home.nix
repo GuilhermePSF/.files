@@ -18,7 +18,6 @@
   obsidianModule.enable = true;
   zshModule.enable = true;
   hyprlandModule.enable = true;
-  quickshellModule.enable = false;
   fastfetchModule.enable = true;
   ghosttyModule.enable = true;
   noctaliaModule.enable = true;
@@ -45,7 +44,6 @@
     ./homeModules/vscode
     ./homeModules/zsh
     ./homeModules/git
-    ./homeModules/quickshell
     ./homeModules/fastfetch
     ./homeModules/ghostty
     ./homeModules/noctalia

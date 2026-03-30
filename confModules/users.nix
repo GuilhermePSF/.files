@@ -11,6 +11,7 @@
       "lp"
       "libvirtd"
       "wireshark"
+      "docker"
     ];
     ignoreShellProgramCheck = true;
   };

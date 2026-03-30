@@ -25,6 +25,9 @@
 
       # --- PDF ---
       masterpdfeditor4 # Proprietary garbage but fuckit
+
+      # --- SVG ---
+      inkscape # SVG editor
     ];
   };
 }

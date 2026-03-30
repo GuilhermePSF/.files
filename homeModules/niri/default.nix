@@ -67,7 +67,6 @@ in
 
       spawn-at-startup "xwayland-satellite";
       spawn-at-startup "wl-gammarelay-rs" "run";
-      # spawn-at-startup "qs";
 
       binds {
         Mod+Q { close-window; }

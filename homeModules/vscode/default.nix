@@ -5,6 +5,82 @@
   ...
 }:
 
+let
+  vscodeSettings = {
+    "workbench.colorTheme" = "Min Theme+";
+
+    "[jsonc]" = {
+      "editor.defaultFormatter" = "esbenp.prettier-vscode";
+    };
+    "editor.formatOnSave" = true;
+    "editor.fontFamily" = "FiraCode Nerd Font Mono";
+    "files.autoSave" = "afterDelay";
+    "workbench.editor.closeOnFileDelete" = true;
+    "terminal.integrated.fontLigatures.enabled" = true;
+    "workbench.sideBar.location" = "right";
+    "window.menuBarVisibility" = "compact";
+    "workbench.statusBar.visible" = true;
+    "editor.fontLigatures" = true;
+    "prettier.singleQuote" = true;
+    "prettier.trailingComma" = "all";
+    "cSpell.userWords" = [
+      "autoresize"
+      "commenters"
+      "echarts"
+      "favourites"
+      "Yari"
+    ];
+    "chat.commandCenter.enabled" = false;
+    "javascript.updateImportsOnFileMove.enabled" = "always";
+    "editor.defaultFormatter" = "esbenp.prettier-vscode";
+
+    "files.associations" = {
+      "*.md" = "markdown";
+    };
+    "markdown.preview.openMarkdownLinks" = "inPreview";
+    "workbench.editorAssociations" = {
+      "*.copilotmd" = "vscode.markdown.preview.editor";
+      "*.md" = "markdown.preview.editor";
+      "*.db" = "default";
+    };
+    "typescript.updateImportsOnFileMove.enabled" = "always";
+    "svg.preview.mode" = "svg";
+    "command-runner.terminal.name" = "runCommand";
+    "command-runner.terminal.autoClear" = true;
+    "command-runner.commands" = {
+      "elixirFormat" = "mix format && exit";
+    };
+    "editor.formatOnPaste" = true;
+    "zig.zls.enabled" = "on";
+    "[c]" = {
+      "editor.defaultFormatter" = "ms-vscode.cpptools";
+    };
+    "workbench.iconTheme" = "material-icon-theme";
+    "diffEditor.ignoreTrimWhitespace" = false;
+    "editor.largeFileOptimizations" = false;
+    "github.copilot.enable" = {
+      "*" = true;
+      "plaintext" = false;
+      "markdown" = false;
+      "scminput" = false;
+      "c" = true;
+    };
+    "workbench.editor.empty.hint" = "hidden";
+    "github.copilot.nextEditSuggestions.enabled" = true;
+    "http.systemCertificatesNode" = true;
+    "editor.unicodeHighlight.invisibleCharacters" = false;
+    "explorer.confirmDragAndDrop" = false;
+    "window.customTitleBarVisibility" = "never";
+
+    "vim.active" = false;
+
+    "extensions.autoUpdate" = false;
+    "extensions.autoCheckUpdates" = true;
+  };
+
+  vscodeSettingsFile = pkgs.writeText "vscode-settings.json" (builtins.toJSON vscodeSettings);
+in
+
 {
   options.vscodeModule.enable = lib.mkEnableOption "Enable VSCode module";
 
@@ -47,16 +123,18 @@
           # --- Other Compiled Languages ---
           golang.go # Go tools often need patching
           haskell.haskell # Haskell GHC paths
+          ziglang.vscode-zig
 
           # --- Tools ---
           # vscodevim.vim
           usernamehw.errorlens
-          google.geminicodeassist
 
         ]
 
         ++ (with pkgs.vscode-marketplace; [
           # --- Your Marketplace Specific List ---
+          ms-vscode.makefile-tools
+          jakobhoeg.vscode-pokemon
           amatiasq.sort-imports
           astro-build.astro-vscode
           theqtcompany.qt-qml
@@ -71,7 +149,6 @@
           heybourn.headwind
           jock.svg
           mechatroner.rainbow-csv
-          myriad-dreamin.tinymist
           nifate.min-theme-plus
           pfwobcke.vscode-ttf
           phoenixframework.phoenix
@@ -79,6 +156,7 @@
           potatochowon9.darkpdf
           shd101wyy.markdown-preview-enhanced
           shengchen.vscode-checkstyle
+          google.geminicodeassist
           steoates.autoimport
           sygene.auto-correct
           tomoki1207.pdf
@@ -107,75 +185,7 @@
       # --------------------------------------------------------
       # SETTINGS
       # --------------------------------------------------------
-      profiles.default.userSettings = {
-        "workbench.colorTheme" = "Min Theme+";
-
-        "[jsonc]" = {
-          "editor.defaultFormatter" = "esbenp.prettier-vscode";
-        };
-        "editor.formatOnSave" = true;
-        "editor.fontFamily" = "FiraCode Nerd Font Mono";
-        "files.autoSave" = "afterDelay";
-        "workbench.editor.closeOnFileDelete" = true;
-        "terminal.integrated.fontLigatures.enabled" = true;
-        "workbench.sideBar.location" = "right";
-        "window.menuBarVisibility" = "compact";
-        "workbench.statusBar.visible" = true;
-        "editor.fontLigatures" = true;
-        "prettier.singleQuote" = true;
-        "prettier.trailingComma" = "all";
-        "cSpell.userWords" = [
-          "autoresize"
-          "commenters"
-          "echarts"
-          "favourites"
-          "Yari"
-        ];
-        "chat.commandCenter.enabled" = false;
-        "javascript.updateImportsOnFileMove.enabled" = "always";
-        "editor.defaultFormatter" = "esbenp.prettier-vscode";
-
-        "files.associations" = {
-          "*.md" = "markdown";
-        };
-        "markdown.preview.openMarkdownLinks" = "inPreview";
-        "workbench.editorAssociations" = {
-          "*.copilotmd" = "vscode.markdown.preview.editor";
-          "*.md" = "markdown.preview.editor";
-          "*.db" = "default";
-        };
-        "typescript.updateImportsOnFileMove.enabled" = "always";
-        "svg.preview.mode" = "svg";
-        "command-runner.terminal.name" = "runCommand";
-        "command-runner.terminal.autoClear" = true;
-        "command-runner.commands" = {
-          "elixirFormat" = "mix format && exit";
-        };
-        "editor.formatOnPaste" = true;
-        "[c]" = {
-          "editor.defaultFormatter" = "ms-vscode.cpptools";
-        };
-        "workbench.iconTheme" = "material-icon-theme";
-        "diffEditor.ignoreTrimWhitespace" = false;
-        "editor.largeFileOptimizations" = false;
-        "github.copilot.enable" = {
-          "*" = true;
-          "plaintext" = false;
-          "markdown" = false;
-          "scminput" = false;
-          "c" = true;
-        };
-        "workbench.editor.empty.hint" = "hidden";
-        "github.copilot.nextEditSuggestions.enabled" = true;
-        "editor.unicodeHighlight.invisibleCharacters" = false;
-        "explorer.confirmDragAndDrop" = false;
-        "window.customTitleBarVisibility" = "never";
-
-        "vim.active" = false;
-
-        "extensions.autoUpdate" = false;
-        "extensions.autoCheckUpdates" = true;
-      };
+      profiles.default.userSettings = vscodeSettings;
 
       # --------------------------------------------------------
       # KEYBINDINGS

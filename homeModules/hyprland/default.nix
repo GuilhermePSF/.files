@@ -33,43 +33,8 @@ in
       gpu-screen-recorder
       cursorPackage
       wl-gammarelay-rs
+      nwg-displays   # GUI for manual layout tweaking when needed
     ];
-
-    # display-mode.sh — backend called by the Quickshell DisplayPicker with a single mode argument
-    xdg.configFile."hypr/display-mode.sh" = {
-      executable = true;
-      text = ''
-        #!/usr/bin/env bash
-        LAPTOP="eDP-1"
-        EXTERNAL=$(hyprctl monitors -j | ${pkgs.jq}/bin/jq -r '.[].name' | grep -v "$LAPTOP" | head -1)
-
-        case "$1" in
-          "laptop-only")
-            hyprctl keyword monitor "$LAPTOP,preferred,0x0,1"
-            [ -n "$EXTERNAL" ] && hyprctl keyword monitor "$EXTERNAL,disabled"
-            ;;
-          "external-only")
-            [ -n "$EXTERNAL" ] && hyprctl keyword monitor "$EXTERNAL,preferred,0x0,1"
-            hyprctl keyword monitor "$LAPTOP,disabled"
-            ;;
-          "mirror")
-            hyprctl keyword monitor "$LAPTOP,preferred,0x0,1,mirror,$EXTERNAL"
-            ;;
-          "extend-bottom")
-            [ -n "$EXTERNAL" ] && hyprctl keyword monitor "$EXTERNAL,preferred,0x0,1"
-            EXT_H=$(hyprctl monitors -j | ${pkgs.jq}/bin/jq -r --arg name "$EXTERNAL" '.[] | select(.name==$name) | .height')
-            EXT_H="''${EXT_H:-1080}"
-            hyprctl keyword monitor "$LAPTOP,preferred,0x''${EXT_H},1"
-            ;;
-          "extend-top")
-            hyprctl keyword monitor "$LAPTOP,preferred,0x0,1"
-            LAPTOP_H=$(hyprctl monitors -j | ${pkgs.jq}/bin/jq -r --arg name "$LAPTOP" '.[] | select(.name==$name) | .height')
-            LAPTOP_H="''${LAPTOP_H:-1080}"
-            [ -n "$EXTERNAL" ] && hyprctl keyword monitor "$EXTERNAL,preferred,0x''${LAPTOP_H},1"
-            ;;
-        esac
-      '';
-    };
 
     xdg.configFile."hypr/hyprpaper.conf".text = ''
       preload = ${wallpaperFile}
@@ -87,11 +52,14 @@ in
       settings = {
         "$mod" = "SUPER";
 
-        # Default monitor layout: laptop auto-positions below external
-        # auto-down avoids overlap when external resolution != 1080p
+        # Monitor layout — kanshi manages profiles automatically on plug/unplug.
+        # These rules are the fallback for any monitor not matched by kanshi,
+        # and define the initial layout on startup before kanshi applies its profile.
         monitor = [
-          ",preferred,0x0,1" # any external monitor — top, auto position
-          "eDP-1,preferred,auto-down,1" # laptop screen — always below external
+          # External monitor: always at origin, preferred mode
+          ",preferred,0x0,1"
+          # Laptop: always below whatever external is present, auto-positioned
+          "eDP-1,1920x1200@60,auto-down,1"
         ];
 
         env = [
@@ -116,7 +84,7 @@ in
         };
 
         misc = {
-          focus_on_activate = true; # switch workspace when an app requests focus (e.g. link opens browser)
+          focus_on_activate = true;
         };
 
         input = {
@@ -149,7 +117,6 @@ in
           ];
         };
 
-        # Main Bindings
         bind = [
           "$mod, Q, killactive"
           "$mod SHIFT, Q, exit"
@@ -170,7 +137,8 @@ in
           "$mod SHIFT, N, exec, busctl --user set-property rs.wl-gammarelay / rs.wl.gammarelay Brightness d 0.3"
           "$mod SHIFT, M, exec, busctl --user set-property rs.wl-gammarelay / rs.wl.gammarelay Brightness d 1.0"
 
-          "$mod, P, exec, qs ipc call displayPicker toggle"
+          # Toggle laptop screen on/off (handled by kanshiModule's toggle script)
+          "$mod, P, exec, toggle-laptop-screen"
 
           # Navigation (HJKL)
           "$mod, H, movefocus, l"
@@ -189,7 +157,6 @@ in
           ", XF86AudioNext, exec, ${noctalia "media" "next"}"
           ", XF86AudioPrev, exec, ${noctalia "media" "previous"}"
         ]
-        # Clean workspace generator to match Niri's logic
         ++ (map (i: "$mod, ${toString (if i == 10 then 0 else i)}, workspace, ${toString i}") (
           builtins.genList (x: x + 1) 10
         ))
@@ -197,15 +164,12 @@ in
           builtins.genList (x: x + 1) 10
         ));
 
-        # Repeating Keys
         bindel = [
-          # Audio (Noctalia)
           ", XF86AudioRaiseVolume, exec, ${noctalia "volume" "increase"}"
           ", XF86AudioLowerVolume, exec, ${noctalia "volume" "decrease"}"
           ", XF86AudioMute, exec, ${noctalia "volume" "muteOutput"}"
           ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
 
-          # Brightness (Noctalia)
           ", XF86MonBrightnessUp, exec, ${noctalia "brightness" "increase"}"
           ", XF86MonBrightnessDown, exec, ${noctalia "brightness" "decrease"}"
         ];
@@ -223,7 +187,6 @@ in
         exec-once = [
           "hyprpaper"
           "wl-gammarelay-rs run"
-          # "qs"
           "hyprctl setcursor ${cursorName} ${toString cursorSize}"
           "wl-paste --type text --watch cliphist store"
           "wl-paste --type image --watch cliphist store"

@@ -83,8 +83,15 @@
         vim.g.mapleader      = " "
         vim.g.maplocalleader = " "
 
-        -- Colour scheme (Stylix injects base16 colours via base16-nvim)
-        require("base16-colorscheme").setup(vim.g.base16_theme or {})
+        -- Colour scheme (Stylix injects base16 colors when available)
+        local ok, base16 = pcall(require, "base16-colorscheme")
+        if ok then
+          if type(vim.g.base16_theme) == "table" then
+            base16.setup(vim.g.base16_theme)
+          else
+            vim.cmd("colorscheme default")
+          end
+        end
 
         -- Lualine
         require("lualine").setup({ options = { theme = "base16" } })

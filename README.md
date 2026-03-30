@@ -17,6 +17,9 @@
 │   └── users.nix
 ├── flake.lock
 ├── flake.nix
+├── flakes
+│   └── core
+│       └── volume
 ├── .gitignore
 ├── homeModules
 │   ├── brave
@@ -34,6 +37,8 @@
 │   ├── hyprland
 │   │   └── default.nix
 │   ├── jetbrains
+│   │   └── default.nix
+│   ├── kanshi
 │   │   └── default.nix
 │   ├── krita
 │   │   └── default.nix
@@ -57,11 +62,9 @@
 │   │   └── default.nix
 │   ├── pavucontrol
 │   │   └── default.nix
+│   ├── pdf
 │   ├── playit
 │   │   └── default.nix
-│   ├── quickshell
-│   │   ├── default.nix
-│   │   └── shell.qml
 │   ├── slack
 │   │   └── default.nix
 │   ├── spicetify
@@ -75,5 +78,5 @@
 │       └── default.nix
 └── home.nix
 
-30 directories, 42 files
+34 directories, 41 files
 ```

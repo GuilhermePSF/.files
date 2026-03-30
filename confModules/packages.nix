@@ -14,6 +14,8 @@
     wget
     git
     tree
+    btop
+    ngrok
     wl-clipboard
     bluez
     bluez-tools
@@ -23,6 +25,9 @@
     man-pages
     man-pages-posix
     usbutils
+    glib
+    glib.dev
+    pkg-config
   ];
 
   nixpkgs.config.allowUnfree = true;

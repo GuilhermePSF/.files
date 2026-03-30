@@ -1,4 +1,5 @@
 {
+
   pkgs,
   lib,
   config,
@@ -14,11 +15,17 @@
       # --- JVM ---
       jdk21
 
+      zig
+
       # --- Python ---
       python3
       python3Packages.uv
       python313Packages.scapy
 
+      bun
+      nodejs_22
+
+      bruno
     ];
   };
 }
