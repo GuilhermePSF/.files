@@ -29,12 +29,14 @@
 │   │   └── default.nix
 │   ├── fastfetch
 │   │   ├── default.nix
-│   │   └── logo.ans
+│   │   └── sunflower.png
 │   ├── firefox
 │   │   └── default.nix
 │   ├── ghostty
 │   │   └── default.nix
 │   ├── git
+│   │   └── default.nix
+│   ├── gnome
 │   │   └── default.nix
 │   ├── hyprland
 │   │   └── default.nix
@@ -62,7 +64,6 @@
 │   │   └── default.nix
 │   ├── pavucontrol
 │   │   └── default.nix
-│   ├── pdf
 │   ├── playit
 │   │   └── default.nix
 │   ├── slack
@@ -78,7 +79,8 @@
 │   └── zsh
 │       ├── aliases.nix
 │       └── default.nix
-└── home.nix
+├── home.nix
+└── package-lock.json
 
-34 directories, 43 files
+34 directories, 45 files
 ```

@@ -13,8 +13,8 @@
   home.enableNixpkgsReleaseCheck = false;
   stylix.enableReleaseChecks = false;
 
-  niriModule.enable = false;
-  hyprlandModule.enable = false;
+  niriModule.enable = true;
+  hyprlandModule.enable = true;
   gnomeModule.enable = true;
   gitModule.enable = true;
   obsidianModule.enable = true;

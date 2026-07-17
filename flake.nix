@@ -26,16 +26,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # nix-minecraft = {
-    # url = "github:Infinidoge/nix-minecraft";
-    # inputs.nixpkgs.follows = "nixpkgs";
-    # };
-
-    # playit = {
-    # url = "github:pedorich-n/playit-nixos-module";
-    # inputs.nixpkgs.follows = "nixpkgs";
-    # };
-
     spicetify-nix = {
       url = "github:Gerg-L/spicetify-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -70,18 +60,22 @@
               inputs.nix-vscode-extensions.overlays.default
               inputs.zed-extensions.overlays.default
               rust-overlay.overlays.default
-              
-              (final: prev: let
-                latestRustPlatform = final.makeRustPlatform {
-                  cargo = final.rust-bin.stable.latest.default;
-                  rustc = final.rust-bin.stable.latest.default;
-                };
-              in {
-                nix-zed-extensions = prev.nix-zed-extensions.override {
-                  rustPlatform = latestRustPlatform;
-                };
 
-              })
+              (
+                final: prev:
+                let
+                  latestRustPlatform = final.makeRustPlatform {
+                    cargo = final.rust-bin.stable.latest.default;
+                    rustc = final.rust-bin.stable.latest.default;
+                  };
+                in
+                {
+                  nix-zed-extensions = prev.nix-zed-extensions.override {
+                    rustPlatform = latestRustPlatform;
+                  };
+
+                }
+              )
             ];
           }
 

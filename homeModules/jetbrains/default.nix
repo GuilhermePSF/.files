@@ -11,8 +11,6 @@
   config = lib.mkIf config.jetbrainsModule.enable {
 
     home.packages = with pkgs; [
-      # jetbrains.idea
-      # jetbrains.rust-rover
       jetbrains.datagrip
     ];
 

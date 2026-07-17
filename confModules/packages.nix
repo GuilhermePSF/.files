@@ -23,7 +23,7 @@
     gemini-cli
     alacritty
     man-pages
-    man-pages-posix 
+    man-pages-posix
     usbutils
     glib
     glib.dev
