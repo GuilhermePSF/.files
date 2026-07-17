@@ -10,11 +10,11 @@ with lib.hm.gvariant;
 
 let
   gnomeExtensions = with pkgs.gnomeExtensions; [
-    pop-shell
-    burn-my-windows
-    caffeine
-    vitals
-    user-themes
+    pop-shell # Tiling window manager extension
+    burn-my-windows # Stylized window closing animations
+    caffeine # Prevents the screen from locking or dimming
+    vitals # System monitoring extension for CPU, RAM, etc.
+    user-themes # Allows loading of user themes for GNOME Shell
   ];
 in
 {
@@ -175,7 +175,7 @@ in
 
       "org/gnome/shell/extensions/burn-my-windows" = {
         animation-time = 267;
-        effect = 7;
+        effect = 7; # TV Effect
       };
     };
   };

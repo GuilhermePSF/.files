@@ -11,14 +11,22 @@
   config = lib.mkIf config.devtoolsModule.enable {
 
     home.packages = with pkgs; [
+      # --- JVM ---
       jdk21
+
       zig
       odin
+
+      # --- Python ---
       python3
       python3Packages.uv
       python313Packages.scapy
+
+      # --- JavaScript ---
       bun
       nodejs_22
+
+      # --- Rust ---
       rust-bin.stable.latest.default
     ];
   };

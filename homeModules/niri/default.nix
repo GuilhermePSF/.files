@@ -79,26 +79,34 @@ in
         Mod+B { spawn "${browser}"; }
         Mod+E { spawn "nautilus"; }
 
+        // Display Picker (Quickshell)
         Mod+P { spawn "qs" "ipc" "call" "displayPicker" "toggle"; }
 
+        // Launcher
         Mod+Space { ${noctalia "launcher" "toggle"} }
 
+        // Power Menu
         Mod+Shift+E { ${noctalia "sessionMenu" "toggle"} }
 
+        // Lock Screen
         Mod+Ctrl+L { ${noctalia "lockScreen" "lock"} }
 
+        // --- AUDIO CONTROLS ---
         XF86AudioRaiseVolume { ${noctalia "volume" "increase"} }
         XF86AudioLowerVolume { ${noctalia "volume" "decrease"} }
         XF86AudioMute        { ${noctalia "volume" "muteOutput"} }
         XF86AudioMicMute     { spawn "wpctl" "set-mute" "@DEFAULT_AUDIO_SOURCE@" "toggle"; }
 
+        // --- BRIGHTNESS CONTROLS ---
         XF86MonBrightnessUp   { ${noctalia "brightness" "increase"} }
         XF86MonBrightnessDown { ${noctalia "brightness" "decrease"} }
 
+        // Media Keys
         XF86AudioPlay { ${noctalia "media" "playPause"} }
         XF86AudioNext { ${noctalia "media" "next"} }
         XF86AudioPrev { ${noctalia "media" "previous"} }
 
+        // Standard Window Management
         Mod+H { focus-column-left; }
         Mod+L { focus-column-right; }
         Mod+K { focus-window-up; }

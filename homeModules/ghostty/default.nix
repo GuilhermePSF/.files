@@ -12,6 +12,7 @@
 
     home.packages = [ pkgs.ghostty ];
 
+    # Write the Ghostty config file (to ~/.config/ghostty/config)
     xdg.configFile."ghostty/config".text = ''
       font-family = "FiraCode Nerd Font", "Symbols-Only Nerd Font"
 

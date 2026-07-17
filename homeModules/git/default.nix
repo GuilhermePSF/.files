@@ -5,6 +5,9 @@
   ...
 }:
 
+let
+  userConfig = import ../../config.nix;
+in
 {
   options.gitModule.enable = lib.mkEnableOption "Enable Git Module";
 
@@ -14,8 +17,8 @@
 
       settings = {
         user = {
-          name = "GuilhermePSF";
-          email = "guilhermepsf23@gmail.com";
+          name = userConfig.git.name;
+          email = userConfig.git.email;
         };
 
         init.defaultBranch = "main";

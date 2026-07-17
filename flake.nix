@@ -88,7 +88,7 @@
               sharedModules = [
                 inputs.zed-extensions.homeManagerModules.default
               ];
-              users.gui = import ./home.nix;
+              users.${(import ./config.nix).username} = import ./home.nix;
               backupFileExtension = "backup";
             };
           }

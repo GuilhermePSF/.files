@@ -95,14 +95,23 @@ in
       profiles.default.extensions =
         with pkgs.vscode-extensions;
         [
+          # --- Copilot ---
           github.copilot
           github.copilot-chat
+
+          # --- C/C++ ---
           llvm-vs-code-extensions.vscode-clangd
+
+          # --- Python ---
           ms-python.python
           ms-python.vscode-pylance
           ms-python.debugpy
+
+          # --- Remote Development ---
           ms-vscode-remote.remote-ssh
           ms-azuretools.vscode-docker
+
+          # --- Java (Fixes JDK path errors) ---
           vscjava.vscode-java-pack
           vscjava.vscode-java-debug
           vscjava.vscode-java-dependency
@@ -110,16 +119,21 @@ in
           vscjava.vscode-maven
           vscjava.vscode-gradle
           redhat.java
+
+          # --- Other Compiled Languages ---
           golang.go
           haskell.haskell
           ziglang.vscode-zig
           rust-lang.rust-analyzer
           danielgavin.ols
+
+          # --- Tools ---
           usernamehw.errorlens
           jnoortheen.nix-ide
         ]
 
         ++ (with pkgs.vscode-marketplace; [
+          # --- Your Marketplace Specific List ---
           myriad-dreamin.tinymist
           ms-vscode.makefile-tools
           twxs.cmake
@@ -149,6 +163,8 @@ in
           tomoki1207.pdf
           wix.vscode-import-cost
           zarifprogrammer.tailwind-snippets
+
+          # --- Standard JS/Web Tools ---
           esbenp.prettier-vscode
           editorconfig.editorconfig
           eamodio.gitlens
@@ -160,12 +176,20 @@ in
           yoavbls.pretty-ts-errors
           pkief.material-icon-theme
           tamasfe.even-better-toml
+
+          # --- Specific Language Tools ---
           jakebecker.elixir-ls
           justusadam.language-haskell
         ]);
 
+      # --------------------------------------------------------
+      # SETTINGS
+      # --------------------------------------------------------
       profiles.default.userSettings = vscodeSettings;
 
+      # --------------------------------------------------------
+      # KEYBINDINGS
+      # --------------------------------------------------------
       profiles.default.keybindings = [
         {
           key = "ctrl+shift+m";
@@ -200,6 +224,7 @@ in
             "    $1"
             "  ];"
             ""
+            "  # Automatically swap to zsh"
             "  shellHook = ''"
             "    exec zsh"
             "  '';"

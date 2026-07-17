@@ -6,16 +6,22 @@
   ...
 }:
 
+let
+  userConfig = import ./config.nix;
+in
 {
-  home.username = "gui";
-  home.homeDirectory = "/home/gui";
+  home.username = userConfig.username;
+  home.homeDirectory = userConfig.homeDirectory;
   home.stateVersion = "25.11";
   home.enableNixpkgsReleaseCheck = false;
   stylix.enableReleaseChecks = false;
 
-  niriModule.enable = true;
-  hyprlandModule.enable = true;
-  gnomeModule.enable = true;
+  # Conditionally enable the selected desktop environment
+  niriModule.enable = userConfig.desktop == "niri";
+  hyprlandModule.enable = userConfig.desktop == "hyprland";
+  gnomeModule.enable = userConfig.desktop == "gnome";
+
+  # General modules
   gitModule.enable = true;
   obsidianModule.enable = true;
   zshModule.enable = true;

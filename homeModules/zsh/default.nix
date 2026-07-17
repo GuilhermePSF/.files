@@ -14,20 +14,29 @@ in
   config = lib.mkIf config.zshModule.enable {
 
     home.packages = with pkgs; [
-      eza
-      chafa
-      gdu
-      ripgrep
-      fd
-      bat
-      fzf
-      zoxide
-      wl-clipboard
+      # --- System Tools ---
+      eza # Better ls
+      chafa # Image viewer
+      gdu # Disk usage
+      ripgrep # Better grep
+      fd # Better find
+      bat # Better cat
+      fzf # Fuzzy finder
+      zoxide # Smarter cd
+      wl-clipboard # Wayland clipboard tool
+
+      # --- Dependencies for your specific Aliases ---
       xrandr
-      go
-      pnpm
+
+      # --- Dev Tools ---
+      go # Go
+      pnpm # JS Package Manager
+
+      # --- Nix Tools ---
       direnv
       nix-direnv
+
+      # --- Compilers ---
       gcc
       gnumake
     ];
@@ -39,17 +48,23 @@ in
       autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
 
+      # Import the aliases file
       shellAliases = aliases.shellAliases;
 
+      # Environment Variables
       sessionVariables = {
         LANG = "en_US.UTF-8";
         EDITOR = "nvim";
         SUDO_EDITOR = "nvim";
         BROWSER = "brave";
+
+        # History Settings
         HISTFILESIZE = "100000000000";
         SAVEHIST = "5000000";
         HISTSIZE = "5000000";
         HIST_STAMPS = "dd-mm-yyyy";
+
+        # Elixir History
         ERL_AFLAGS = "-kernel shell_history enabled -kernel shell_history_file_bytes 4096000";
       };
 
@@ -66,10 +81,12 @@ in
       initContent = ''
         ${pkgs.fastfetch}/bin/fastfetch
 
+        # Ensure ~/.local/bin (uv tool installs) is always in PATH
         export PATH="$HOME/.local/bin:$PATH"
 
         eval "$(direnv hook zsh)"
 
+        # --- Custom Functions ---
         ce() { cd "$@" && code . && exit; }
         co() { cd "$@" && nautilus . > /dev/null 2>&1 & disown; }
       '';

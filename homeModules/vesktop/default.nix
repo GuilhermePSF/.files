@@ -12,8 +12,12 @@
 
     home.packages = [ pkgs.vesktop ];
 
+    # ----------------------------------------------------------------
+    # Wayland flags — passed via the desktop entry wrapper env var
+    # that Vesktop reads. This file is never written to by the app.
+    # ----------------------------------------------------------------
     xdg.configFile."vesktop/settings.json" = {
-      force = true;
+      force = true; # overwrite but don't symlink — copy instead
       text = builtins.toJSON {
         discordBranch = "stable";
         arRPC = true;
@@ -23,6 +27,13 @@
       };
     };
 
+    # ----------------------------------------------------------------
+    # Stylix theme for Vesktop.
+    # Stylix writes its generated theme to ~/.config/Vencord/themes/ but
+    # Vesktop's bundled Vencord only reads from ~/.config/vesktop/themes/.
+    # We point the vesktop themes dir at the same store path Stylix uses
+    # for its Vencord target.
+    # ----------------------------------------------------------------
     xdg.configFile."vesktop/themes/stylix.theme.css".source =
       config.xdg.configFile."Vencord/themes/stylix.theme.css".source;
   };

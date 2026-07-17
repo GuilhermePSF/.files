@@ -1,5 +1,6 @@
 {
   shellAliases = {
+    # --- System & Misc ---
     q = "exit";
     c = "clear";
     nv = "nvim";
@@ -10,13 +11,19 @@
     birth = "stat / | grep 'Birth' | sed 's/Birth: //g' | cut -b 2-11";
     brt = "xrandr --output eDP-1 --brightness";
     timestamp = "date -u +\"%Y%m%d%H%M%S\"";
+
+    # --- Fixes / Utils ---
     history = "history 1";
     h = "history";
     kb = "setxkbmap us";
     df = "df -h -x tmpfs";
     nosuspend = "xset s off & xset -dpms";
     brave = "brave-browser";
+
+    # Running Playit via Nix Run as you requested
     playit = "nix run github:pedorich-n/playit-nixos-module#playit-cli -- start";
+
+    # --- Eza ---
     ls = "eza --color=always --group-directories-first --icons";
     ll = "eza -la --icons --octal-permissions --group-directories-first";
     l = "eza -bGF --header --git --color=always --group-directories-first --icons";
@@ -25,6 +32,8 @@
     lx = "eza -lbhHigUmuSa@ --time-style=long-iso --git --color-scale --color=always --group-directories-first --icons";
     lS = "eza -1 --color=always --group-directories-first --icons";
     lt = "eza --tree --level=2 --color=always --group-directories-first --icons";
+
+    # --- Git ---
     gs = "git status";
     ga = "git add";
     gaa = "git add .";
@@ -51,10 +60,14 @@
     gwip = "git commit -m 'WIP'";
     guncommit = "git reset --soft HEAD~1 && grss .";
     gh = "git log --pretty=oneline --abbrev-commit";
+
+    # --- Clipboard ---
     cpy = "wl-copy";
     p = "wl-paste";
     cpyf = "wl-copy <";
     pf = "wl-paste >";
+
+    # --- Mix (Elixir) ---
     im = "iex -S mix";
     ims = "iex -S mix phx.server";
     mse = "mix setup";
@@ -73,6 +86,8 @@
     mec = "mix ecto.create";
     med = "mix ecto.drop";
     mni = "cd assets && ni && cd ..";
+
+    # --- NPM ---
     nr = "npm run";
     ns = "npm start";
     nd = "npm run dev";
@@ -81,6 +96,8 @@
     nfix = "npm run format:fix";
     nt = "npm run test";
     ni = "npm install";
+
+    # --- Bun ---
     br = "bun run";
     bs = "bun run start";
     bd = "bun run dev";
@@ -90,5 +107,6 @@
     bt = "bun run test";
     bi = "bun install";
     ba = "bun add";
+
   };
 }

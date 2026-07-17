@@ -12,7 +12,10 @@
 
     home.packages = [ pkgs.slack ];
 
+    # Slack reads a managed-policies JSON on Linux
+    # (~/.config/Slack/managed_storage/com.slack.Slack.json)
     xdg.configFile."Slack/managed_storage/com.slack.Slack.json".text = builtins.toJSON {
+      # Launch with native Wayland renderer
       commandLineArgs = "--enable-features=UseOzonePlatform --ozone-platform=wayland";
     };
   };

@@ -19,6 +19,11 @@ in
     programs.spicetify = {
       enable = true;
 
+      # --- THEME ---
+      # theme = spicePkgs.themes.catppuccin;
+      # colorScheme = "mocha";
+
+      # --- EXTENSIONS ---
       enabledExtensions = with spicePkgs.extensions; [
         adblock
         hidePodcasts

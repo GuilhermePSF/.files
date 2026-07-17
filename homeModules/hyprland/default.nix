@@ -11,6 +11,7 @@ let
 
   wallpaperFile = "${config.home.homeDirectory}/.background-image";
 
+  ### CURSOR POINTER CONFIGURATION ###
   cursorName = "Bibata-Modern-Classic";
   cursorPackage = pkgs.bibata-cursors;
   cursorSize = 24;
@@ -54,7 +55,9 @@ in
         "$mod" = "SUPER";
 
         monitor = [
+          # External monitor: always at origin, preferred mode
           ",preferred,0x0,1"
+          # Laptop: always below whatever external is present, auto-positioned
           "eDP-1,1920x1200@60,auto-down,1"
         ];
 
@@ -122,23 +125,33 @@ in
           "$mod, T, exec, hyprctl dispatch layoutmsg orientationcycle left top && ${
             toast "Tiling" "Layout orientation toggled" "media-record"
           }"
+
+          # Apps & Shell (Noctalia integrated)
           "$mod, Return, exec, ${terminal}"
           "$mod, B, exec, ${browser}"
           "$mod, E, exec, nautilus"
           "$mod, Space, exec, ${noctalia "launcher" "toggle"}"
           "$mod SHIFT, E, exec, ${noctalia "sessionMenu" "toggle"}"
           "$mod CTRL, L, exec, ${noctalia "lockScreen" "lock"}"
+
           "$mod SHIFT, S, exec, hyprshot -m region"
+
           "$mod SHIFT, N, exec, busctl --user set-property rs.wl-gammarelay / rs.wl.gammarelay Brightness d 0.3"
           "$mod SHIFT, M, exec, busctl --user set-property rs.wl-gammarelay / rs.wl.gammarelay Brightness d 1.0"
+
+          # Navigation (HJKL)
           "$mod, H, movefocus, l"
           "$mod, L, movefocus, r"
           "$mod, K, movefocus, u"
           "$mod, J, movefocus, d"
+
+          # Window Shifting
           "$mod SHIFT, H, movewindow, l"
           "$mod SHIFT, L, movewindow, r"
           "$mod SHIFT, K, movewindow, u"
           "$mod SHIFT, J, movewindow, d"
+
+          # Media Controls (Noctalia)
           ", XF86AudioPlay, exec, ${noctalia "media" "playPause"}"
           ", XF86AudioNext, exec, ${noctalia "media" "next"}"
           ", XF86AudioPrev, exec, ${noctalia "media" "previous"}"
@@ -165,6 +178,7 @@ in
           "$mod, mouse:273, resizewindow"
         ];
 
+        # Lid switch — lock & suspend when closed
         bindl = [
           ", switch:on:Lid Switch, exec, ${noctalia "sessionMenu" "lockAndSuspend"}"
         ];

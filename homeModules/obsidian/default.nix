@@ -14,18 +14,32 @@
       obsidian
     ];
 
+    # ----------------------------------------------------------------
+    # Vault directory (the actual notes live in ~/Obsidian)
+    # ----------------------------------------------------------------
     home.file."Obsidian/.keep".text = "";
 
+    # ----------------------------------------------------------------
+    # Global Obsidian config  (~/.config/obsidian/obsidian.json)
+    # Tells Obsidian where the vault lives and enables the GPU sandbox
+    # fix required on NixOS (Electron + Wayland).
+    # ----------------------------------------------------------------
     xdg.configFile."obsidian/obsidian.json".text = builtins.toJSON {
       vaults = {
+        # The key is arbitrary – Obsidian uses it as an internal ID
         "guilhermesVault" = {
           path = "${config.home.homeDirectory}/Obsidian/GUIs Vault";
-          ts = 1700000000000;
+          ts = 1700000000000; # static timestamp is fine
           open = true;
         };
       };
     };
 
+    # ----------------------------------------------------------------
+    # Per-vault settings  (~/Obsidian/GUIs Vault/.obsidian/)
+    # ----------------------------------------------------------------
+
+    # app.json – core editor/UI behaviour
     home.file."Obsidian/GUIs Vault/.obsidian/app.json".text = builtins.toJSON {
       promptDelete = false;
       legacyEditor = false;
@@ -44,6 +58,7 @@
       showFrontmatter = true;
     };
 
+    # appearance.json – theme & UI chrome
     home.file."Obsidian/GUIs Vault/.obsidian/appearance.json".text = builtins.toJSON {
       theme = "Tokyo Night";
       colorScheme = "obsidian";
@@ -58,11 +73,13 @@
       cssEnabledSnippets = [ ];
     };
 
+    # Tokyo Night theme CSS
     home.file."Obsidian/GUIs Vault/.obsidian/themes/Tokyo Night/theme.css".source = pkgs.fetchurl {
       url = "https://raw.githubusercontent.com/tcmmichaelb139/obsidian-tokyonight/main/theme.css";
       sha256 = "0ddk22h57r0wx62whb9679jchgy1fvx5v1n42acw7y9fycz8a7zp";
     };
 
+    # Tokyo Night theme manifest
     home.file."Obsidian/GUIs Vault/.obsidian/themes/Tokyo Night/manifest.json".text = builtins.toJSON {
       name = "Tokyo Night";
       version = "1.1.6";
@@ -70,6 +87,7 @@
       author = "tcmmichaelb139";
     };
 
+    # Style Settings – Moon variant colours
     home.file."Obsidian/GUIs Vault/.obsidian/plugins/obsidian-style-settings/data.json".text =
       builtins.toJSON
         {
@@ -91,6 +109,7 @@
           "Appearance@@text-faint@@dark" = "#828BB8";
         };
 
+    # core-plugins.json – enables/disables built-in plugins
     home.file."Obsidian/GUIs Vault/.obsidian/core-plugins.json".text = builtins.toJSON {
       "file-explorer" = true;
       "global-search" = true;
@@ -125,6 +144,7 @@
       "bases" = true;
     };
 
+    # Community plugins list (enables style-settings)
     home.file."Obsidian/GUIs Vault/.obsidian/community-plugins.json".text = builtins.toJSON [
       "obsidian-style-settings"
     ];
@@ -141,6 +161,7 @@
         }
       ];
 
+      # Quick switcher
       "switcher:open" = [
         {
           modifiers = [ "Ctrl" ];
@@ -148,6 +169,7 @@
         }
       ];
 
+      # Command palette
       "command-palette:open" = [
         {
           modifiers = [ "Ctrl" ];
@@ -155,6 +177,7 @@
         }
       ];
 
+      # Toggle reading / live-preview view
       "markdown.toggle-preview" = [
         {
           modifiers = [ "Ctrl" ];
@@ -162,6 +185,7 @@
         }
       ];
 
+      # Graph view
       "graph:open" = [
         {
           modifiers = [ "Ctrl" ];
@@ -169,6 +193,7 @@
         }
       ];
 
+      # New note
       "app:create-new-note" = [
         {
           modifiers = [
@@ -179,6 +204,7 @@
         }
       ];
 
+      # Daily note
       "daily-notes" = [
         {
           modifiers = [ "Ctrl" ];
@@ -186,6 +212,7 @@
         }
       ];
 
+      # Search in all files
       "global-search:open" = [
         {
           modifiers = [
@@ -220,6 +247,7 @@
       close = false;
     };
 
+    # daily-notes.json – daily notes config
     home.file."Obsidian/GUIs Vault/.obsidian/daily-notes.json".text = builtins.toJSON {
       folder = "1 - Raw Notes";
       format = "YYYY-MM-DD";
