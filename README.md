@@ -13,6 +13,7 @@
 │   ├── packages.nix
 │   ├── stylix
 │   │   ├── default.nix
+│   │   ├── wallpaper-black.jpg
 │   │   └── wallpaper.jpg
 │   └── users.nix
 ├── flake.lock
@@ -27,7 +28,8 @@
 │   ├── devtools
 │   │   └── default.nix
 │   ├── fastfetch
-│   │   └── default.nix
+│   │   ├── default.nix
+│   │   └── logo.ans
 │   ├── firefox
 │   │   └── default.nix
 │   ├── ghostty
@@ -37,8 +39,6 @@
 │   ├── hyprland
 │   │   └── default.nix
 │   ├── jetbrains
-│   │   └── default.nix
-│   ├── kanshi
 │   │   └── default.nix
 │   ├── krita
 │   │   └── default.nix
@@ -73,10 +73,12 @@
 │   │   └── default.nix
 │   ├── vscode
 │   │   └── default.nix
+│   ├── zed
+│   │   └── default.nix
 │   └── zsh
 │       ├── aliases.nix
 │       └── default.nix
 └── home.nix
 
-34 directories, 41 files
+34 directories, 43 files
 ```

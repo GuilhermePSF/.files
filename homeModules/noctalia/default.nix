@@ -13,7 +13,6 @@
 
   config = lib.mkIf config.noctaliaModule.enable {
 
-    # 1. Required packages for Plugins and Clipboard
     home.packages = with pkgs; [
       cliphist
       wl-clipboard
@@ -21,44 +20,16 @@
 
     programs.noctalia-shell = {
       enable = true;
-      systemd.enable = true;
-
-      plugins = {
-        sources = [
-          {
-            enabled = true;
-            name = "Official Noctalia Plugins";
-            url = "https://github.com/noctalia-dev/noctalia-plugins";
-          }
-        ];
-        states = {
-          weekly-calendar = {
-            enabled = true;
-            sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-          };
-          screenshot = {
-            enabled = true;
-            sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-          };
-          screen-recorder = {
-            enabled = true;
-            sourceUrl = "https://github.com/noctalia-dev/noctalia-plugins";
-          };
-        };
-        version = 2;
-      };
 
       settings = {
         bar = {
           density = "compact";
           position = "top";
 
-          marginVertical = 4;
+          marginVertical = 10;
           marginHorizontal = 10;
-          # Use mkForce to win over the upstream module default of 1.0
           backgroundOpacity = lib.mkForce 0.8;
           showCapsule = true;
-          frameRadius = 12;
 
           widgets = {
             left = [
@@ -84,8 +55,6 @@
                 id = "Battery";
                 warningThreshold = 30;
               }
-              { id = "screenshot"; }
-              { id = "screen-recorder"; }
               {
                 id = "Clock";
                 formatHorizontal = "ddd, MMM dd  •  HH:mm";

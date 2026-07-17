@@ -1,5 +1,4 @@
 {
-
   pkgs,
   lib,
   config,
@@ -12,20 +11,15 @@
   config = lib.mkIf config.devtoolsModule.enable {
 
     home.packages = with pkgs; [
-      # --- JVM ---
       jdk21
-
       zig
-
-      # --- Python ---
+      odin
       python3
       python3Packages.uv
       python313Packages.scapy
-
       bun
       nodejs_22
-
-      bruno
+      rust-bin.stable.latest.default
     ];
   };
 }

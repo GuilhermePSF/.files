@@ -14,13 +14,28 @@
   };
 
   services.displayManager.sessionPackages = [ pkgs.niri ];
-  services.displayManager.ly.enable = true;
+  services.displayManager.gdm.enable = true;
+  services.gnome.gnome-keyring.enable = true;
+
+  environment.gnome.excludePackages = with pkgs; [
+    epiphany
+    geary
+    gedit
+    gnome-characters
+    gnome-console
+    gnome-tour
+    yelp
+  ];
+
+  services.desktopManager.gnome.enable = true;
+
+  services.libinput.touchpad.disableWhileTyping = false;
 
   xdg.portal = {
     enable = true;
     extraPortals = [
       pkgs.xdg-desktop-portal-hyprland
-      pkgs.xdg-desktop-portal-gnome # keeps GTK file pickers working
+      pkgs.xdg-desktop-portal-gnome
     ];
     config.common.default = "*";
   };
@@ -28,30 +43,35 @@
   programs.dconf.enable = true;
 
   virtualisation.libvirtd.enable = true;
+
   virtualisation.docker.enable = true;
+  virtualisation.docker.package = pkgs.docker_29;
+
   programs.virt-manager.enable = true;
 
   programs.wireshark.enable = true;
   programs.wireshark.package = pkgs.wireshark;
 
-  #services.fprintd = {
-  #  enable = true;
-  #  tod.enable = true;
-  #  tod.driver = pkgs.libfprint-2-tod1-goodix;
-  #};
+  security.polkit.enable = true;
 
-  # security.pam.services = {
-    # login.fprintAuth = true;
-    # polkit-1.fprintAuth = true;
-    # ly.fprintAuth = true;
-  # };
-# 
-  # sudo: prompt for fingerprint AND password at the same time
-  # security.pam.services.sudo.text = ''
-    # auth sufficient pam_unix.so try_first_pass
-    # auth sufficient pam_fprintd.so
-    # auth required pam_deny.so
-    # account required pam_unix.so
-    # session required pam_unix.so
-  # '';
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if (action.id.indexOf("net.reactivated.fprint.") == 0 &&
+          subject.local && subject.active) {
+        return polkit.Result.YES;
+      }
+    });
+  '';
+
+  services.fprintd.enable = true;
+  services.fprintd.tod.enable = true;
+  services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
+
+  security.pam.services.sudo.text = ''
+  auth sufficient pam_fprintd.so timeout=5
+  auth sufficient pam_unix.so try_first_pass nullok
+  auth required pam_deny.so
+  account required pam_unix.so
+  session required pam_unix.so
+'';
 }

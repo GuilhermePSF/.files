@@ -16,18 +16,6 @@
 
       # --- Images ---
       loupe # GNOME image viewer
-
-      # --- Photo management ---
-      shotwell # Photo manager
-
-      # --- Fonts ---
-      font-manager # Browse & preview installed fonts
-
-      # --- PDF ---
-      masterpdfeditor4 # Proprietary garbage but fuckit
-
-      # --- SVG ---
-      inkscape # SVG editor
     ];
   };
 }

@@ -11,13 +11,14 @@ let
 
   wallpaperFile = "${config.home.homeDirectory}/.background-image";
 
-  ### CURSOR POINTER CONFIGURATION ###
   cursorName = "Bibata-Modern-Classic";
   cursorPackage = pkgs.bibata-cursors;
   cursorSize = 24;
 
   noctalia = action: cmd: "noctalia-shell ipc call \"${action}\" \"${cmd}\"";
-  toast = title: body: icon: "noctalia-shell ipc call toast send '{\"title\":\"${title}\",\"body\":\"${body}\",\"icon\":\"${icon}\",\"duration\":1500}'";
+  toast =
+    title: body: icon:
+    "noctalia-shell ipc call toast send '{\"title\":\"${title}\",\"body\":\"${body}\",\"icon\":\"${icon}\",\"duration\":1500}'";
 in
 {
   options.hyprlandModule.enable = lib.mkEnableOption "Enable Hyprland Module";
@@ -33,7 +34,7 @@ in
       gpu-screen-recorder
       cursorPackage
       wl-gammarelay-rs
-      nwg-displays   # GUI for manual layout tweaking when needed
+      nwg-displays
     ];
 
     xdg.configFile."hypr/hyprpaper.conf".text = ''
@@ -52,13 +53,8 @@ in
       settings = {
         "$mod" = "SUPER";
 
-        # Monitor layout — kanshi manages profiles automatically on plug/unplug.
-        # These rules are the fallback for any monitor not matched by kanshi,
-        # and define the initial layout on startup before kanshi applies its profile.
         monitor = [
-          # External monitor: always at origin, preferred mode
           ",preferred,0x0,1"
-          # Laptop: always below whatever external is present, auto-positioned
           "eDP-1,1920x1200@60,auto-down,1"
         ];
 
@@ -71,9 +67,9 @@ in
         ];
 
         general = {
-          gaps_in = 4;
-          gaps_out = 6;
-          border_size = 3;
+          gaps_in = 1;
+          gaps_out = 3;
+          border_size = 2;
           layout = "master";
           resize_on_border = true;
         };
@@ -93,6 +89,7 @@ in
           touchpad = {
             natural_scroll = true;
             tap-to-click = true;
+            disable_while_typing = false;
           };
         };
 
@@ -122,37 +119,26 @@ in
           "$mod SHIFT, Q, exit"
           "$mod, F, fullscreen"
           "$mod, V, togglefloating"
-          "$mod, T, exec, hyprctl dispatch layoutmsg orientationcycle left top && ${toast "Tiling" "Layout orientation toggled" "media-record"}"
-
-          # Apps & Shell (Noctalia integrated)
+          "$mod, T, exec, hyprctl dispatch layoutmsg orientationcycle left top && ${
+            toast "Tiling" "Layout orientation toggled" "media-record"
+          }"
           "$mod, Return, exec, ${terminal}"
           "$mod, B, exec, ${browser}"
           "$mod, E, exec, nautilus"
           "$mod, Space, exec, ${noctalia "launcher" "toggle"}"
           "$mod SHIFT, E, exec, ${noctalia "sessionMenu" "toggle"}"
-          "$mod SHIFT, L, exec, ${noctalia "lockScreen" "lock"}"
-
+          "$mod CTRL, L, exec, ${noctalia "lockScreen" "lock"}"
           "$mod SHIFT, S, exec, hyprshot -m region"
-
           "$mod SHIFT, N, exec, busctl --user set-property rs.wl-gammarelay / rs.wl.gammarelay Brightness d 0.3"
           "$mod SHIFT, M, exec, busctl --user set-property rs.wl-gammarelay / rs.wl.gammarelay Brightness d 1.0"
-
-          # Toggle laptop screen on/off (handled by kanshiModule's toggle script)
-          "$mod, P, exec, toggle-laptop-screen"
-
-          # Navigation (HJKL)
           "$mod, H, movefocus, l"
           "$mod, L, movefocus, r"
           "$mod, K, movefocus, u"
           "$mod, J, movefocus, d"
-
-          # Window Shifting
           "$mod SHIFT, H, movewindow, l"
           "$mod SHIFT, L, movewindow, r"
           "$mod SHIFT, K, movewindow, u"
           "$mod SHIFT, J, movewindow, d"
-
-          # Media Controls (Noctalia)
           ", XF86AudioPlay, exec, ${noctalia "media" "playPause"}"
           ", XF86AudioNext, exec, ${noctalia "media" "next"}"
           ", XF86AudioPrev, exec, ${noctalia "media" "previous"}"
@@ -179,7 +165,6 @@ in
           "$mod, mouse:273, resizewindow"
         ];
 
-        # Lid switch — lock & suspend when closed
         bindl = [
           ", switch:on:Lid Switch, exec, ${noctalia "sessionMenu" "lockAndSuspend"}"
         ];
@@ -190,6 +175,7 @@ in
           "hyprctl setcursor ${cursorName} ${toString cursorSize}"
           "wl-paste --type text --watch cliphist store"
           "wl-paste --type image --watch cliphist store"
+          "noctalia-shell"
         ];
       };
     };

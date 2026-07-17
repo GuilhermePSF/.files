@@ -13,64 +13,49 @@ in
 
   config = lib.mkIf config.zshModule.enable {
 
-    # 1. Install the tools your aliases rely on
     home.packages = with pkgs; [
-      # --- System Tools ---
-      eza # Better ls
-      chafa # Image viewer
-      gdu # Disk usage
-      ripgrep # Better grep
-      fd # Better find
-      bat # Better cat
-      fzf # Fuzzy finder
-      zoxide # Smarter cd
-      xclip # Clipboard tool
-
-      # --- Dependencies for your specific Aliases ---
+      eza
+      chafa
+      gdu
+      ripgrep
+      fd
+      bat
+      fzf
+      zoxide
+      wl-clipboard
       xrandr
-
-      # --- Dev Tools ---
-      go # Go
-      rustc # Rust Compiler
-      cargo # Rust Package Manager
-      pnpm # JS Package Manager
-
+      go
+      pnpm
       direnv
       nix-direnv
-
       gcc
       gnumake
     ];
 
     programs.zsh = {
-      enable                  = true;
-      enableCompletion        = true;
-      autosuggestion.enable   = true;
+      enable = true;
+      dotDir = ".config/nvim";
+      enableCompletion = true;
+      autosuggestion.enable = true;
       syntaxHighlighting.enable = true;
 
-      # Import the aliases file
       shellAliases = aliases.shellAliases;
 
-      # Environment Variables
       sessionVariables = {
-        LANG        = "en_US.UTF-8";
-        EDITOR      = "nvim";
+        LANG = "en_US.UTF-8";
+        EDITOR = "nvim";
         SUDO_EDITOR = "nvim";
-        BROWSER     = "brave";
-
-        # History Settings
+        BROWSER = "brave";
         HISTFILESIZE = "100000000000";
-        SAVEHIST     = "5000000";
-        HISTSIZE     = "5000000";
-        HIST_STAMPS  = "dd-mm-yyyy";
-
-        # Elixir History
+        SAVEHIST = "5000000";
+        HISTSIZE = "5000000";
+        HIST_STAMPS = "dd-mm-yyyy";
         ERL_AFLAGS = "-kernel shell_history enabled -kernel shell_history_file_bytes 4096000";
       };
 
       oh-my-zsh = {
         enable = true;
-        theme  = "robbyrussell";
+        theme = "robbyrussell";
         plugins = [
           "git"
           "colored-man-pages"
@@ -81,32 +66,30 @@ in
       initContent = ''
         ${pkgs.fastfetch}/bin/fastfetch
 
-        # Ensure ~/.local/bin (uv tool installs) is always in PATH
         export PATH="$HOME/.local/bin:$PATH"
 
         eval "$(direnv hook zsh)"
 
-        # --- Custom Functions ---
         ce() { cd "$@" && code . && exit; }
         co() { cd "$@" && nautilus . > /dev/null 2>&1 & disown; }
       '';
     };
 
     programs.fzf = {
-      enable              = true;
+      enable = true;
       enableZshIntegration = true;
     };
 
     programs.zoxide = {
-      enable              = true;
+      enable = true;
       enableZshIntegration = true;
-      options             = [ "--cmd cd" ];
+      options = [ "--cmd cd" ];
     };
 
     programs.direnv = {
-      enable              = true;
+      enable = true;
       enableZshIntegration = true;
-      nix-direnv.enable   = true;
+      nix-direnv.enable = true;
     };
   };
 }

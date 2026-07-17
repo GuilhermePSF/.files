@@ -12,8 +12,6 @@
 
     home.packages = [ pkgs.krita ];
 
-    # Krita stores its config in ~/.config/kritarc (INI format).
-    # We seed the most useful defaults; Krita merges unknown keys safely.
     xdg.configFile."kritarc".text = ''
       [General]
       theme=Dark

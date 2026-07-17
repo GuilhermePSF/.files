@@ -11,52 +11,29 @@
   config = lib.mkIf config.nautilusModule.enable {
 
     home.packages = with pkgs; [
-      # --- Core ---
       nautilus
-
-      # --- GVFS backends (network mounts: SMB, MTP, SSH, Google Drive, FTP) ---
-      gvfs # Core virtual filesystem (includes FUSE support)
-
-      # --- Thumbnails & Previews ---
-      gnome-epub-thumbnailer # ePub
-      ffmpegthumbnailer # Video thumbnails
-      evince # PDF previewer + viewer
-      webp-pixbuf-loader # WebP image support in GTK
-
-      # --- Quick Look / Spacebar preview (like macOS) ---
-      sushi # Spacebar file previewer
-
-      # --- Archive support (right-click extract/compress) ---
-      file-roller # GNOME archive manager GUI
+      gvfs
+      gnome-epub-thumbnailer
+      ffmpegthumbnailer
+      evince
+      webp-pixbuf-loader
+      sushi
+      file-roller
       p7zip
       unzip
       zip
       unrar
-
-      # --- Image viewer ---
-      # loupe is provided by mediaModule
-
-      # --- Trash, bookmarks, monitoring ---
-      glib # gio CLI (gio trash, gio open, etc.)
-
-      # --- Nautilus extensions ---
-      nautilus-python # Python extension API
-
-      # --- Wayland clipboard ---
+      glib
+      nautilus-python
       wl-clipboard
     ];
 
-    # ----------------------------------------------------------------
-    # XDG MIME — Nautilus handles all directory/file open requests
-    # ----------------------------------------------------------------
     xdg.mimeApps = {
       enable = true;
       defaultApplications = {
         "inode/directory" = [ "org.gnome.Nautilus.desktop" ];
         "application/x-directory" = [ "org.gnome.Nautilus.desktop" ];
         "x-directory/normal" = [ "org.gnome.Nautilus.desktop" ];
-
-        # Archives → File Roller
         "application/zip" = [ "org.gnome.FileRoller.desktop" ];
         "application/x-tar" = [ "org.gnome.FileRoller.desktop" ];
         "application/x-bzip2" = [ "org.gnome.FileRoller.desktop" ];
@@ -65,8 +42,6 @@
         "application/x-rar" = [ "org.gnome.FileRoller.desktop" ];
         "application/x-xz" = [ "org.gnome.FileRoller.desktop" ];
         "application/x-zstd-compressed-tar" = [ "org.gnome.FileRoller.desktop" ];
-
-        # Images → Loupe (provided by mediaModule)
         "image/jpeg" = [ "org.gnome.Loupe.desktop" ];
         "image/png" = [ "org.gnome.Loupe.desktop" ];
         "image/gif" = [ "org.gnome.Loupe.desktop" ];
@@ -74,15 +49,10 @@
         "image/svg+xml" = [ "org.gnome.Loupe.desktop" ];
         "image/bmp" = [ "org.gnome.Loupe.desktop" ];
         "image/tiff" = [ "org.gnome.Loupe.desktop" ];
-
-        # PDFs → Evince
         "application/pdf" = [ "org.gnome.Evince.desktop" ];
       };
     };
 
-    # ----------------------------------------------------------------
-    # GNOME portal — file picker used by Brave, VSCode, Firefox, etc.
-    # ----------------------------------------------------------------
     xdg.configFile."xdg-desktop-portal/portals.conf".text = ''
       [preferred]
       default=gnome
@@ -90,9 +60,6 @@
       org.freedesktop.impl.portal.AppChooser=gnome
     '';
 
-    # ----------------------------------------------------------------
-    # Nautilus preferences via dconf
-    # ----------------------------------------------------------------
     dconf.settings = {
       "org/gnome/nautilus/preferences" = {
         default-folder-viewer = "list-view";
@@ -130,7 +97,6 @@
       "org/gnome/nautilus/compression" = {
         default-compression-format = "zip";
       };
-      # File chooser dialog (used by ALL apps via portal)
       "org/gtk/settings/file-chooser" = {
         show-hidden = false;
         sort-directories-first = true;
@@ -148,9 +114,6 @@
       };
     };
 
-    # ----------------------------------------------------------------
-    # Bookmarks (sidebar in Nautilus + all GTK file pickers)
-    # ----------------------------------------------------------------
     home.file.".config/gtk-3.0/bookmarks".text = ''
       file:///home/gui/UMINHO UMinho
       file:///home/gui/Downloads Downloads

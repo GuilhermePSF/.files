@@ -21,13 +21,20 @@
     bluez-tools
     nixfmt
     gemini-cli
-    qemu_kvm
+    alacritty
     man-pages
-    man-pages-posix
+    man-pages-posix 
     usbutils
     glib
     glib.dev
     pkg-config
+    exercism
+    hyperfine
+    qbittorrent
+
+    eduvpn-client
+
+    poppler-utils
   ];
 
   nixpkgs.config.allowUnfree = true;
@@ -38,6 +45,8 @@
     zlib
     openssl
   ];
+
+  services.flatpak.enable = true;
 
   environment.variables = {
     NH_FLAKE = "/home/gui/nixos-config";

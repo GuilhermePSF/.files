@@ -16,8 +16,11 @@
       {
         "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
         "logo": {
-          "source": "nixos_small",
+          "source": "/home/gui/nixos-config/homeModules/fastfetch/sunflower.png",
+          "height": 10,
           "padding": {
+            "top": 0 ,
+            "left": 0,
             "right": 2
           }
         },

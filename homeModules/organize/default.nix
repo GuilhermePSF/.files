@@ -12,25 +12,14 @@
 
     home.packages = with pkgs; [ uv ];
 
-    # ~/.local/bin is where uv installs tool binaries — make sure it's in PATH
     home.sessionPath = [ "$HOME/.local/bin" ];
 
-    # organize-tool is not yet packaged in nixpkgs 25.11 — install via uv.
-    # uv tool install is idempotent so this is safe to run on every switch.
     home.activation.installOrganizeTool = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       $DRY_RUN_CMD ${pkgs.uv}/bin/uv tool install --quiet organize-tool || true
     '';
 
-    # ----------------------------------------------------------------
-    # organize-tool config — ~/.config/organize-tool/config.yaml
-    # Rules run top-to-bottom; first match wins, so specific rules
-    # (CVs, Wallpapers) always come before their broader siblings
-    # (PDFs, Images).
-    # ----------------------------------------------------------------
     xdg.configFile."organize/config.yaml".text = ''
       rules:
-
-        # ── PICTURES ────────────────────────────────────────────────
 
         - name: "Screenshots (hyprshot) from Pictures"
           locations:
@@ -68,8 +57,6 @@
                 - tiff
           actions:
             - move: ~/Pictures/Wallpapers/
-
-        # ── DOCUMENTS ───────────────────────────────────────────────
 
         - name: "CVs and Résumés"
           locations:
@@ -128,8 +115,6 @@
                 - fb2
           actions:
             - move: ~/Documents/Books/
-
-        # ── MEDIA ───────────────────────────────────────────────────
 
         - name: "Vector and Design files"
           locations:
@@ -198,8 +183,6 @@
           actions:
             - move: ~/Music/
 
-        # ── DEV / SYSTEM ────────────────────────────────────────────
-
         - name: "Fonts"
           locations:
             - ~/Downloads
@@ -262,8 +245,6 @@
           actions:
             - move: ~/dev/databases/
 
-        # ── WEB / MISC ───────────────────────────────────────────────
-
         - name: "HTML and Web exports"
           locations:
             - ~/Downloads
@@ -302,8 +283,6 @@
           actions:
             - move: ~/Downloads/Configs/
 
-        # ── HOME ROOT CLEANUP ────────────────────────────────────────
-
         - name: "Loose files in home root (non-nix)"
           locations:
             - path: ~
@@ -314,8 +293,6 @@
           actions:
             - move: ~/Misc/
 
-        # ── FALLBACK ────────────────────────────────────────────────
-
         - name: "Catch-all"
           locations:
             - ~/Downloads
@@ -324,8 +301,6 @@
             - move: ~/Misc/
     '';
 
-    # organize run is one-shot — no daemon mode exists.
-    # We use a systemd timer to run it every 5 minutes.
     systemd.user.services.organize-tool = {
       Unit.Description = "organize-tool: sort files";
       Service = {
@@ -345,7 +320,6 @@
       Install.WantedBy = [ "timers.target" ];
     };
 
-    # Ensure all destination directories exist
     home.activation.createOrganizeDirs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       for dir in \
         "$HOME/Pictures/Screenshots" \

@@ -43,12 +43,11 @@
         };
       };
 
-      # System-level targets only — home-manager targets live in their own modules
       targets = {
         gtk.enable = true;
         qt.enable = true;
         plymouth.enable = true;
-        grub.enable = false; # using systemd-boot
+        grub.enable = false;
         console.enable = true;
       };
     };

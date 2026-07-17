@@ -13,16 +13,18 @@
   home.enableNixpkgsReleaseCheck = false;
   stylix.enableReleaseChecks = false;
 
-  niriModule.enable = true;
+  niriModule.enable = false;
+  hyprlandModule.enable = false;
+  gnomeModule.enable = true;
   gitModule.enable = true;
   obsidianModule.enable = true;
   zshModule.enable = true;
-  hyprlandModule.enable = true;
   fastfetchModule.enable = true;
   ghosttyModule.enable = true;
   noctaliaModule.enable = true;
   minecraftModule.enable = false;
   vscodeModule.enable = true;
+  zedModule.enable = true;
   nhModule.enable = true;
   spicetifyModule.enable = true;
   braveModule.enable = true;
@@ -33,15 +35,17 @@
   vesktopModule.enable = true;
   slackModule.enable = true;
   jetbrainsModule.enable = true;
-  organizeModule.enable = true;
+  organizeModule.enable = false;
   pavucontrolModule.enable = true;
   mediaModule.enable = true;
   devtoolsModule.enable = true;
 
   imports = [
+    ./homeModules/gnome
     ./homeModules/hyprland
     ./homeModules/niri
     ./homeModules/vscode
+    ./homeModules/zed
     ./homeModules/zsh
     ./homeModules/git
     ./homeModules/fastfetch

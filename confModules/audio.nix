@@ -13,7 +13,6 @@
       "99-audio-priority" = {
         "monitor.alsa.rules" = [
           {
-            # All HDMI/DP outputs — low priority (exact prefix from wpctl inspect)
             matches = [
               { "node.name" = "~alsa_output.*HiFi__HDMI.*__sink"; }
               { "node.name" = "~alsa_output.*HiFi__DP.*__sink"; }
@@ -24,7 +23,6 @@
             };
           }
           {
-            # Headphone jack — highest priority, auto-switches when plugged in
             matches = [
               { "node.name" = "~alsa_output.*HiFi__Headphones.*__sink"; }
               { "node.name" = "~alsa_output.*HiFi__Headphone.*__sink"; }
