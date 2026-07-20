@@ -49,7 +49,10 @@
     {
       nixosConfigurations.nixos-btw = nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
-        specialArgs = { inherit inputs; };
+        specialArgs = {
+          inherit inputs;
+          config = import ./config.nix;
+        };
         modules = [
           ./configuration.nix
 
@@ -84,7 +87,10 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
-              extraSpecialArgs = { inherit inputs; };
+              extraSpecialArgs = {
+                inherit inputs;
+                config = import ./config.nix;
+              };
               sharedModules = [
                 inputs.zed-extensions.homeManagerModules.default
               ];

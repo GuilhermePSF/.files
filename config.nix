@@ -16,6 +16,13 @@
     email = "guilhermepsf23@gmail.com";
   };
 
+  # NixOS Configuration
+  nixosConfig = "${homeDirectory}/nixos-config";
+
+  # Obsidian Configuration
+  obsidianVault = "GUIs Vault";
+  obsidianVaultId = "guilhermesVault";
+
   # Primary Desktop Environment
   #
   # Select which desktop environment to enable by default.

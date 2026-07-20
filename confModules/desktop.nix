@@ -68,10 +68,10 @@
   services.fprintd.tod.driver = pkgs.libfprint-2-tod1-goodix;
 
   security.pam.services.sudo.text = ''
-  auth sufficient pam_fprintd.so timeout=5
-  auth sufficient pam_unix.so try_first_pass nullok
-  auth required pam_deny.so
-  account required pam_unix.so
-  session required pam_unix.so
-'';
+    auth sufficient pam_fprintd.so timeout=5
+    auth sufficient pam_unix.so try_first_pass nullok
+    auth required pam_deny.so
+    account required pam_unix.so
+    session required pam_unix.so
+  '';
 }

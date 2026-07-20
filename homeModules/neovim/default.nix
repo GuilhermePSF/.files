@@ -20,272 +20,250 @@
       viAlias = true;
       vimAlias = true;
 
-            extraPackages = with pkgs; [
+      extraPackages = with pkgs; [
 
-              # LSP servers
+        # LSP servers
 
-              lua-language-server
+        lua-language-server
 
-              nil # Nix LSP
+        nil # Nix LSP
 
-              nodePackages.typescript-language-server
+        nodePackages.typescript-language-server
 
-              vscode-langservers-extracted # HTML/CSS/JSON/ESLint
+        vscode-langservers-extracted # HTML/CSS/JSON/ESLint
 
-            ];
+      ];
 
-      
+      plugins = with pkgs.vimPlugins; [
 
-            plugins = with pkgs.vimPlugins; [
+        # --- Plugin manager bootstrap ---
 
-              # --- Plugin manager bootstrap ---
+        lazy-nvim
 
-              lazy-nvim
+        # --- Treesitter (syntax) ---
 
-      
+        nvim-treesitter.withAllGrammars
 
-              # --- Treesitter (syntax) ---
+        # --- LSP ---
 
-              nvim-treesitter.withAllGrammars
+        nvim-lspconfig
 
-      
+        # --- Completion ---
 
-              # --- LSP ---
+        nvim-cmp
 
-              nvim-lspconfig
+        cmp-nvim-lsp
 
-      
+        cmp-buffer
 
-              # --- Completion ---
+        cmp-path
 
-              nvim-cmp
+        luasnip
 
-              cmp-nvim-lsp
+        cmp_luasnip
 
-              cmp-buffer
+        # --- File tree ---
 
-              cmp-path
+        nvim-tree-lua
 
-              luasnip
+        nvim-web-devicons
 
-              cmp_luasnip
+        # --- Fuzzy finder ---
 
-      
+        telescope-nvim
 
-              # --- File tree ---
+        plenary-nvim
 
-              nvim-tree-lua
+        # --- Git ---
 
-              nvim-web-devicons
+        gitsigns-nvim
 
-      
+        # --- Status line ---
 
-              # --- Fuzzy finder ---
+        lualine-nvim
 
-              telescope-nvim
+        # --- Stylix (base16 colours) ---
 
-              plenary-nvim
+        base16-nvim
 
-      
+      ];
 
-              # --- Git ---
+      extraLuaConfig = ''
 
-              gitsigns-nvim
+        -- Basic options
 
-      
+        vim.opt.number         = true
 
-              # --- Status line ---
+        vim.opt.relativenumber = true
 
-              lualine-nvim
+        vim.opt.expandtab      = true
 
-      
+        vim.opt.shiftwidth     = 2
 
-              # --- Stylix (base16 colours) ---
+        vim.opt.tabstop        = 2
 
-              base16-nvim
+        vim.opt.smartindent    = true
 
-            ];
+        vim.opt.wrap           = true
 
-      
+        vim.opt.termguicolors  = true
 
-            extraLuaConfig = ''
+        vim.opt.signcolumn     = "yes"
 
-              -- Basic options
+        vim.opt.updatetime     = 250
 
-              vim.opt.number         = true
+        vim.opt.timeoutlen     = 300
 
-              vim.opt.relativenumber = true
+        vim.opt.undofile       = true
 
-              vim.opt.expandtab      = true
 
-              vim.opt.shiftwidth     = 2
 
-              vim.opt.tabstop        = 2
+        -- Leader
 
-              vim.opt.smartindent    = true
+        vim.g.mapleader      = " "
 
-              vim.opt.wrap           = true
+        vim.g.maplocalleader = " "
 
-              vim.opt.termguicolors  = true
 
-              vim.opt.signcolumn     = "yes"
 
-              vim.opt.updatetime     = 250
+        -- Colour scheme (Stylix injects base16 colors when available)
 
-              vim.opt.timeoutlen     = 300
+        local ok, base16 = pcall(require, "base16-colorscheme")
 
-              vim.opt.undofile       = true
+        if ok then
 
-      
+          if type(vim.g.base16_theme) == "table" then
 
-              -- Leader
+            base16.setup(vim.g.base16_theme)
 
-              vim.g.mapleader      = " "
+          else
 
-              vim.g.maplocalleader = " "
+            vim.cmd("colorscheme default")
 
-      
+          end
 
-              -- Colour scheme (Stylix injects base16 colors when available)
+        end
 
-              local ok, base16 = pcall(require, "base16-colorscheme")
 
-              if ok then
 
-                if type(vim.g.base16_theme) == "table" then
+        -- Lualine
 
-                  base16.setup(vim.g.base16_theme)
+        require("lualine").setup({ options = { theme = "base16" } })
 
-                else
 
-                  vim.cmd("colorscheme default")
 
-                end
+        -- Telescope keymaps
 
-              end
+        local tb = require("telescope.builtin")
 
-      
+        vim.keymap.set("n", "<leader>ff", tb.find_files,  { desc = "Find files" })
 
-              -- Lualine
+        vim.keymap.set("n", "<leader>fg", tb.live_grep,   { desc = "Live grep" })
 
-              require("lualine").setup({ options = { theme = "base16" } })
+        vim.keymap.set("n", "<leader>fb", tb.buffers,     { desc = "Buffers" })
 
-      
 
-              -- Telescope keymaps
 
-              local tb = require("telescope.builtin")
+        -- Nvim-tree
 
-              vim.keymap.set("n", "<leader>ff", tb.find_files,  { desc = "Find files" })
+        require("nvim-tree").setup()
 
-              vim.keymap.set("n", "<leader>fg", tb.live_grep,   { desc = "Live grep" })
+        vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "File tree" })
 
-              vim.keymap.set("n", "<leader>fb", tb.buffers,     { desc = "Buffers" })
 
-      
 
-              -- Nvim-tree
+        -- LSP keymaps (attached per buffer)
 
-              require("nvim-tree").setup()
+        vim.api.nvim_create_autocmd("LspAttach", {
 
-              vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "File tree" })
+          callback = function(ev)
 
-      
+            local opts = { buffer = ev.buf }
 
-              -- LSP keymaps (attached per buffer)
+            vim.keymap.set("n", "gd",         vim.lsp.buf.definition,     opts)
 
-              vim.api.nvim_create_autocmd("LspAttach", {
+            vim.keymap.set("n", "K",          vim.lsp.buf.hover,          opts)
 
-                callback = function(ev)
+            vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename,         opts)
 
-                  local opts = { buffer = ev.buf }
+            vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action,    opts)
 
-                  vim.keymap.set("n", "gd",         vim.lsp.buf.definition,     opts)
+            vim.keymap.set("n", "<leader>f",  vim.lsp.buf.format,         opts)
 
-                  vim.keymap.set("n", "K",          vim.lsp.buf.hover,          opts)
+          end,
 
-                  vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename,         opts)
+        })
 
-                  vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action,    opts)
 
-                  vim.keymap.set("n", "<leader>f",  vim.lsp.buf.format,         opts)
 
-                end,
+        local servers = { "lua_ls", "nil_ls", "ts_ls" }
 
-              })
 
-      
 
-              local servers = { "lua_ls", "nil_ls", "ts_ls" }
+        for _, server_name in ipairs(servers) do
 
-      
+          vim.lsp.config(server_name, {})
 
-              for _, server_name in ipairs(servers) do
+          vim.lsp.enable(server_name)
 
-                vim.lsp.config(server_name, {})
+        end
 
-                vim.lsp.enable(server_name)
 
-              end
 
-      
+        -- Completion
 
-              -- Completion
+        local cmp     = require("cmp")
 
-              local cmp     = require("cmp")
+        local luasnip = require("luasnip")
 
-              local luasnip = require("luasnip")
+        cmp.setup({
 
-              cmp.setup({
+          snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
 
-                snippet = { expand = function(args) luasnip.lsp_expand(args.body) end },
+          mapping = cmp.mapping.preset.insert({
 
-                mapping = cmp.mapping.preset.insert({
+            ["<C-Space>"] = cmp.mapping.complete(),
 
-                  ["<C-Space>"] = cmp.mapping.complete(),
+            ["<CR>"]      = cmp.mapping.confirm({ select = true }),
 
-                  ["<CR>"]      = cmp.mapping.confirm({ select = true }),
+            ["<Tab>"]     = cmp.mapping(function(fallback)
 
-                  ["<Tab>"]     = cmp.mapping(function(fallback)
+              if cmp.visible() then cmp.select_next_item()
 
-                    if cmp.visible() then cmp.select_next_item()
+              elseif luasnip.expand_or_jumpable() then luasnip.expand_or_jump()
 
-                    elseif luasnip.expand_or_jumpable() then luasnip.expand_or_jump()
+              else fallback() end
 
-                    else fallback() end
+            end, { "i", "s" }),
 
-                  end, { "i", "s" }),
+          }),
 
-                }),
+          sources = cmp.config.sources({
 
-                sources = cmp.config.sources({
+            { name = "nvim_lsp" },
 
-                  { name = "nvim_lsp" },
+            { name = "luasnip" },
 
-                  { name = "luasnip" },
+            { name = "buffer" },
 
-                  { name = "buffer" },
+            { name = "path" },
 
-                  { name = "path" },
+          }),
 
-                }),
+        })
 
-              })
 
-      
 
-              -- Gitsigns
+        -- Gitsigns
 
-              require("gitsigns").setup()
+        require("gitsigns").setup()
 
-            '';
+      '';
 
-          };
+    };
 
-      
+    # Stylix handles the colour scheme via base16-nvim above
 
-          # Stylix handles the colour scheme via base16-nvim above
-
-          stylix.targets.neovim.enable = true;
+    stylix.targets.neovim.enable = true;
   };
 }

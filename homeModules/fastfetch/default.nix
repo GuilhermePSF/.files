@@ -16,7 +16,7 @@
       {
         "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
         "logo": {
-          "source": "/home/gui/nixos-config/homeModules/fastfetch/sunflower.png",
+          "source": "${config.nixosConfig}/homeModules/fastfetch/sunflower.png",
           "height": 10,
           "padding": {
             "top": 0 ,

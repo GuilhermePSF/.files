@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 
 {
   fileSystems."/mnt/PopOSPartition" = {
@@ -7,8 +7,8 @@
     options = [ "nofail" ];
   };
 
-  fileSystems."/home/gui/popOSHome" = {
-    device = "/mnt/PopOSPartition/home/gui";
+  fileSystems."${config.homeDirectory}/popOSHome" = {
+    device = "/mnt/PopOSPartition/home/${config.username}";
     fsType = "none";
     options = [ "bind" ];
     depends = [ "/mnt/PopOSPartition" ];

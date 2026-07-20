@@ -26,7 +26,6 @@ in
       # --- EXTENSIONS ---
       enabledExtensions = with spicePkgs.extensions; [
         adblock
-        hidePodcasts
         shuffle
         beautifulLyrics
         coverAmbience

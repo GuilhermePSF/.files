@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   documentation = {
@@ -11,6 +11,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    typst
     wget
     git
     tree
@@ -49,7 +50,7 @@
   services.flatpak.enable = true;
 
   environment.variables = {
-    NH_FLAKE = "/home/gui/nixos-config";
+    NH_FLAKE = config.nixosConfig;
     TERMINAL = "ghostty";
     NIXOS_OZONE_WL = "1";
   };

@@ -89,7 +89,7 @@ in
           "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom7/"
           "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom8/"
           "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom9/"
-"org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom-keybindings/custom10/"
+          "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom-keybindings/custom10/"
         ];
       };
 

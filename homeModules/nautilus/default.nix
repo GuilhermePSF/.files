@@ -115,35 +115,35 @@
     };
 
     home.file.".config/gtk-3.0/bookmarks".text = ''
-      file:///home/gui/UMINHO UMinho
-      file:///home/gui/Downloads Downloads
-      file:///home/gui/Documents Documents
-      file:///home/gui/Pictures Pictures
-      file:///home/gui/Videos Videos
-      file:///home/gui/Music Music
-      file:///home/gui/Pictures/Screenshots Screenshots
-      file:///home/gui/Pictures/Wallpapers Wallpapers
-      file:///home/gui/Documents/PDFs PDFs
-      file:///home/gui/dev Dev
-      file:///home/gui/Obsidian Obsidian Vault
-      file:///home/gui/nixos-config NixOS Config
-      file:///home/gui/Misc Misc
+      file://${config.homeDirectory}/UMINHO UMinho
+      file://${config.homeDirectory}/Downloads Downloads
+      file://${config.homeDirectory}/Documents Documents
+      file://${config.homeDirectory}/Pictures Pictures
+      file://${config.homeDirectory}/Videos Videos
+      file://${config.homeDirectory}/Music Music
+      file://${config.homeDirectory}/Pictures/Screenshots Screenshots
+      file://${config.homeDirectory}/Pictures/Wallpapers Wallpapers
+      file://${config.homeDirectory}/Documents/PDFs PDFs
+      file://${config.homeDirectory}/dev Dev
+      file://${config.homeDirectory}/Obsidian Obsidian Vault
+      file://${config.nixosConfig} NixOS Config
+      file://${config.homeDirectory}/Misc Misc
     '';
 
     home.file.".config/gtk-4.0/bookmarks".text = ''
-      file:///home/gui/UMINHO UMinho
-      file:///home/gui/Downloads Downloads
-      file:///home/gui/Documents Documents
-      file:///home/gui/Pictures Pictures
-      file:///home/gui/Videos Videos
-      file:///home/gui/Music Music
-      file:///home/gui/Pictures/Screenshots Screenshots
-      file:///home/gui/Pictures/Wallpapers Wallpapers
-      file:///home/gui/Documents/PDFs PDFs
-      file:///home/gui/dev Dev
-      file:///home/gui/Obsidian Obsidian Vault
-      file:///home/gui/nixos-config NixOS Config
-      file:///home/gui/Misc Misc
+      file://${config.homeDirectory}/UMINHO UMinho
+      file://${config.homeDirectory}/Downloads Downloads
+      file://${config.homeDirectory}/Documents Documents
+      file://${config.homeDirectory}/Pictures Pictures
+      file://${config.homeDirectory}/Videos Videos
+      file://${config.homeDirectory}/Music Music
+      file://${config.homeDirectory}/Pictures/Screenshots Screenshots
+      file://${config.homeDirectory}/Pictures/Wallpapers Wallpapers
+      file://${config.homeDirectory}/Documents/PDFs PDFs
+      file://${config.homeDirectory}/dev Dev
+      file://${config.homeDirectory}/Obsidian Obsidian Vault
+      file://${config.nixosConfig} NixOS Config
+      file://${config.homeDirectory}/Misc Misc
     '';
 
   };
