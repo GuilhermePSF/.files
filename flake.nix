@@ -51,7 +51,7 @@
         system = "x86_64-linux";
         specialArgs = {
           inherit inputs;
-          config = import ./config.nix;
+          my = import ./config.nix;
         };
         modules = [
           ./configuration.nix
@@ -89,7 +89,7 @@
               useUserPackages = true;
               extraSpecialArgs = {
                 inherit inputs;
-                config = import ./config.nix;
+                my = import ./config.nix;
               };
               sharedModules = [
                 inputs.zed-extensions.homeManagerModules.default

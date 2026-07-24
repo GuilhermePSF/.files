@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  my,
   ...
 }:
 
@@ -16,7 +17,7 @@
       {
         "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
         "logo": {
-          "source": "${config.nixosConfig}/homeModules/fastfetch/sunflower.png",
+          "source": "${my.nixosConfig}/homeModules/fastfetch/sunflower.png",
           "height": 10,
           "padding": {
             "top": 0 ,

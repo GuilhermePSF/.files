@@ -1,12 +1,12 @@
 # This is the central configuration file.
 # All user-specific settings should be defined here.
 
-{
+rec {
   # User Configuration
   #
   # Replace with your own username and home directory path.
   username = "gui";
-  homeDirectory = "/home/gui";
+  homeDirectory = "/home/${username}";
 
   # Git Configuration
   #

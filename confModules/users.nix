@@ -1,7 +1,7 @@
-{ pkgs, config, ... }:
+{ pkgs, my, ... }:
 
 {
-  users.users.${config.username} = {
+  users.users.${my.username} = {
     shell = pkgs.zsh;
     isNormalUser = true;
     extraGroups = [
@@ -18,7 +18,7 @@
 
   nix.settings.trusted-users = [
     "root"
-    config.username
+    my.username
   ];
 
   programs.zsh.enable = true;

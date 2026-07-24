@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  my,
   ...
 }:
 
@@ -115,35 +116,35 @@
     };
 
     home.file.".config/gtk-3.0/bookmarks".text = ''
-      file://${config.homeDirectory}/UMINHO UMinho
-      file://${config.homeDirectory}/Downloads Downloads
-      file://${config.homeDirectory}/Documents Documents
-      file://${config.homeDirectory}/Pictures Pictures
-      file://${config.homeDirectory}/Videos Videos
-      file://${config.homeDirectory}/Music Music
-      file://${config.homeDirectory}/Pictures/Screenshots Screenshots
-      file://${config.homeDirectory}/Pictures/Wallpapers Wallpapers
-      file://${config.homeDirectory}/Documents/PDFs PDFs
-      file://${config.homeDirectory}/dev Dev
-      file://${config.homeDirectory}/Obsidian Obsidian Vault
-      file://${config.nixosConfig} NixOS Config
-      file://${config.homeDirectory}/Misc Misc
+      file://${my.homeDirectory}/UMINHO UMinho
+      file://${my.homeDirectory}/Downloads Downloads
+      file://${my.homeDirectory}/Documents Documents
+      file://${my.homeDirectory}/Pictures Pictures
+      file://${my.homeDirectory}/Videos Videos
+      file://${my.homeDirectory}/Music Music
+      file://${my.homeDirectory}/Pictures/Screenshots Screenshots
+      file://${my.homeDirectory}/Pictures/Wallpapers Wallpapers
+      file://${my.homeDirectory}/Documents/PDFs PDFs
+      file://${my.homeDirectory}/dev Dev
+      file://${my.homeDirectory}/Obsidian Obsidian Vault
+      file://${my.nixosConfig} NixOS Config
+      file://${my.homeDirectory}/Misc Misc
     '';
 
     home.file.".config/gtk-4.0/bookmarks".text = ''
-      file://${config.homeDirectory}/UMINHO UMinho
-      file://${config.homeDirectory}/Downloads Downloads
-      file://${config.homeDirectory}/Documents Documents
-      file://${config.homeDirectory}/Pictures Pictures
-      file://${config.homeDirectory}/Videos Videos
-      file://${config.homeDirectory}/Music Music
-      file://${config.homeDirectory}/Pictures/Screenshots Screenshots
-      file://${config.homeDirectory}/Pictures/Wallpapers Wallpapers
-      file://${config.homeDirectory}/Documents/PDFs PDFs
-      file://${config.homeDirectory}/dev Dev
-      file://${config.homeDirectory}/Obsidian Obsidian Vault
-      file://${config.nixosConfig} NixOS Config
-      file://${config.homeDirectory}/Misc Misc
+      file://${my.homeDirectory}/UMINHO UMinho
+      file://${my.homeDirectory}/Downloads Downloads
+      file://${my.homeDirectory}/Documents Documents
+      file://${my.homeDirectory}/Pictures Pictures
+      file://${my.homeDirectory}/Videos Videos
+      file://${my.homeDirectory}/Music Music
+      file://${my.homeDirectory}/Pictures/Screenshots Screenshots
+      file://${my.homeDirectory}/Pictures/Wallpapers Wallpapers
+      file://${my.homeDirectory}/Documents/PDFs PDFs
+      file://${my.homeDirectory}/dev Dev
+      file://${my.homeDirectory}/Obsidian Obsidian Vault
+      file://${my.nixosConfig} NixOS Config
+      file://${my.homeDirectory}/Misc Misc
     '';
 
   };

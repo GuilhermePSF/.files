@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, my, ... }:
 
 {
   documentation = {
@@ -33,6 +33,8 @@
     hyperfine
     qbittorrent
 
+    opencode
+
     eduvpn-client
 
     poppler-utils
@@ -50,7 +52,7 @@
   services.flatpak.enable = true;
 
   environment.variables = {
-    NH_FLAKE = config.nixosConfig;
+    NH_FLAKE = my.nixosConfig;
     TERMINAL = "ghostty";
     NIXOS_OZONE_WL = "1";
   };

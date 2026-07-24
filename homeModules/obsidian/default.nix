@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  my,
   ...
 }:
 
@@ -27,8 +28,8 @@
     xdg.configFile."obsidian/obsidian.json".text = builtins.toJSON {
       vaults = {
         # The key is arbitrary – Obsidian uses it as an internal ID
-        "${config.obsidianVaultId}" = {
-          path = "${config.home.homeDirectory}/Obsidian/${config.obsidianVault}";
+        "${my.obsidianVaultId}" = {
+          path = "${config.home.homeDirectory}/Obsidian/${my.obsidianVault}";
           ts = 1700000000000; # static timestamp is fine
           open = true;
         };
@@ -36,11 +37,11 @@
     };
 
     # ----------------------------------------------------------------
-    # Per-vault settings  (~/Obsidian/${config.obsidianVault}/.obsidian/)
+    # Per-vault settings  (~/Obsidian/${my.obsidianVault}/.obsidian/)
     # ----------------------------------------------------------------
 
     # app.json – core editor/UI behaviour
-    home.file."Obsidian/${config.obsidianVault}/.obsidian/app.json".text = builtins.toJSON {
+    home.file."Obsidian/${my.obsidianVault}/.obsidian/app.json".text = builtins.toJSON {
       promptDelete = false;
       legacyEditor = false;
       defaultViewMode = "preview";
@@ -59,7 +60,7 @@
     };
 
     # appearance.json – theme & UI chrome
-    home.file."Obsidian/${config.obsidianVault}/.obsidian/appearance.json".text = builtins.toJSON {
+    home.file."Obsidian/${my.obsidianVault}/.obsidian/appearance.json".text = builtins.toJSON {
       theme = "Tokyo Night";
       colorScheme = "obsidian";
       cssTheme = "Tokyo Night";
@@ -74,7 +75,7 @@
     };
 
     # Tokyo Night theme CSS
-    home.file."Obsidian/${config.obsidianVault}/.obsidian/themes/Tokyo Night/theme.css".source =
+    home.file."Obsidian/${my.obsidianVault}/.obsidian/themes/Tokyo Night/theme.css".source =
       pkgs.fetchurl
         {
           url = "https://raw.githubusercontent.com/tcmmichaelb139/obsidian-tokyonight/main/theme.css";
@@ -82,7 +83,7 @@
         };
 
     # Tokyo Night theme manifest
-    home.file."Obsidian/${config.obsidianVault}/.obsidian/themes/Tokyo Night/manifest.json".text =
+    home.file."Obsidian/${my.obsidianVault}/.obsidian/themes/Tokyo Night/manifest.json".text =
       builtins.toJSON
         {
           name = "Tokyo Night";
@@ -92,28 +93,29 @@
         };
 
     # Style Settings – Moon variant colours
-    home.file."Obsidian/${config.obsidianVault}/.obsidian/plugins/obsidian-style-settings/data.json".text =
-      builtins.toJSON {
-        "Appearance@@red@@dark" = "#FF757F";
-        "Appearance@@red1@@dark" = "#C53B53";
-        "Appearance@@green@@dark" = "#C3E88D";
-        "Appearance@@cyan@@dark" = "#86E1FC";
-        "Appearance@@blue@@dark" = "#82AAFF";
-        "Appearance@@yellow@@dark" = "#FFC777";
-        "Appearance@@orange@@dark" = "#FF966C";
-        "Appearance@@magenta@@dark" = "#C099FF";
-        "Appearance@@bg@@dark" = "#222436";
-        "Appearance@@bg_dark@@dark" = "#1E2030";
-        "Appearance@@bg_highlight@@dark" = "#2F334D";
-        "Appearance@@bg_highlight_dark@@dark" = "#1E2030";
-        "Appearance@@bg_dark2@@dark" = "#191B29";
-        "Appearance@@text-normal@@dark" = "#C8D3F5";
-        "Appearance@@text-muted@@dark" = "#828BB8";
-        "Appearance@@text-faint@@dark" = "#828BB8";
-      };
+    home.file."Obsidian/${my.obsidianVault}/.obsidian/plugins/obsidian-style-settings/data.json".text =
+      builtins.toJSON
+        {
+          "Appearance@@red@@dark" = "#FF757F";
+          "Appearance@@red1@@dark" = "#C53B53";
+          "Appearance@@green@@dark" = "#C3E88D";
+          "Appearance@@cyan@@dark" = "#86E1FC";
+          "Appearance@@blue@@dark" = "#82AAFF";
+          "Appearance@@yellow@@dark" = "#FFC777";
+          "Appearance@@orange@@dark" = "#FF966C";
+          "Appearance@@magenta@@dark" = "#C099FF";
+          "Appearance@@bg@@dark" = "#222436";
+          "Appearance@@bg_dark@@dark" = "#1E2030";
+          "Appearance@@bg_highlight@@dark" = "#2F334D";
+          "Appearance@@bg_highlight_dark@@dark" = "#1E2030";
+          "Appearance@@bg_dark2@@dark" = "#191B29";
+          "Appearance@@text-normal@@dark" = "#C8D3F5";
+          "Appearance@@text-muted@@dark" = "#828BB8";
+          "Appearance@@text-faint@@dark" = "#828BB8";
+        };
 
     # core-plugins.json – enables/disables built-in plugins
-    home.file."Obsidian/${config.obsidianVault}/.obsidian/core-plugins.json".text = builtins.toJSON {
+    home.file."Obsidian/${my.obsidianVault}/.obsidian/core-plugins.json".text = builtins.toJSON {
       "file-explorer" = true;
       "global-search" = true;
       "switcher" = true;
@@ -148,17 +150,15 @@
     };
 
     # Community plugins list (enables style-settings)
-    home.file."Obsidian/${config.obsidianVault}/.obsidian/community-plugins.json".text =
-      builtins.toJSON
-        [
-          "obsidian-style-settings"
-        ];
+    home.file."Obsidian/${my.obsidianVault}/.obsidian/community-plugins.json".text = builtins.toJSON [
+      "obsidian-style-settings"
+    ];
 
-    home.file."Obsidian/${config.obsidianVault}/.obsidian/templates.json".text = builtins.toJSON {
+    home.file."Obsidian/${my.obsidianVault}/.obsidian/templates.json".text = builtins.toJSON {
       folder = "4 - Zettelkasten/A - Templates";
     };
 
-    home.file."Obsidian/${config.obsidianVault}/.obsidian/hotkeys.json".text = builtins.toJSON {
+    home.file."Obsidian/${my.obsidianVault}/.obsidian/hotkeys.json".text = builtins.toJSON {
       "insert-template" = [
         {
           modifiers = [ "Alt" ];
@@ -229,7 +229,7 @@
       ];
     };
 
-    home.file."Obsidian/${config.obsidianVault}/.obsidian/graph.json".text = builtins.toJSON {
+    home.file."Obsidian/${my.obsidianVault}/.obsidian/graph.json".text = builtins.toJSON {
       collapse-filter = false;
       search = "";
       showTags = false;
@@ -253,7 +253,7 @@
     };
 
     # daily-notes.json – daily notes config
-    home.file."Obsidian/${config.obsidianVault}/.obsidian/daily-notes.json".text = builtins.toJSON {
+    home.file."Obsidian/${my.obsidianVault}/.obsidian/daily-notes.json".text = builtins.toJSON {
       folder = "1 - Raw Notes";
       format = "YYYY-MM-DD";
       template = "4 - Zettelkasten/A - Templates/Daily Note";
