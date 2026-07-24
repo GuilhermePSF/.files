@@ -10,7 +10,33 @@
     pulse.enable = true;
 
     wireplumber.extraConfig = {
+      # 1. Stop WirePlumber from auto-switching profiles when a microphone is requested
+      "11-bluetooth-policy" = {
+        "wireplumber.settings" = {
+          "bluetooth.autoswitch-to-headset-profile" = false;
+        };
+      };
+
+      # 2. Tell the BlueZ monitor to ONLY expose the high-quality playback roles
+      "12-bluez-clean-profiles" = {
+        "monitor.bluez.properties" = {
+          "bluez5.roles" = [ "a2dp_sink" "a2dp_source" "bap_sink" "bap_source" ];
+        };
+      };
+
       "99-audio-priority" = {
+        "monitor.bluez.rules" = [
+          {
+            matches = [
+              { "node.name" = "~bluez_output.*"; }
+            ];
+            actions.update-props = {
+              "priority.session" = 1500;
+              "priority.driver" = 1500;
+            };
+          }
+        ];
+        
         "monitor.alsa.rules" = [
           {
             matches = [
