@@ -2,13 +2,6 @@
 
 This is my personal NixOS configuration, built with Flakes, Home-Manager, and Stylix. While it's tailored to my workflow, the modular design makes it easy to adapt for your own use.
 
-## Highlights
-
--   **Fully Flake-based**: Modern, reproducible, and dependency-managed.
--   **Modular Architecture**: System settings (`confModules`) and user applications (`homeModules`) are cleanly separated.
--   **Centralized User Settings**: Key variables like username, home path, and dotfiles are managed in a single `config.nix` file.
--   **Theming with Stylix**: Palettes are generated from a wallpaper and applied system-wide for a consistent look.
--   **Selectable Desktops**: Easily switch between Hyprland, GNOME, or Niri by changing a single variable in `config.nix`.
 
 ## Gallery
 
