@@ -10,7 +10,12 @@
     dev.enable = true;
   };
 
+  # programs.steam = {
+  #   enable = true;
+  # };
+
   environment.systemPackages = with pkgs; [
+    protontricks
     typst
     wget
     git

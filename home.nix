@@ -45,6 +45,7 @@ in
   pavucontrolModule.enable = true;
   mediaModule.enable = true;
   devtoolsModule.enable = true;
+  steamModule.enable = true;
 
   imports = [
     ./homeModules/gnome
@@ -73,5 +74,9 @@ in
     ./homeModules/pavucontrol
     ./homeModules/media
     ./homeModules/devtools
+    ./homeModules/steam
+
+    # External Home Manager modules
+    inputs.zed-extensions.homeManagerModules.default
   ];
 }

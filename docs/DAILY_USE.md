@@ -83,13 +83,11 @@ Most of your user-facing applications (like browsers, editors, media players) sh
 
 ### Why `git add` is Necessary
 
-Your NixOS configuration is declarative, and `git` is the tool you use to track its state. When you make a change, you should always stage and commit it.
+Nix flakes don't read your working directory directly, they read the Git **index** (whatever `git add` has staged, or already committed). Any file that isn't tracked by Git essentially doesn't exist as far as the flake is concerned.
 
--   **Reproducibility**: `git` allows you to see the exact history of your system's configuration. If a change breaks something, you can use `git diff` to see what changed and `git checkout` to revert to a working state.
--   **Flakes and Purity**: Flakes lock the versions of your inputs (like `nixpkgs`) in `flake.lock`. By default, Nix warns you if you try to build from a "dirty" (uncommitted) Git repository, because the state is not well-defined. Committing your changes ensures that every build is based on a known, reproducible state.
--   **Peace of Mind**: Knowing that your entire system configuration is tracked in Git gives you the confidence to experiment. If you make a mistake, you can always go back.
+This has a very concrete consequence: if you create a new file (say, a new module at `homeModules/my-app/default.nix`) and forget to `git add` it, `nixos-rebuild switch` will fail with a "path does not exist" or similar error — even though the file is right there on disk. Nix isn't being pedantic about cleanliness; it genuinely cannot see the file yet.
 
-Always run `git add .` and `git commit` after you have confirmed a change works.
+**Practical rule**: any time you add a new file to the config, `git add` it *before* rebuilding, not after confirming it works. Otherwise you'll spend time debugging a "missing file" error that's really just an unstaged file.
 
 
 ## Repository Structure
@@ -98,6 +96,11 @@ This provides an overview of the configuration's layout.
 
 ```
 .
+├── assets
+│   ├── hyprland.png
+│   ├── noctalia.png
+│   ├── shell.png
+│   └── stylix.png
 ├── config.nix
 ├── configuration.nix
 ├── confModules
@@ -120,7 +123,6 @@ This provides an overview of the configuration's layout.
 ├── flakes
 │   └── core
 │       └── volume
-├── generate-readme.sh
 ├── .gitignore
 ├── hardware-configuration.nix
 ├── homeModules
@@ -171,6 +173,8 @@ This provides an overview of the configuration's layout.
 │   │   └── default.nix
 │   ├── spicetify
 │   │   └── default.nix
+│   ├── steam
+│   │   └── default.nix
 │   ├── vesktop
 │   │   └── default.nix
 │   ├── vscode
@@ -181,11 +185,9 @@ This provides an overview of the configuration's layout.
 │       ├── aliases.nix
 │       └── default.nix
 ├── home.nix
-├── hyprland.png
-├── noctalia.png
 ├── README.md
-├── shell.png
-└── stylix.png
+└── scripts
+    └── generate-readme.sh
 
-35 directories, 54 files
+38 directories, 55 files
 ```

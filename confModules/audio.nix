@@ -20,7 +20,12 @@
       # 2. Tell the BlueZ monitor to ONLY expose the high-quality playback roles
       "12-bluez-clean-profiles" = {
         "monitor.bluez.properties" = {
-          "bluez5.roles" = [ "a2dp_sink" "a2dp_source" "bap_sink" "bap_source" ];
+          "bluez5.roles" = [
+            "a2dp_sink"
+            "a2dp_source"
+            "bap_sink"
+            "bap_source"
+          ];
         };
       };
 
@@ -36,7 +41,7 @@
             };
           }
         ];
-        
+
         "monitor.alsa.rules" = [
           {
             matches = [

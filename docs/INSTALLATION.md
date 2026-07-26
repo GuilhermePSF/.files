@@ -41,9 +41,9 @@ nix-shell -p git
 Now, from within this new shell, clone this configuration repository.
 
 ```bash
-# It's recommended to clone it to a consistent location, e.g., ~/.config/nixos
-git clone https://github.com/your-username/nixos-config.git ~/.config/nixos
-cd ~/.config/nixos
+# It's recommended to clone it to a consistent location, e.g., ~/nixos-config
+git clone https://github.com/GuilhermePSF/.files ~/nixos-config
+cd ~/nixos-config
 ```
 
 **Important**: If you plan to push your changes back to a different repository, update the remote origin:
@@ -105,7 +105,7 @@ sudo nixos-generate-config --show-hardware-config > hardware-configuration.nix
 
 The `confModules/mounts.nix` file in this repository defines system-specific disk mounts from my personal machine.
 
-**Action Required**: You should **delete or clear this file** (`confModules/mounts.nix`) and configure your own mounts based on your `hardware-configuration.nix` and your specific disk setup. Do not assume the existing mounts will work for you, as they are tied to specific disk UUIDs and paths.
+**Action Required**: You should **delete or clear this file** (`confModules/mounts.nix`) and configure your own mounts (if you even have any) based on your `hardware-configuration.nix` and your specific disk setup. Do not assume the existing mounts will work for you, as they are tied to my specific disk UUIDs and paths.
 
 ### 5. Build and Switch
 

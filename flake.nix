@@ -91,9 +91,6 @@
                 inherit inputs;
                 my = import ./config.nix;
               };
-              sharedModules = [
-                inputs.zed-extensions.homeManagerModules.default
-              ];
               users.${(import ./config.nix).username} = import ./home.nix;
               backupFileExtension = "backup";
             };
