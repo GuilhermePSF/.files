@@ -7,57 +7,102 @@
 
 let
   vscodeSettings = {
-    "workbench.colorTheme" = "Min Theme+";
+    # ==========================================================
+    # Appearance
+    # ==========================================================
+    "workbench.colorTheme" = "One Dark Pro Flat";
+    "workbench.iconTheme" = "material-icon-theme";
 
-    "[jsonc]" = {
-      "editor.defaultFormatter" = "esbenp.prettier-vscode";
-    };
-    "editor.formatOnSave" = true;
-    "editor.fontFamily" = "FiraCode Nerd Font Mono";
-    "files.autoSave" = "afterDelay";
-    "workbench.editor.closeOnFileDelete" = true;
-    "terminal.integrated.fontLigatures.enabled" = true;
+    "window.titleBarStyle" = "custom";
+    "window.customTitleBarVisibility" = "never";
+    "window.menuBarVisibility" = "hidden";
+    "window.commandCenter" = false;
+    "workbench.statusBar.visible" = false;
+
     "workbench.sideBar.location" = "right";
-    "window.menuBarVisibility" = "compact";
-    "workbench.statusBar.visible" = true;
+    "workbench.activityBar.location" = "hidden";
+    "workbench.secondarySideBar.defaultVisibility" = "hidden";
+
+    "breadcrumbs.enabled" = false;
+    "editor.minimap.enabled" = false;
+    "editor.stickyScroll.enabled" = false;
+
+    "workbench.editor.empty.hint" = "hidden";
+    "workbench.layoutControl.enabled" = false;
+
+    # ==========================================================
+    # Editor
+    # ==========================================================
+    "editor.fontFamily" = "FiraCode Nerd Font Mono";
     "editor.fontLigatures" = true;
-    "prettier.singleQuote" = true;
-    "prettier.trailingComma" = "all";
-    "cSpell.userWords" = [
-      "autoresize"
-      "commenters"
-      "echarts"
-      "favourites"
-      "Yari"
-    ];
-    "chat.commandCenter.enabled" = false;
-    "javascript.updateImportsOnFileMove.enabled" = "always";
+
     "editor.defaultFormatter" = "esbenp.prettier-vscode";
+    "editor.formatOnSave" = true;
+    "editor.formatOnPaste" = true;
+
+    "editor.largeFileOptimizations" = false;
+    "editor.unicodeHighlight.invisibleCharacters" = false;
+
+    "diffEditor.ignoreTrimWhitespace" = false;
+
+    # ==========================================================
+    # Explorer
+    # ==========================================================
+    "explorer.confirmDragAndDrop" = false;
+    "workbench.editor.closeOnFileDelete" = true;
+    "workbench.tree.indent" = 20;
+
+    # ==========================================================
+    # Files
+    # ==========================================================
+    "files.autoSave" = "afterDelay";
 
     "files.associations" = {
       "*.md" = "markdown";
     };
+
+    # ==========================================================
+    # Terminal
+    # ==========================================================
+    "terminal.integrated.fontLigatures.enabled" = true;
+
+    # ==========================================================
+    # Formatting
+    # ==========================================================
+    "prettier.singleQuote" = true;
+    "prettier.trailingComma" = "all";
+
+    "[jsonc]" = {
+      "editor.defaultFormatter" = "esbenp.prettier-vscode";
+    };
+
+    "[c]" = {
+      "editor.defaultFormatter" = "ms-vscode.cpptools";
+    };
+
+    # ==========================================================
+    # Language Support
+    # ==========================================================
+    "javascript.updateImportsOnFileMove.enabled" = "always";
+    "typescript.updateImportsOnFileMove.enabled" = "always";
+
+    "zig.zls.enabled" = "on";
+    "svg.preview.mode" = "svg";
+
+    # ==========================================================
+    # Markdown
+    # ==========================================================
     "markdown.preview.openMarkdownLinks" = "inPreview";
+
     "workbench.editorAssociations" = {
       "*.copilotmd" = "vscode.markdown.preview.editor";
       "*.md" = "markdown.preview.editor";
       "*.db" = "default";
     };
-    "typescript.updateImportsOnFileMove.enabled" = "always";
-    "svg.preview.mode" = "svg";
-    "command-runner.terminal.name" = "runCommand";
-    "command-runner.terminal.autoClear" = true;
-    "command-runner.commands" = {
-      "elixirFormat" = "mix format && exit";
-    };
-    "editor.formatOnPaste" = true;
-    "zig.zls.enabled" = "on";
-    "[c]" = {
-      "editor.defaultFormatter" = "ms-vscode.cpptools";
-    };
-    "workbench.iconTheme" = "material-icon-theme";
-    "diffEditor.ignoreTrimWhitespace" = false;
-    "editor.largeFileOptimizations" = false;
+
+    # ==========================================================
+    # Copilot
+    # ==========================================================
     "github.copilot.enable" = {
       "*" = true;
       "plaintext" = false;
@@ -65,20 +110,102 @@ let
       "scminput" = false;
       "c" = true;
     };
-    "workbench.editor.empty.hint" = "hidden";
-    "github.copilot.nextEditSuggestions.enabled" = true;
-    "http.systemCertificatesNode" = true;
-    "editor.unicodeHighlight.invisibleCharacters" = false;
-    "explorer.confirmDragAndDrop" = false;
-    "window.customTitleBarVisibility" = "never";
 
+    "github.copilot.nextEditSuggestions.enabled" = true;
+
+    # ==========================================================
+    # Misc
+    # ==========================================================
+    "http.systemCertificatesNode" = true;
     "vim.active" = false;
 
     "extensions.autoUpdate" = false;
     "extensions.autoCheckUpdates" = true;
+
+    # ==========================================================
+    # Spell Checker
+    # ==========================================================
+    "cSpell.userWords" = [
+      "autoresize"
+      "commenters"
+      "echarts"
+      "favourites"
+      "Yari"
+    ];
   };
 
-  vscodeSettingsFile = pkgs.writeText "vscode-settings.json" (builtins.toJSON vscodeSettings);
+  # Extensions available directly from nixpkgs' vscode-extensions set.
+  nixpkgsExtensions = with pkgs.vscode-extensions; [
+    # --- Copilot ---
+    github.copilot
+    github.copilot-chat
+
+    # --- C/C++ ---
+    llvm-vs-code-extensions.vscode-clangd
+
+    # --- Python ---
+    ms-python.debugpy
+    ms-python.python
+    ms-python.vscode-pylance
+
+    # --- Remote Development ---
+    ms-azuretools.vscode-docker
+    ms-vscode-remote.remote-ssh
+
+    # --- Java (fixes JDK path errors) ---
+    redhat.java
+    vscjava.vscode-gradle
+    vscjava.vscode-java-debug
+    vscjava.vscode-java-dependency
+    vscjava.vscode-java-pack
+    vscjava.vscode-java-test
+    vscjava.vscode-maven
+
+    # --- Other Compiled Languages ---
+    danielgavin.ols
+    golang.go
+    haskell.haskell
+    rust-lang.rust-analyzer
+    ziglang.vscode-zig
+
+    # --- Tools ---
+    jnoortheen.nix-ide
+    usernamehw.errorlens
+  ];
+
+  # Extensions only available via the community marketplace overlay
+  # (nix-vscode-extensions or similar), not packaged in nixpkgs proper.
+  marketplaceExtensions = with pkgs.vscode-marketplace; [
+    # --- Formatting / Git / JS-Web Tools ---
+    bradlc.vscode-tailwindcss
+    dbaeumer.vscode-eslint
+    eamodio.gitlens
+    esbenp.prettier-vscode
+    mhutchie.git-graph
+    pkief.material-icon-theme
+    ritwickdey.liveserver
+    vue.volar
+
+    # --- Language-Specific Tools ---
+    jakebecker.elixir-ls
+    justusadam.language-haskell
+
+    # --- Misc / File-Type Tools ---
+    caponetto.vscode-diff-viewer
+    guilhermepsf23.livevue-sigil-highlighting
+    jock.svg
+    mechatroner.rainbow-csv
+    myriad-dreamin.tinymist
+    pfwobcke.vscode-ttf
+    phoenixframework.phoenix
+    plibither8.remove-comments
+    tomoki1207.pdf
+    twxs.cmake
+    zhuangtongfa.material-theme
+
+    # --- Build Tools ---
+    ms-vscode.makefile-tools
+  ];
 in
 
 {
@@ -92,128 +219,29 @@ in
       enable = true;
       mutableExtensionsDir = false;
 
-      profiles.default.extensions =
-        with pkgs.vscode-extensions;
-        [
-          # --- Copilot ---
-          github.copilot
-          github.copilot-chat
+    # STILL CANT FIGURE OUT HOW TO REMOVE THE FOCKING TITLE BAR DECORATIONS
+     package = (pkgs.symlinkJoin {
+        name = "vscode-no-decorations";
+        paths = [ pkgs.vscode ];
+        nativeBuildInputs = [ pkgs.makeWrapper ];
+        postBuild = ''
+          wrapProgram $out/bin/code \
+            --unset NIXOS_OZONE_WL \
+            --add-flags "--ozone-platform-hint=auto" \
+            --add-flags "--disable-features=WaylandWindowDecorations" \
+            --add-flags "--enable-wayland-ime=true" \
+            --add-flags "--wayland-text-input-version=3"
+        '';
+      }) // { inherit (pkgs.vscode) pname version; };
 
-          # --- C/C++ ---
-          llvm-vs-code-extensions.vscode-clangd
-
-          # --- Python ---
-          ms-python.python
-          ms-python.vscode-pylance
-          ms-python.debugpy
-
-          # --- Remote Development ---
-          ms-vscode-remote.remote-ssh
-          ms-azuretools.vscode-docker
-
-          # --- Java (Fixes JDK path errors) ---
-          vscjava.vscode-java-pack
-          vscjava.vscode-java-debug
-          vscjava.vscode-java-dependency
-          vscjava.vscode-java-test
-          vscjava.vscode-maven
-          vscjava.vscode-gradle
-          redhat.java
-
-          # --- Other Compiled Languages ---
-          golang.go
-          haskell.haskell
-          ziglang.vscode-zig
-          rust-lang.rust-analyzer
-          danielgavin.ols
-
-          # --- Tools ---
-          usernamehw.errorlens
-          jnoortheen.nix-ide
-        ]
-
-        ++ (with pkgs.vscode-marketplace; [
-          # --- Your Marketplace Specific List ---
-          myriad-dreamin.tinymist
-          ms-vscode.makefile-tools
-          twxs.cmake
-          jakobhoeg.vscode-pokemon
-          amatiasq.sort-imports
-          astro-build.astro-vscode
-          theqtcompany.qt-qml
-          theqtcompany.qt-core
-          caponetto.vscode-diff-viewer
-          cweijan.dbclient-jdbc
-          cweijan.vscode-mysql-client2
-          edonet.vscode-command-runner
-          formulahendry.auto-rename-tag
-          guilhermepsf23.livevue-sigil-highlighting
-          heybourn.headwind
-          jock.svg
-          mechatroner.rainbow-csv
-          nifate.min-theme-plus
-          pfwobcke.vscode-ttf
-          phoenixframework.phoenix
-          plibither8.remove-comments
-          potatochowon9.darkpdf
-          shd101wyy.markdown-preview-enhanced
-          shengchen.vscode-checkstyle
-          steoates.autoimport
-          sygene.auto-correct
-          tomoki1207.pdf
-          wix.vscode-import-cost
-          zarifprogrammer.tailwind-snippets
-
-          # --- Standard JS/Web Tools ---
-          esbenp.prettier-vscode
-          editorconfig.editorconfig
-          eamodio.gitlens
-          mhutchie.git-graph
-          dbaeumer.vscode-eslint
-          vue.volar
-          bradlc.vscode-tailwindcss
-          ritwickdey.liveserver
-          yoavbls.pretty-ts-errors
-          pkief.material-icon-theme
-          tamasfe.even-better-toml
-
-          # --- Specific Language Tools ---
-          jakebecker.elixir-ls
-          justusadam.language-haskell
-        ]);
-
-      # --------------------------------------------------------
-      # SETTINGS
-      # --------------------------------------------------------
-      profiles.default.userSettings = vscodeSettings;
-
-      # --------------------------------------------------------
-      # KEYBINDINGS
-      # --------------------------------------------------------
-      profiles.default.keybindings = [
-        {
-          key = "ctrl+shift+m";
-          command = "markdown.showPreview";
-          when = "editorLangId == markdown";
-        }
-        {
-          key = "ctrl+alt+s";
-          command = "command-runner.run";
-          when = "editorTextFocus";
-        }
-        {
-          key = "ctrl+shift+s";
-          command = "command-runner.run";
-          args = {
-            command = "elixirFormat";
-          };
-        }
-      ];
+      profiles.default = {
+        userSettings = vscodeSettings;
+        extensions = nixpkgsExtensions ++ marketplaceExtensions;
+      };
     };
 
     home.file = {
       ".config/Code/User/snippets/nix.json".text = builtins.toJSON {
-
         "Nix Shell (Zsh)" = {
           "prefix" = "nixzsh";
           "body" = [
@@ -232,9 +260,7 @@ in
           ];
           "description" = "Create a nix shell that opens zsh directly";
         };
-
       };
     };
-
   };
 }
