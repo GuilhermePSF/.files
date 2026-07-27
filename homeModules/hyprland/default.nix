@@ -8,6 +8,7 @@
 let
   terminal = "ghostty";
   browser = "brave";
+  mod = "SUPER";
 
   wallpaperFile = "${config.home.homeDirectory}/.background-image";
 
@@ -25,6 +26,8 @@ in
   options.hyprlandModule.enable = lib.mkEnableOption "Enable Hyprland Module";
 
   config = lib.mkIf config.hyprlandModule.enable {
+
+    stylix.targets.hyprland.enable = false;
 
     home.packages = with pkgs; [
       brightnessctl
@@ -51,147 +54,172 @@ in
       package = pkgs.hyprland;
       systemd.variables = [ "--all" ];
 
-      settings = {
-        "$mod" = "SUPER";
+      configType = "lua";
 
-        monitor = [
-          # External monitor: always at origin, preferred mode
-          ",preferred,0x0,1"
-          # Laptop: always below whatever external is present, auto-positioned
-          "eDP-1,1920x1200@60,auto-down,1"
-        ];
+      extraConfig = ''
+        ------------------
+        ---- MONITORS ----
+        ------------------
+        -- External monitor: always at origin, preferred mode
+        hl.monitor({
+          output = "",
+          mode = "preferred",
+          position = "0x0",
+          scale = 1,
+        })
+        -- Laptop: always below whatever external is present, auto-positioned
+        hl.monitor({
+          output = "eDP-1",
+          mode = "1920x1200@60",
+          position = "auto-down",
+          scale = 1,
+        })
 
-        env = [
-          "XCURSOR_THEME,${cursorName}"
-          "XCURSOR_SIZE,${toString cursorSize}"
-          "XDG_CURRENT_DESKTOP,Hyprland"
-          "XDG_SESSION_TYPE,wayland"
-          "XDG_SESSION_DESKTOP,Hyprland"
-        ];
+        -------------------------------
+        ---- ENVIRONMENT VARIABLES ----
+        -------------------------------
+        hl.env("XCURSOR_THEME", "${cursorName}")
+        hl.env("XCURSOR_SIZE", "${toString cursorSize}")
+        hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
+        hl.env("XDG_SESSION_TYPE", "wayland")
+        hl.env("XDG_SESSION_DESKTOP", "Hyprland")
 
-        general = {
-          gaps_in = 1;
-          gaps_out = 3;
-          border_size = 2;
-          layout = "master";
-          resize_on_border = true;
-        };
+        -----------------------
+        ---- LOOK AND FEEL ----
+        -----------------------
+        hl.config({
+          general = {
+            gaps_in = 1,
+            gaps_out = 3,
+            border_size = 2,
+            layout = "master",
+            resize_on_border = true,
+          },
+          master = {
+            orientation = "left",
+            new_status = "slave",
+          },
+          misc = {
+            focus_on_activate = true,
+          },
+          input = {
+            kb_layout = "us",
+            follow_mouse = 1,
+            touchpad = {
+              natural_scroll = true,
+              tap_to_click = true,
+              disable_while_typing = false,
+            },
+          },
+          decoration = {
+            rounding = 6,
+            shadow = {
+              enabled = true,
+              range = 4,
+              render_power = 3,
+            },
+          },
+          animations = {
+            enabled = true,
+          },
+        })
 
-        master = {
-          orientation = "left";
-          new_status = "slave";
-        };
+        hl.curve("decel", { type = "bezier", points = { {0.05, 0.9}, {0.1, 1.0} } })
 
-        misc = {
-          focus_on_activate = true;
-        };
+        hl.animation({ leaf = "windows",    enabled = true, speed = 3, bezier = "decel",  style = "popin 80%" })
+        hl.animation({ leaf = "windowsOut", enabled = true, speed = 3, bezier = "decel",  style = "popin 80%" })
+        hl.animation({ leaf = "border",     enabled = true, speed = 5, bezier = "default" })
+        hl.animation({ leaf = "fade",       enabled = true, speed = 3, bezier = "default" })
+        hl.animation({ leaf = "workspaces", enabled = true, speed = 4, bezier = "decel",  style = "slide" })
 
-        input = {
-          kb_layout = "us";
-          follow_mouse = 1;
-          touchpad = {
-            natural_scroll = true;
-            tap-to-click = true;
-            disable_while_typing = false;
-          };
-        };
+        ---------------------
+        ---- KEYBINDINGS ----
+        ---------------------
+        local mod = "${mod}"
 
-        decoration = {
-          rounding = 6;
-          shadow = {
-            enabled = true;
-            range = 4;
-            render_power = 3;
-          };
-        };
-
-        animations = {
-          enabled = true;
-          bezier = "decel, 0.05, 0.9, 0.1, 1.0";
-          animation = [
-            "windows, 1, 3, decel, popin 80%"
-            "windowsOut, 1, 3, decel, popin 80%"
-            "border, 1, 5, default"
-            "fade, 1, 3, default"
-            "workspaces, 1, 4, decel, slide"
-          ];
-        };
-
-        bind = [
-          "$mod, Q, killactive"
-          "$mod SHIFT, Q, exit"
-          "$mod, F, fullscreen"
-          "$mod, V, togglefloating"
-          "$mod, T, exec, hyprctl dispatch layoutmsg orientationcycle left top && ${
+        hl.bind(mod .. " + Q", hl.dsp.window.close())
+        hl.bind(mod .. " + SHIFT + Q", hl.dsp.exit())
+        hl.bind(mod .. " + F", hl.dsp.window.fullscreen())
+        hl.bind(mod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+        hl.bind(mod .. " + T", hl.dsp.exec_cmd(
+          [[hyprctl dispatch layoutmsg orientationcycle left top && ${
             toast "Tiling" "Layout orientation toggled" "media-record"
-          }"
-
-          # Apps & Shell (Noctalia integrated)
-          "$mod, Return, exec, ${terminal}"
-          "$mod, B, exec, ${browser}"
-          "$mod, E, exec, nautilus"
-          "$mod, Space, exec, ${noctalia "launcher" "toggle"}"
-          "$mod SHIFT, E, exec, ${noctalia "sessionMenu" "toggle"}"
-          "$mod CTRL, L, exec, ${noctalia "lockScreen" "lock"}"
-
-          "$mod SHIFT, S, exec, hyprshot -m region"
-
-          "$mod SHIFT, N, exec, busctl --user set-property rs.wl-gammarelay / rs.wl.gammarelay Brightness d 0.3"
-          "$mod SHIFT, M, exec, busctl --user set-property rs.wl-gammarelay / rs.wl.gammarelay Brightness d 1.0"
-
-          # Navigation (HJKL)
-          "$mod, H, movefocus, l"
-          "$mod, L, movefocus, r"
-          "$mod, K, movefocus, u"
-          "$mod, J, movefocus, d"
-
-          # Window Shifting
-          "$mod SHIFT, H, movewindow, l"
-          "$mod SHIFT, L, movewindow, r"
-          "$mod SHIFT, K, movewindow, u"
-          "$mod SHIFT, J, movewindow, d"
-
-          # Media Controls (Noctalia)
-          ", XF86AudioPlay, exec, ${noctalia "media" "playPause"}"
-          ", XF86AudioNext, exec, ${noctalia "media" "next"}"
-          ", XF86AudioPrev, exec, ${noctalia "media" "previous"}"
-        ]
-        ++ (map (i: "$mod, ${toString (if i == 10 then 0 else i)}, workspace, ${toString i}") (
-          builtins.genList (x: x + 1) 10
+          }]]
         ))
-        ++ (map (i: "$mod SHIFT, ${toString (if i == 10 then 0 else i)}, movetoworkspace, ${toString i}") (
-          builtins.genList (x: x + 1) 10
-        ));
 
-        bindel = [
-          ", XF86AudioRaiseVolume, exec, ${noctalia "volume" "increase"}"
-          ", XF86AudioLowerVolume, exec, ${noctalia "volume" "decrease"}"
-          ", XF86AudioMute, exec, ${noctalia "volume" "muteOutput"}"
-          ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
+        -- Apps & Shell (Noctalia integrated)
+        hl.bind(mod .. " + Return", hl.dsp.exec_cmd("${terminal}"))
+        hl.bind(mod .. " + B", hl.dsp.exec_cmd("${browser}"))
+        hl.bind(mod .. " + E", hl.dsp.exec_cmd("nautilus"))
+        hl.bind(mod .. " + Space", hl.dsp.exec_cmd([[${noctalia "launcher" "toggle"}]]))
+        hl.bind(mod .. " + SHIFT + E", hl.dsp.exec_cmd([[${noctalia "sessionMenu" "toggle"}]]))
+        hl.bind(mod .. " + CTRL + L", hl.dsp.exec_cmd([[${noctalia "lockScreen" "lock"}]]))
 
-          ", XF86MonBrightnessUp, exec, ${noctalia "brightness" "increase"}"
-          ", XF86MonBrightnessDown, exec, ${noctalia "brightness" "decrease"}"
-        ];
+        hl.bind(mod .. " + SHIFT + S", hl.dsp.exec_cmd("hyprshot -m region"))
 
-        bindm = [
-          "$mod, mouse:272, movewindow"
-          "$mod, mouse:273, resizewindow"
-        ];
+        hl.bind(mod .. " + SHIFT + N", hl.dsp.exec_cmd(
+          "busctl --user set-property rs.wl-gammarelay / rs.wl.gammarelay Brightness d 0.3"
+        ))
+        hl.bind(mod .. " + SHIFT + M", hl.dsp.exec_cmd(
+          "busctl --user set-property rs.wl-gammarelay / rs.wl.gammarelay Brightness d 1.0"
+        ))
 
-        # Lid switch — lock & suspend when closed
-        bindl = [
-          ", switch:on:Lid Switch, exec, ${noctalia "sessionMenu" "lockAndSuspend"}"
-        ];
+        -- Navigation (HJKL)
+        hl.bind(mod .. " + H", hl.dsp.focus({ direction = "left" }))
+        hl.bind(mod .. " + L", hl.dsp.focus({ direction = "right" }))
+        hl.bind(mod .. " + K", hl.dsp.focus({ direction = "up" }))
+        hl.bind(mod .. " + J", hl.dsp.focus({ direction = "down" }))
 
-        exec-once = [
-          "hyprpaper"
-          "wl-gammarelay-rs run"
-          "hyprctl setcursor ${cursorName} ${toString cursorSize}"
-          "wl-paste --type text --watch cliphist store"
-          "wl-paste --type image --watch cliphist store"
-          "noctalia-shell"
-        ];
-      };
+        -- Window Shifting
+        -- NOTE: verify hl.dsp.window.move's direction form against
+        -- https://wiki.hypr.land/Configuring/Basics/Binds/ and the
+        -- Dispatchers page -- the Lua dispatcher surface is still new and
+        -- some signatures may differ slightly from what's assumed here.
+        hl.bind(mod .. " + SHIFT + H", hl.dsp.window.move({ direction = "left" }))
+        hl.bind(mod .. " + SHIFT + L", hl.dsp.window.move({ direction = "right" }))
+        hl.bind(mod .. " + SHIFT + K", hl.dsp.window.move({ direction = "up" }))
+        hl.bind(mod .. " + SHIFT + J", hl.dsp.window.move({ direction = "down" }))
+
+        -- Media Controls (Noctalia)
+        hl.bind("XF86AudioPlay", hl.dsp.exec_cmd([[${noctalia "media" "playPause"}]]), { locked = true })
+        hl.bind("XF86AudioNext", hl.dsp.exec_cmd([[${noctalia "media" "next"}]]), { locked = true })
+        hl.bind("XF86AudioPrev", hl.dsp.exec_cmd([[${noctalia "media" "previous"}]]), { locked = true })
+
+        -- Volume / brightness (repeating + locked, like the old bindel)
+        hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd([[${noctalia "volume" "increase"}]]), { locked = true, repeating = true })
+        hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd([[${noctalia "volume" "decrease"}]]), { locked = true, repeating = true })
+        hl.bind("XF86AudioMute", hl.dsp.exec_cmd([[${noctalia "volume" "muteOutput"}]]), { locked = true, repeating = true })
+        hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), { locked = true, repeating = true })
+
+        hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd([[${noctalia "brightness" "increase"}]]), { locked = true, repeating = true })
+        hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd([[${noctalia "brightness" "decrease"}]]), { locked = true, repeating = true })
+
+        -- Mouse move/resize
+        hl.bind(mod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
+        hl.bind(mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
+
+        -- Lid switch — lock & suspend when closed
+        hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd([[${noctalia "sessionMenu" "lockAndSuspend"}]]), { locked = true })
+
+        -- Workspaces: mod+[0-9] to switch, mod+SHIFT+[0-9] to move window
+        for i = 1, 10 do
+          local key = i % 10 -- 10 maps to key 0
+          hl.bind(mod .. " + " .. key, hl.dsp.focus({ workspace = i }))
+          hl.bind(mod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
+        end
+
+        -------------------
+        ---- AUTOSTART ----
+        -------------------
+        hl.on("hyprland.start", function()
+          hl.exec_cmd("hyprpaper")
+          hl.exec_cmd("wl-gammarelay-rs run")
+          hl.exec_cmd("hyprctl setcursor ${cursorName} ${toString cursorSize}")
+          hl.exec_cmd("wl-paste --type text --watch cliphist store")
+          hl.exec_cmd("wl-paste --type image --watch cliphist store")
+          hl.exec_cmd("noctalia-shell")
+        end)
+      '';
     };
   };
 }

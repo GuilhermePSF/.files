@@ -188,7 +188,8 @@ let
 
     # --- Language-Specific Tools ---
     jakebecker.elixir-ls
-    justusadam.language-haskell
+    # Haskell
+    haskell.language-haskell
 
     # --- Misc / File-Type Tools ---
     caponetto.vscode-diff-viewer
@@ -219,20 +220,24 @@ in
       enable = true;
       mutableExtensionsDir = false;
 
-    # STILL CANT FIGURE OUT HOW TO REMOVE THE FOCKING TITLE BAR DECORATIONS
-     package = (pkgs.symlinkJoin {
-        name = "vscode-no-decorations";
-        paths = [ pkgs.vscode ];
-        nativeBuildInputs = [ pkgs.makeWrapper ];
-        postBuild = ''
-          wrapProgram $out/bin/code \
-            --unset NIXOS_OZONE_WL \
-            --add-flags "--ozone-platform-hint=auto" \
-            --add-flags "--disable-features=WaylandWindowDecorations" \
-            --add-flags "--enable-wayland-ime=true" \
-            --add-flags "--wayland-text-input-version=3"
-        '';
-      }) // { inherit (pkgs.vscode) pname version; };
+      # STILL CANT FIGURE OUT HOW TO REMOVE THE FOCKING TITLE BAR DECORATIONS
+      package =
+        (pkgs.symlinkJoin {
+          name = "vscode-no-decorations";
+          paths = [ pkgs.vscode ];
+          nativeBuildInputs = [ pkgs.makeWrapper ];
+          postBuild = ''
+            wrapProgram $out/bin/code \
+              --unset NIXOS_OZONE_WL \
+              --add-flags "--ozone-platform-hint=auto" \
+              --add-flags "--disable-features=WaylandWindowDecorations" \
+              --add-flags "--enable-wayland-ime=true" \
+              --add-flags "--wayland-text-input-version=3"
+          '';
+        })
+        // {
+          inherit (pkgs.vscode) pname version;
+        };
 
       profiles.default = {
         userSettings = vscodeSettings;

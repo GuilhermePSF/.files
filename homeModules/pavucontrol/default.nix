@@ -15,7 +15,7 @@
       pavucontrol # Per-app volume control (works with PipeWire)
 
       # --- PipeWire patchbay / graph ---
-      helvum # Visual PipeWire graph patcher
+      crosspipe # Visual PipeWire graph patcher
 
       # --- Audio effects ---
       easyeffects # EQ & effects per app via PipeWire

@@ -28,7 +28,8 @@
 
         nil # Nix LSP
 
-        nodePackages.typescript-language-server
+        # --- Language Servers ---
+        typescript-language-server
 
         vscode-langservers-extracted # HTML/CSS/JSON/ESLint
 

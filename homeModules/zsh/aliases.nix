@@ -26,7 +26,6 @@ in
     kb = "setxkbmap us";
     df = "df -h -x tmpfs";
     nosuspend = "xset s off & xset -dpms";
-    brave = "brave-browser";
 
     # Running Playit via Nix Run as you requested
     playit = "nix run github:pedorich-n/playit-nixos-module#playit-cli -- start";

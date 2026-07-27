@@ -23,11 +23,4 @@ rec {
   obsidianVault = "GUIs Vault";
   obsidianVaultId = "guilhermesVault";
 
-  # Primary Desktop Environment
-  #
-  # Select which desktop environment to enable by default.
-  # This will install and configure all necessary packages and services.
-  #
-  # Options: "gnome", "hyprland", "niri"
-  desktop = "hyprland";
 }

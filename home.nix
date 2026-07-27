@@ -12,14 +12,14 @@ in
 {
   home.username = userConfig.username;
   home.homeDirectory = userConfig.homeDirectory;
-  home.stateVersion = "25.11";
+  home.stateVersion = "26.05";
   home.enableNixpkgsReleaseCheck = false;
   stylix.enableReleaseChecks = false;
 
   # Conditionally enable the selected desktop environment
-  niriModule.enable = userConfig.desktop == "niri";
-  hyprlandModule.enable = userConfig.desktop == "hyprland";
-  gnomeModule.enable = userConfig.desktop == "gnome";
+  niriModule.enable = true;
+  hyprlandModule.enable = true;
+  gnomeModule.enable = true;
 
   # General modules
   gitModule.enable = true;
