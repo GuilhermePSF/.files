@@ -8,7 +8,9 @@ This is my personal NixOS configuration, built with Flakes, Home-Manager, and St
 | Hyprland (Tiled) | Noctalia (Launcher) |
 |------------------|---------------------|
 | ![Hyprland](assets/hyprland.png) | ![Noctalia](assets/noctalia.png) |
-| **Auto Styling (Stylix)** | **Fastfetch (Shell)** |
+
+| Auto Styling (Stylix) | Fastfetch (Shell) |
+|------------------|---------------------|
 | ![Stylix](assets/stylix.png) | ![Fastfetch Screenshot](assets/shell.png) |
 
 ## Further Information
